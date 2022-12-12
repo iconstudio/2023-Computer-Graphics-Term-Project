@@ -18,7 +18,8 @@ public:
 		, myName(), myHealth(), maxHealth()
 		, myModel()
 		, myCollider(nullptr)
-		, mySpeed(), myDirection(), maxSpeed(8.0f), myFriction()
+		, mySpeed(), myDirection()
+		, maxSpeed(8.0f), myFriction(), airDamping(30.0f)
 	{}
 
 	constexpr Entity(const ModelView& model_view)
@@ -26,7 +27,8 @@ public:
 		, myName(), myHealth(), maxHealth()
 		, myModel(model_view)
 		, myCollider(nullptr)
-		, mySpeed(), myDirection(), maxSpeed(8.0f), myFriction()
+		, mySpeed(), myDirection()
+		, maxSpeed(8.0f), myFriction(), airDamping(30.0f)
 	{}
 
 	Entity(const ModelView& model_view, const glm::vec3& position)
@@ -74,6 +76,11 @@ public:
 					mySpeed = 0;
 				}
 			}
+
+			if (0 < maxSpeed && maxSpeed < std::abs(mySpeed))
+			{
+				mySpeed = std::max(maxSpeed, mySpeed - airDamping * delta_time * 1.5f);
+			}
 		}
 	}
 
@@ -105,7 +112,7 @@ public:
 #pragma region 물리
 	inline constexpr float SetSpeed(const float& speed)
 	{
-		return mySpeed = std::min(maxSpeed, speed);
+		return mySpeed = speed;
 	}
 
 	inline void SetDirection(const glm::vec3& direction)
@@ -121,7 +128,7 @@ public:
 
 	inline constexpr float AddSpeed(const float& speed)
 	{
-		return SetSpeed(mySpeed + speed);
+		return mySpeed += speed;
 	}
 
 	inline constexpr float& GetSpeed()
@@ -227,7 +234,10 @@ public:
 	float mySpeed;
 	glm::vec3 myDirection;
 	float maxSpeed;
+	// 마찰력
 	float myFriction;
+	// 공기 저항력
+	float airDamping;
 
 	bool isAttacking;
 	float attackDelay;

@@ -92,22 +92,23 @@ public:
 		if (0 != press_side || 0 != press_forward)
 		{
 			auto vector = glm::vec3{ press_side, 0, press_forward };
-			glm::vec3 movement;
-
 			if (press_forward < 0)
 			{
 				vector.z *= 0.6666667f;
 			}
-			movement = glm::normalize(vector);
+			
+			const auto movement = glm::normalize(vector);
 
 			const auto toward = glm::vec4{ movement, 1.0f };
 
 			SetDirection(toward * GetRotation());
 
 			const float aceel = moveAccel * delta_time;
-			//MoveTo(movement, speed);
-
-			AddSpeed(aceel);
+			const float my_speed = AddSpeed(aceel);
+			if (maxSpeed < my_speed)
+			{
+				SetSpeed(maxSpeed);
+			}
 		}
 	}
 
