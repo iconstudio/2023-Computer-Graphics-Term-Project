@@ -120,15 +120,31 @@ public:
 		myDirection = glm::normalize(direction);
 	}
 
-	inline void SetVelocity(const glm::vec3& vector)
-	{
-		SetSpeed(glm::length(vector));
-		SetDirection(vector);
-	}
-
 	inline constexpr float AddSpeed(const float& speed)
 	{
 		return mySpeed += speed;
+	}
+
+	inline void SetVelocity(const glm::vec3& vector)
+	{
+		SetSpeed(glm::length(vector));
+		SetDirection(glm::normalize(vector));
+	}
+	
+	inline void AddVelocity(const glm::vec3& velocity)
+	{
+		auto my_velocity = myDirection * mySpeed;
+		my_velocity += velocity;
+
+		SetVelocity(my_velocity);
+	}
+
+	inline void AddVelocity(const float& speed, const glm::vec3& direction)
+	{
+		auto my_velocity = myDirection * mySpeed;
+		my_velocity += direction * speed;
+
+		SetVelocity(my_velocity);
 	}
 
 	inline constexpr float& GetSpeed()

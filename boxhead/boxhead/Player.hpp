@@ -7,7 +7,7 @@ class Player : public Entity
 public:
 	constexpr Player()
 		: Entity()
-		, moveMaxSpeed(7.0f), walkMaxSpeed(3.0f)
+		, moveMaxSpeed(7.0f), walkMaxSpeed(2.5f)
 		, moveAccel(40.0f), walkAccel(20.0f)
 		, moveFriction(16.0f), walkFriction(30.0f)
 	{
@@ -98,16 +98,19 @@ public:
 			}
 			
 			const auto movement = glm::normalize(vector);
-
 			const auto toward = glm::vec4{ movement, 1.0f };
+			const auto direction = toward * GetRotation();
 
-			SetDirection(toward * GetRotation());
+			//SetDirection(direction);
+
+			bool was_overflow = maxSpeed < mySpeed;
 
 			const float aceel = moveAccel * delta_time;
-			const float my_speed = AddSpeed(aceel);
-			if (maxSpeed < my_speed)
+			AddVelocity(aceel, direction);
+			
+			if (!was_overflow && maxSpeed < mySpeed)
 			{
-				SetSpeed(maxSpeed);
+				mySpeed = maxSpeed;
 			}
 		}
 	}
