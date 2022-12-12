@@ -171,6 +171,12 @@
     <ClCompile Include="GameViewManger.cpp">
       <Filter>소스 파일\Core</Filter>
     </ClCompile>
+    <ClCompile Include="TexturePlaneModel.cpp">
+      <Filter>소스 파일\Contents</Filter>
+    </ClCompile>
+    <ClCompile Include="TextureCubeModel.cpp">
+      <Filter>소스 파일\Contents</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -310,6 +316,12 @@
     </ClInclude>
     <ClInclude Include="GameViewManger.hpp">
       <Filter>헤더 파일\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="TextureCubeModel.hpp">
+      <Filter>헤더 파일\Contents\Models</Filter>
+    </ClInclude>
+    <ClInclude Include="TexturePlaneModel.hpp">
+      <Filter>헤더 파일\Contents\Models</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

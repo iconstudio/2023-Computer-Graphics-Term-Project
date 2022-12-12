@@ -206,6 +206,8 @@
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SideCubeModel.cpp" />
     <ClCompile Include="stdafx.cpp" />
+    <ClCompile Include="TextureCubeModel.cpp" />
+    <ClCompile Include="TexturePlaneModel.cpp" />
     <ClCompile Include="Timer.cpp" />
     <ClCompile Include="Transform.cpp" />
     <ClCompile Include="Wall.cpp" />
@@ -256,6 +258,8 @@
     <ClInclude Include="Scene.hpp" />
     <ClInclude Include="SideCubeModel.hpp" />
     <ClInclude Include="stdafx.hpp" />
+    <ClInclude Include="TextureCubeModel.hpp" />
+    <ClInclude Include="TexturePlaneModel.hpp" />
     <ClInclude Include="Timer.hpp" />
     <ClInclude Include="Transform.hpp" />
     <ClInclude Include="Wall.hpp" />
