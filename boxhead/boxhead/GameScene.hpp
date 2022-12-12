@@ -239,29 +239,29 @@ public:
 		}
 	}
 
-	virtual void OnUpdateView(const int& w, const int& h)
+	void OnUpdateView(const int& w, const int& h) override
 	{
 		UpdateClientRect();
 
 		FocusCursor();
 	}
 
-	virtual void OnKeyboard(const unsigned char& key, const int& x, const int& y)
+	void OnKeyboard(const unsigned char& key, const int& x, const int& y) override
 	{
 		playerCharacter->OnKeyboard(key, x, y);
 	}
 
-	virtual void OnKeyboardUp(const unsigned char& key, const int& x, const int& y)
+	void OnKeyboardUp(const unsigned char& key, const int& x, const int& y) override
 	{
 		playerCharacter->OnKeyboard(key, x, y);
 	}
 
-	virtual void OnSpecialKey(const int& key, const int& x, const int& y)
+	void OnSpecialKey(const int& key, const int& x, const int& y)
 	{
 		playerCharacter->OnSpecialKey(key, x, y);
 	}
 
-	virtual void OnMouse(const int& button, const int& state, const int& x, const int& y)
+	void OnMouse(const int& button, const int& state, const int& x, const int& y) override
 	{
 		if (ogl::IsMouseClicked(state))
 		{
@@ -288,7 +288,7 @@ public:
 		playerCharacter->OnMouse(button, state, x, y);
 	}
 
-	virtual void OnMouseMotion(const int& x, const int& y)
+	void OnMouseMotion(const int& x, const int& y) override
 	{
 		if (cursorClicked)
 		{
@@ -296,16 +296,46 @@ public:
 		}
 	}
 
+	void PrepareRendering() override
+	{}
+
 	void Render() override
 	{
+		const auto& matrix_cam = viewManager.GetCameraMatrix();
+		const auto& matrix_view = viewManager.GetPerspectiveViewMatrix();
+
+		textureRenderer.PrepareRendering();
+		auto tex_uniform_world = textureRenderer.GetUniform("a_WorldMatrix");
+		auto tex_uniform_camera = textureRenderer.GetUniform("a_CameraMatrix");
+		auto tex_uniform_proj = textureRenderer.GetUniform("a_ProjMatrix");
+
+		tex_uniform_world.AssignMatrix4x4(ogl::identity);
+		tex_uniform_camera.AssignMatrix4x4(matrix_cam);
+		tex_uniform_proj.AssignMatrix4x4(matrix_view);
+
+		// x, y, z, s, t
+		constexpr GLsizei shade_tex = sizeof(float) * 5;
+
+		auto attr_texpos = textureRenderer.BeginAttribute("a_Position", shade_tex);
+		auto attr_texcoord = textureRenderer.BeginAttribute("a_TexCoord", shade_tex);
+
+		// 3: ÅØ½ºÃÄ ¹Ù´Ú
+		auto model_texfloor = ModelView::GetReference(3);
+		model_texfloor.PrepareRendering();
+		textureRenderer.ReadBuffer(attr_texpos, 3);
+		textureRenderer.ReadBuffer(attr_texcoord, 2);
+
+		model_texfloor.Render();
+		textureRenderer.ResetSeekBuffer();
+
 		myRenderer.PrepareRendering();
 		auto uniform_mat_world = myRenderer.GetUniform("a_WorldMatrix");
 		auto uniform_mat_camera = myRenderer.GetUniform("a_CameraMatrix");
 		auto uniform_mat_proj = myRenderer.GetUniform("a_ProjMatrix");
 
 		uniform_mat_world.AssignMatrix4x4(ogl::identity);
-		uniform_mat_camera.AssignMatrix4x4(viewManager.GetCameraMatrix());
-		uniform_mat_proj.AssignMatrix4x4(viewManager.GetPerspectiveViewMatrix());
+		uniform_mat_camera.AssignMatrix4x4(matrix_cam);
+		uniform_mat_proj.AssignMatrix4x4(matrix_view);
 
 		// x, y, z, r, g, b, a
 		constexpr GLsizei shade_stride = sizeof(float) * 7;

@@ -10,6 +10,8 @@
 #include "CubeModel.hpp"
 #include "AxisModel.hpp"
 #include "FloorModel.hpp"
+#include "TexturePlaneModel.hpp"
+#include "TextureCubeModel.hpp"
 
 class Framework
 {
@@ -33,6 +35,7 @@ public:
 		modelBuffer.Reserve(20);
 		textureBuffer.Reserve(10);
 
+		// 
 		constexpr auto spatial_c1 = ogl::Colour{ 0.0f, 1.0f, 1.0f, 1.0f };
 		constexpr auto spatial_c2 = ogl::Colour{ 1.0f, 0.0f, 1.0f, 1.0f };
 		constexpr auto spatial_c3 = ogl::Colour{ 1.0f, 1.0f, 0.0f, 1.0f };
@@ -69,6 +72,7 @@ public:
 		// Model 0: Å¥ºê
 		auto& cube_buffer = modelBuffer.Push(raw_cube);
 
+		// 
 		constexpr auto axis_color = ogl::Colour{ 0.0f, 0.0f, 0.0f, 1.0f };
 		const ogl::Vertex axis_lines[] =
 		{
@@ -83,6 +87,7 @@ public:
 		// Model 1: ÁÂÇ¥Ãà
 		auto& axis_buffer = modelBuffer.PushRaw(axis_lines);
 
+		// 
 		constexpr auto floor_c1 = ogl::Colour{ 0.15f, 0.4f, 0.1f, 1.0f };
 		constexpr auto floor_c2 = ogl::Colour{ 0.6f, 0.2f, 0.0f, 1.0f };
 		constexpr auto floor_c3 = ogl::Colour{ 0.0f, 0.6f, 0.0f, 1.0f };
@@ -96,12 +101,8 @@ public:
 
 		// Model 2: ¹Ù´Ú
 		auto& floor_buffer = modelBuffer.Push(floor);
-
-		// ¸ðµ¨ ÁØºñ
-		AddModel<SideCubeModel>("Cube", cube_buffer);
-		AddModel<AxisModel>("Axis", axis_buffer);
-		AddModel<FloorModel>("Floor", floor_buffer);
-
+		
+		// 
 		const ogl::blob::TexturePlane texfloor = ogl::blob::plane::tex::Create
 		(
 			-1.0f, 0.0f, -1.0f, glm::vec2{ 0.0f, 0.0f },
@@ -110,8 +111,14 @@ public:
 			+1.0f, 0.0f, -1.0f, glm::vec2{ 1.0f, 0.0f }
 		);
 
-		// Texture 0: ¹Ù´Ú
+		// Model 3: ÅØ½ºÃÄ ¹Ù´Ú
 		auto& texfloor_buffer = textureBuffer.Push(texfloor);
+
+		// ¸ðµ¨ ÁØºñ
+		AddModel<SideCubeModel>("Cube", cube_buffer);
+		AddModel<AxisModel>("Axis", axis_buffer);
+		AddModel<FloorModel>("Floor", floor_buffer);
+		AddModel<TexturePlaneModel>("TextureFloor", texfloor_buffer);
 
 		if (0 < myScenes.size())
 		{
@@ -323,17 +330,7 @@ public:
 	{
 		return textureBuffer.At(id);
 	}
-
-	static Model* const GetModel(const size_t& id)
-	{
-		return Instance->GetModel(id);
-	}
-
-	static ogl::VertexStream::Buffer& GetTexture(const size_t& id)
-	{
-		return Instance->GetTexture(id);
-	}
-
+	
 	void AddModelID(std::string_view name, const size_t& id)
 	{
 		gameModelIDs.insert({ std::string{ name }, id });
