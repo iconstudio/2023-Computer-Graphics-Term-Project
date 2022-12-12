@@ -5,14 +5,17 @@ class Player : public Entity
 public:
 	constexpr Player()
 		: Entity()
+		, pressForward(0), pressSide(0)
 	{}
 
 	Player(const glm::vec3& position)
 		: Entity(position)
+		, pressForward(0), pressSide(0)
 	{}
 
 	Player(const float& x, const float& y, const float& z)
 		: Entity(x, y, z)
+		, pressForward(0), pressSide(0)
 	{}
 
 	virtual ~Player()
@@ -106,4 +109,6 @@ public:
 	}
 
 	camera::Camera* myCamera;
+	int pressForward;
+	int pressSide;
 };

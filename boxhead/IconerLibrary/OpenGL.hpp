@@ -30,6 +30,7 @@ namespace ogl
 	using CallbackRenderer = void (*)(void);
 	using CallbackViewport = void (*)(int width, int height);
 	using CallbackKeyboard = void (*)(unsigned char key, int mouse_x, int mouse_y);
+	using CallbackKeyboardUp = void (*)(unsigned char key, int mouse_x, int mouse_y);
 	using CallbackSpecialKeyboard = void (*)(int key, int mouse_x, int mouse_y);
 	using CallbackMouse = void (*)(int btn, int state, int screen_x, int screen_y);
 	using CallbackMouseMove = void (*)(int mouse_x, int mouse_y);
@@ -83,6 +84,16 @@ namespace ogl
 	inline void SetKeyboardMethod(const CallbackKeyboard& callback)
 	{
 		glutKeyboardFunc(callback);
+	}
+
+	inline void SetKeyboardUpMethod(CallbackKeyboardUp&& callback)
+	{
+		glutKeyboardUpFunc(std::forward<CallbackKeyboardUp>(callback));
+	}
+
+	inline void SetKeyboardUpMethod(const CallbackKeyboardUp& callback)
+	{
+		glutKeyboardUpFunc(callback);
 	}
 
 	inline void SetSpecialKeyboardMethod(CallbackSpecialKeyboard&& callback)
