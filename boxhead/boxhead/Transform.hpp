@@ -23,7 +23,7 @@ public:
 
 		//const auto my_mat = ogl::Rotate(ogl::identity, myPitch, myYaw, myRoll);
 
-		Translate(rotation * vector);
+		Translate(vector * rotation);
 		//auto toward = myMatrix * glm::vec4{ axis, 1.0f };
 		//auto toward = glm::mat4{ quaternion } * glm::vec4{ axis, 1.0f };
 		//auto toward = rotation * glm::vec4{ axis, 0.0f };

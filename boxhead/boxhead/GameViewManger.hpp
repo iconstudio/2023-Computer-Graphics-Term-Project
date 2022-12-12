@@ -68,9 +68,10 @@ public:
 
 			if (followSmooth)
 			{
-				glm::mat4 target = mainCamera.GetCameraMatrix();
+				auto& target = mainCamera.GetCameraMatrix();
+				auto& transform = followTransform.myMatrix;
 
-				if (target != followTransform)
+				if (target != transform)
 				{
 
 				}
