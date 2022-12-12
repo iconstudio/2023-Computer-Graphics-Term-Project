@@ -259,9 +259,6 @@
     <ClInclude Include="Wall.hpp" />
     <ClInclude Include="WindowManager.hpp" />
     <ClInclude Include="WorldManager.hpp" />
-    <ClInclude Include="input.h" />
-    <ClInclude Include="line.h" />
-    <ClInclude Include="misc.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="cube.txt" />
