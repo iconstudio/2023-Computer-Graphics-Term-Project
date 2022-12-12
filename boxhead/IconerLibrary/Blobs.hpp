@@ -120,6 +120,11 @@ namespace ogl
 	MAKE_3D_BLOB(ColoredPlane, 28, 7);
 
 	/// <summary>
+	/// 텍스쳐 면 (x, y, z, texid, s, t)
+	/// </summary>
+	MAKE_3D_BLOB(TexturePlane, 24, 6);
+
+	/// <summary>
 	/// 면 마다 색깔 있는 육면체
 	/// </summary>
 	MAKE_3D_BLOB(ColoredCube, 168, 7);
@@ -128,6 +133,11 @@ namespace ogl
 	/// 색인된 색깔 있는 육면체 (EBO 사용 필수)
 	/// </summary>
 	MAKE_3D_BLOB(IndexedColoredCube, 56, 7);
+
+	/// <summary>
+	/// 면 마다 텍스쳐가 있는 육면체 (x, y, z, texid, s, t)
+	/// </summary>
+	MAKE_3D_BLOB(ColoredCube, 168, 6);
 
 	/// <summary>
 	/// 2D 직선

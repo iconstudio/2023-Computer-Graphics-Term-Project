@@ -20,7 +20,7 @@ class TankShow
 {
 public:
 	TankShow()
-		: myRenderer(), myVertexBuffer(ogl::CreateVertex())
+		: myRenderer(), modelBuffer(ogl::CreateVertex())
 		, myX(), myY(), myZ()
 		, myPitch(), myYaw(), myRoll()
 	{}
@@ -52,7 +52,7 @@ public:
 			{ 0.0f, +300.0f, 0.0f, axis_color },
 			{ 0.0f, -300.0f, 0.0f, axis_color }
 		};
-		myVertexBuffer.PushRaw(axis_lines);
+		modelBuffer.PushRaw(axis_lines);
 
 		constexpr auto spatial_c1 = ogl::Colour{ 0.0f, 1.0f, 1.0f, 1.0f };
 		constexpr auto spatial_c2 = ogl::Colour{ 1.0f, 0.0f, 1.0f, 1.0f };
@@ -87,7 +87,7 @@ public:
 			ogl::blob::plane::Create(pt5, pt8, pt7, pt6, spatial_c6)
 		};
 		const auto raw_cube = ogl::blob::cube::Create(each_sides);
-		myVertexBuffer.Push(raw_cube);
+		modelBuffer.Push(raw_cube);
 
 		constexpr ogl::Quad head_pt1 = { -0.45f, +0.2f, -0.3f };
 		constexpr ogl::Quad head_pt2 = { -0.45f, +0.2f, +0.3f };
@@ -108,7 +108,7 @@ public:
 			ogl::blob::plane::Create(head_pt5, head_pt8, head_pt7, head_pt6, spatial_c7)
 		};
 		const auto head_cube = ogl::blob::cube::Create(head_sides);
-		myVertexBuffer.Push(head_cube);
+		modelBuffer.Push(head_cube);
 
 		constexpr ogl::Quad arm_pt1 = { -0.1f, +0.7f, -0.1f };
 		constexpr ogl::Quad arm_pt2 = { -0.1f, +0.7f, +0.1f };
@@ -129,7 +129,7 @@ public:
 			ogl::blob::plane::Create(arm_pt5, arm_pt8, arm_pt7, arm_pt6, spatial_c9)
 		};
 		const auto arms_cube = ogl::blob::cube::Create(arms_sides);
-		myVertexBuffer.Push(arms_cube);
+		modelBuffer.Push(arms_cube);
 
 		constexpr auto floor_c1 = ogl::Colour{ 0.15f, 0.4f, 0.1f, 1.0f };
 		constexpr auto floor_c2 = ogl::Colour{ 0.6f, 0.2f, 0.0f, 1.0f };
@@ -141,7 +141,7 @@ public:
 			{ +10.0f, -2.0f, +10.0f, floor_c3 },
 			{ +10.0f, -2.0f, -10.0f, floor_c2 }
 		);
-		myVertexBuffer.Push(floor);
+		modelBuffer.Push(floor);
 
 		myRenderer.Start();
 	}
@@ -288,7 +288,7 @@ public:
 		auto attr_pos = myRenderer.BeginAttribute("a_Position", stride);
 		auto attr_col = myRenderer.BeginAttribute("a_Colour", stride);
 
-		auto& buffer_axis = myVertexBuffer.At(0);
+		auto& buffer_axis = modelBuffer.At(0);
 		buffer_axis.PrepareRendering();
 		{
 			myRenderer.ReadBuffer(attr_pos, 3);
@@ -297,7 +297,7 @@ public:
 			myRenderer.ResetSeekBuffer();
 		}
 
-		auto& buffer_floor = myVertexBuffer.At(4);
+		auto& buffer_floor = modelBuffer.At(4);
 		buffer_floor.PrepareRendering();
 		myRenderer.ReadBuffer(attr_pos, 3);
 		myRenderer.ReadBuffer(attr_col, 4);
@@ -316,7 +316,7 @@ public:
 
 		uniform_mat_world.AssignMatrix4x4(my_mat);
 
-		auto& buffer_cube = myVertexBuffer.At(1);
+		auto& buffer_cube = modelBuffer.At(1);
 		buffer_cube.PrepareRendering();
 		{
 			myRenderer.ReadBuffer(attr_pos, 3);
@@ -332,7 +332,7 @@ public:
 		my_mat = ogl::Rotate(my_mat, 0.0f, myHeadYaw, 0.0f);
 		uniform_mat_world.AssignMatrix4x4(my_mat);
 
-		auto& buffer_head = myVertexBuffer.At(2);
+		auto& buffer_head = modelBuffer.At(2);
 		buffer_head.PrepareRendering();
 		{
 			myRenderer.ReadBuffer(attr_pos, 3);
@@ -346,7 +346,7 @@ public:
 
 		const auto my_head_mat = my_mat;
 
-		auto& buffer_arm = myVertexBuffer.At(3);
+		auto& buffer_arm = modelBuffer.At(3);
 		buffer_arm.PrepareRendering();
 		// ¿ÞÂÊ ±Í
 		{
@@ -383,7 +383,7 @@ public:
 	}
 
 	ogl::Pipeline myRenderer;
-	ogl::VertexStream myVertexBuffer;
+	ogl::VertexStream modelBuffer;
 
 	//glm::mat4 myWorldMatrix;
 	glm::mat4 myCameraMatrix;

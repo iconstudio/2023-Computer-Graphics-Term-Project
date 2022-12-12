@@ -15,7 +15,7 @@ class Framework
 {
 public:
 	Framework()
-		: myVertexBuffer()
+		: modelBuffer(), textureBuffer()
 		, myScenes()
 		, currentScene(nullptr), reservatedScene(nullptr)
 		, sceneProcessFinished(false)
@@ -30,7 +30,8 @@ public:
 
 	void Awake()
 	{
-		myVertexBuffer.Reserve(10);
+		modelBuffer.Reserve(20);
+		textureBuffer.Reserve(10);
 
 		constexpr auto spatial_c1 = ogl::Colour{ 0.0f, 1.0f, 1.0f, 1.0f };
 		constexpr auto spatial_c2 = ogl::Colour{ 1.0f, 0.0f, 1.0f, 1.0f };
@@ -66,7 +67,7 @@ public:
 		const auto raw_cube = ogl::blob::cube::Create(each_sides);
 
 		// 0: Å¥ºê
-		auto& cube_buffer = myVertexBuffer.Push(raw_cube);
+		auto& cube_buffer = modelBuffer.Push(raw_cube);
 
 		constexpr auto axis_color = ogl::Colour{ 0.0f, 0.0f, 0.0f, 1.0f };
 		const ogl::Vertex axis_lines[] =
@@ -80,21 +81,21 @@ public:
 		};
 
 		// 1: ÁÂÇ¥Ãà
-		auto& axis_buffer = myVertexBuffer.PushRaw(axis_lines);
+		auto& axis_buffer = modelBuffer.PushRaw(axis_lines);
 
 		constexpr auto floor_c1 = ogl::Colour{ 0.15f, 0.4f, 0.1f, 1.0f };
 		constexpr auto floor_c2 = ogl::Colour{ 0.6f, 0.2f, 0.0f, 1.0f };
 		constexpr auto floor_c3 = ogl::Colour{ 0.0f, 0.6f, 0.0f, 1.0f };
 		constexpr ogl::blob::ColoredPlane floor = ogl::blob::plane::Create
 		(
-			{ -10.0f, -2.0f, -10.0f, floor_c1 },
-			{ -10.0f, -2.0f, +10.0f, floor_c2 },
-			{ +10.0f, -2.0f, +10.0f, floor_c3 },
-			{ +10.0f, -2.0f, -10.0f, floor_c2 }
+			{ -10.0f, 0.0f, -10.0f, floor_c1 },
+			{ -10.0f, 0.0f, +10.0f, floor_c2 },
+			{ +10.0f, 0.0f, +10.0f, floor_c3 },
+			{ +10.0f, 0.0f, -10.0f, floor_c2 }
 		);
 
 		// 2: ¹Ù´Ú
-		auto& floor_buffer = myVertexBuffer.Push(floor);
+		auto& floor_buffer = modelBuffer.Push(floor);
 
 		// ¸ðµ¨ ÁØºñ
 		AddModel<SideCubeModel>("Cube", cube_buffer);
@@ -344,7 +345,7 @@ private:
 
 	ogl::VertexStream::Buffer& GetVertexBuffer(const size_t& index)
 	{
-		return myVertexBuffer.At(index);
+		return modelBuffer.At(index);
 	}
 
 	std::vector<Scene*> myScenes;
@@ -352,7 +353,7 @@ private:
 	Scene* reservatedScene;
 	bool sceneProcessFinished;
 
-	ogl::VertexStream myVertexBuffer;
+	ogl::VertexStream modelBuffer, textureBuffer;
 	std::vector<Model*> gameModels;
 	std::unordered_map<std::string, size_t> gameModelIDs;
 

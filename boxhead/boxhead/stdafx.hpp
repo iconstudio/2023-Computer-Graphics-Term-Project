@@ -4,6 +4,7 @@
 #include <type_traits>
 #include <concepts>
 #include <iostream>
+#include <strstream>
 #include <iomanip>
 #include <fstream>
 #include <syncstream>

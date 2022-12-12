@@ -14,9 +14,10 @@ using namespace camera;
 class WorldManager
 {
 public:
-	constexpr WorldManager()
+	constexpr WorldManager(float xscale, float yscale, float zscale)
 		: heightMap()
 		, stageFilepath("Stage.txt")
+		, boardScaleW(xscale), boardScaleH(yscale), boardScaleD(zscale)
 	{
 		heightMap.reserve(boardSizeW * boardSizeH + 1);
 	}
@@ -126,14 +127,15 @@ public:
 	static inline constexpr size_t boardSizeH = 40;
 
 private:
-	static inline constexpr float boardScaleW = 1.0f;
-	static inline constexpr float boardScaleD = 1.0f;
-
-	std::vector<Block> heightMap;
-	std::string stageFilepath;
+	float boardScaleW;
+	float boardScaleD;
+	float boardScaleH;
 
 	//int terrainMap[boardSizeH][boardSizeW];
 	int** terrainMap;
+	std::string stageFilepath;
+
+	std::vector<Block> heightMap;
 };
 
 class GameScene : public Scene
@@ -142,7 +144,7 @@ public:
 	constexpr GameScene(const size_t& id)
 		: Scene(id)
 		, myRenderer()
-		, worldManager(), viewManager()
+		, worldManager(1.0f, 1.0f, 1.0f), viewManager()
 		, windowFocused(false), cursorClicked(false), cursorPosition(), clientRect()
 		, playerCharacter(nullptr), playerSpawnPosition(1.0f, 1.0f, 1.0f)
 	{
