@@ -159,6 +159,17 @@ namespace ogl
 			glUniform1i(myID, arg0);
 		}
 
+		void ActiveTexture(const GLint& index)
+		{
+			glUniform1i(myID, index);
+			glActiveTexture(GL_TEXTURE0 + index);
+		}
+
+		void BindTexture(const GLint& texid)
+		{
+			glBindTexture(GL_TEXTURE_2D, texid);
+		}
+
 	private:
 		const GLint myID;
 	};

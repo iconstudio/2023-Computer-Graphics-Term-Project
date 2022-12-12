@@ -21,11 +21,6 @@
 #include "ModelView.hpp"
 #include "GameViewManger.hpp"
 
-namespace map
-{
-	class WorldManager;
-}
-
 float RandomizeColour();
 
 inline constexpr bool CheckKey(const short state)

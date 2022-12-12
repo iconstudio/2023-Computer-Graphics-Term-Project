@@ -75,20 +75,28 @@
     <Linkage-freeglut>static</Linkage-freeglut>
     <IncludePath>$(SolutionDir)IconerLibrary;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)lib;$(LibraryPath)</LibraryPath>
+    <CopyLocalDeploymentContent>true</CopyLocalDeploymentContent>
+    <CopyCppRuntimeToOutputDir>true</CopyCppRuntimeToOutputDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <IncludePath>$(SolutionDir)IconerLibrary;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)lib;$(LibraryPath)</LibraryPath>
     <GlfwLinkage>static</GlfwLinkage>
     <Linkage-freeglut>static</Linkage-freeglut>
+    <CopyLocalDeploymentContent>true</CopyLocalDeploymentContent>
+    <CopyCppRuntimeToOutputDir>true</CopyCppRuntimeToOutputDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LibraryPath>$(SolutionDir)lib;$(LibraryPath)</LibraryPath>
     <IncludePath>$(SolutionDir)IconerLibrary;$(IncludePath)</IncludePath>
+    <CopyLocalDeploymentContent>true</CopyLocalDeploymentContent>
+    <CopyCppRuntimeToOutputDir>true</CopyCppRuntimeToOutputDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LibraryPath>$(SolutionDir)lib;$(LibraryPath)</LibraryPath>
     <IncludePath>$(SolutionDir)IconerLibrary;$(IncludePath)</IncludePath>
+    <CopyLocalDeploymentContent>true</CopyLocalDeploymentContent>
+    <CopyCppRuntimeToOutputDir>true</CopyCppRuntimeToOutputDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -100,7 +108,7 @@
       <LanguageStandard_C>stdc17</LanguageStandard_C>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.hpp</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>$(SolutionDir)IconerLibrary</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)textures;$(SolutionDir)IconerLibrary</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -120,7 +128,7 @@
       <LanguageStandard_C>stdc17</LanguageStandard_C>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.hpp</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>$(SolutionDir)IconerLibrary</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)textures;$(SolutionDir)IconerLibrary</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -139,7 +147,7 @@
       <LanguageStandard_C>stdc17</LanguageStandard_C>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.hpp</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>$(SolutionDir)IconerLibrary</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)textures;$(SolutionDir)IconerLibrary</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -158,7 +166,7 @@
       <LanguageStandard_C>stdc17</LanguageStandard_C>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.hpp</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>$(SolutionDir)IconerLibrary</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)textures;$(SolutionDir)IconerLibrary</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -273,14 +281,14 @@
     <Text Include="Stage.txt" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="..\textures\TDF1.bmp" />
-    <Image Include="..\textures\TDF2.bmp" />
-    <Image Include="..\textures\TDF3.bmp" />
-    <Image Include="..\textures\TDF4.bmp" />
-    <Image Include="..\textures\TDF5.bmp" />
-    <Image Include="..\textures\TDF7.bmp" />
-    <Image Include="..\textures\TDX0.bmp" />
-    <Image Include="..\textures\TDX3.bmp" />
+    <Image Include="textures\TDF1.bmp" />
+    <Image Include="textures\TDF2.bmp" />
+    <Image Include="textures\TDF3.bmp" />
+    <Image Include="textures\TDF4.bmp" />
+    <Image Include="textures\TDF5.bmp" />
+    <Image Include="textures\TDF7.bmp" />
+    <Image Include="textures\TDX0.bmp" />
+    <Image Include="textures\TDX3.bmp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

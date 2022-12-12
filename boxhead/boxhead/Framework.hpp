@@ -12,8 +12,6 @@
 #include "FloorModel.hpp"
 #include "TexturePlaneModel.hpp"
 #include "TextureCubeModel.hpp"
-#define STB_IMAGE_IMPLEMENTATION
-#include "ImageLoader.hpp"
 
 class Framework
 {
@@ -24,10 +22,12 @@ public:
 		, currentScene(nullptr), reservatedScene(nullptr)
 		, sceneProcessFinished(false)
 		, gameModels(), gameModelIDs()
+		, gameTextures(), gameTextureIDs()
 	{
 		myScenes.reserve(10);
 		gameModels.reserve(20);
 		gameModelIDs.reserve(20);
+		gameTextureIDs.reserve(20);
 
 		Instance = this;
 	}
@@ -240,15 +240,26 @@ public:
 	{
 		return gameModels.at(FindModelID(name));
 	}
-
-	ogl::VertexStream::Buffer& GetTexture(const size_t& id)
+	
+	GLint LoadTexture(std::string_view filepath)
 	{
-		return textureBuffer.At(id);
+		AddTextureID(filepath, gameTextureIDs.size());
+
+		GLint texture = InternalLoadTexture(filepath);
+
+		gameTextures.push_back(texture);
+
+		return texture;
 	}
 
-	const ogl::VertexStream::Buffer& GetTexture(const size_t& id) const
+	static ogl::VertexStream::Buffer& GetTextureBuffer(const size_t& id)
 	{
-		return textureBuffer.At(id);
+		return Instance->textureBuffer.At(id);
+	}
+
+	static GLint GetTextureID(const size_t& index)
+	{
+		return Instance->gameTextures.at(index);
 	}
 
 	void AddModelID(std::string_view name, const size_t& id)
@@ -260,6 +271,22 @@ public:
 	{
 		auto it = gameModelIDs.find(std::string{ name });
 		if (gameModelIDs.cend() != it)
+		{
+			return size_t(-1);
+		}
+
+		return it->second;
+	}
+
+	void AddTextureID(std::string_view name, const size_t& id)
+	{
+		gameTextureIDs.insert({ std::string{ name }, id });
+	}
+
+	size_t FindTextureID(std::string_view name) const
+	{
+		auto it = gameTextureIDs.find(std::string{ name });
+		if (gameTextureIDs.cend() != it)
 		{
 			return size_t(-1);
 		}
@@ -385,68 +412,10 @@ private:
 
 	void CreateTextures()
 	{
-		auto tex = CreatePngTexture("image1.png");
-
-		constexpr GLulong checkerboard[] =
-		{
-		0xFFFFFFFF, 0x00000000, 0xFFFFFFFF, 0x00000000, 0xFFFFFFFF, 0x00000000, 0xFFFFFFFF, 0x00000000,
-		0x00000000, 0xFFFFFFFF, 0x00000000, 0xFFFFFFFF, 0x00000000, 0xFFFFFFFF, 0x00000000, 0xFFFFFFFF,
-		0xFFFFFFFF, 0x00000000, 0xFFFFFFFF, 0x00000000, 0xFFFFFFFF, 0x00000000, 0xFFFFFFFF, 0x00000000,
-		0x00000000, 0xFFFFFFFF, 0x00000000, 0xFFFFFFFF, 0x00000000, 0xFFFFFFFF, 0x00000000, 0xFFFFFFFF,
-		0xFFFFFFFF, 0x00000000, 0xFFFFFFFF, 0x00000000, 0xFFFFFFFF, 0x00000000, 0xFFFFFFFF, 0x00000000,
-		0x00000000, 0xFFFFFFFF, 0x00000000, 0xFFFFFFFF, 0x00000000, 0xFFFFFFFF, 0x00000000, 0xFFFFFFFF,
-		0xFFFFFFFF, 0x00000000, 0xFFFFFFFF, 0x00000000, 0xFFFFFFFF, 0x00000000, 0xFFFFFFFF, 0x00000000,
-		0x00000000, 0xFFFFFFFF, 0x00000000, 0xFFFFFFFF, 0x00000000, 0xFFFFFFFF, 0x00000000, 0xFFFFFFFF,
-		};
-
-		glGenTextures(1, &tex);
-		glBindTexture(GL_TEXTURE_2D, tex);
-
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 8, 8, 0, GL_RGBA, GL_UNSIGNED_BYTE, checkerboard);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-
-		constexpr float rect_sz = 0.5f;
-		// (x, y, z, u, v)
-		constexpr float myrect[] =
-		{
-			// Triangle1 pos
-			-rect_sz, -rect_sz, 0.0f, 0.0f, 0.0f,
-			+rect_sz, -rect_sz, 0.0f, 1.0f, 0.0f,
-			+rect_sz, +rect_sz, 0.0f, 1.0f, 1.0f,
-
-			// Triangle2 pos
-			-rect_sz, -rect_sz, 0.0f, 0.0f, 0.0f,
-			-rect_sz, +rect_sz, 0.0f, 0.0f, 1.0f,
-			+rect_sz, +rect_sz, 0.0f, 1.0f, 1.0f,
-		};
-
-		VertexBuffer lecture6_rect_vbo(GL_ARRAY_BUFFER);
-		lecture6_rect_vbo.Bind(myrect, sizeof(myrect), GL_STATIC_DRAW);
-		vboLecture6Positions.Attach(&lecture6_rect_vbo, 1);
+		auto dirt_tex_0 = LoadTexture("textures/TDX0.bmp");
 	}
 
-	GLuint LoadTexture(const char* file)
-	{
-		int width, height, number_channels;
-		stbi_set_flip_vertically_on_load(true);
-
-		unsigned char* data = stbi_load("A.png", &width, &height, &number_channels, 0);
-
-		GLuint result;
-		glGenTextures(1, &result);
-
-		glBindTexture(GL_TEXTURE_2D, result);
-		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
-
-		stbi_image_free(data);
-
-		return result;
-	}
+	GLuint InternalLoadTexture(std::string_view filepath);
 
 	std::vector<Scene*> myScenes;
 	Scene* currentScene;
@@ -456,6 +425,8 @@ private:
 	ogl::VertexStream modelBuffer, textureBuffer;
 	std::vector<Model*> gameModels;
 	std::unordered_map<std::string, size_t> gameModelIDs;
+	std::vector<GLint> gameTextures;
+	std::unordered_map<std::string, size_t> gameTextureIDs;
 
 	friend class Model;
 	friend class ModelView;
