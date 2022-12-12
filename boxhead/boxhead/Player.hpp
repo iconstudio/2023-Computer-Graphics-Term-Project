@@ -7,20 +7,28 @@ class Player : public Entity
 public:
 	constexpr Player()
 		: Entity()
-		, pressForward(0), pressSide(0)
-	{}
+		, moveMaxSpeed(7.0f), walkMaxSpeed(3.0f)
+		, moveAccel(40.0f), walkAccel(20.0f)
+		, moveFriction(16.0f), walkFriction(30.0f)
+	{
+		maxSpeed = moveMaxSpeed;
+		myAccel = moveAccel;
+		myFriction = moveFriction;
+	}
 
 	Player(const glm::vec3& position)
-		: Entity(position)
-		, pressForward(0), pressSide(0)
-	{}
+		: Player()
+	{
+		SetPosition(position);
+	}
 
 	Player(const float& x, const float& y, const float& z)
-		: Entity(x, y, z)
-		, pressForward(0), pressSide(0)
-	{}
+		: Player()
+	{
+		SetPosition(x, y, z);
+	}
 
-	virtual ~Player()
+	~Player()
 	{}
 
 	Entity* Shot()
@@ -34,28 +42,72 @@ public:
 	}
 
 	void Start() override
-	{
-		pressForward = 0;
-		pressSide = 0;
-	}
+	{}
 
 	void Update(const float& delta_time) override
 	{
 		Entity::Update(delta_time);
 
-		if (0 != pressSide || 0 != pressForward)
+		short state_esc = ObtainKeyState(VK_ESCAPE);
+		short state_lt = ObtainKeyState(VK_LEFT);
+		short state_rt = ObtainKeyState(VK_RIGHT);
+		short state_up = ObtainKeyState(VK_UP);
+		short state_dw = ObtainKeyState(VK_DOWN);
+		short state_w = ObtainKeyState('W');
+		short state_a = ObtainKeyState('A');
+		short state_s = ObtainKeyState('S');
+		short state_d = ObtainKeyState('D');
+		short state_r = ObtainKeyState('R');
+		short state_q = ObtainKeyState('Q');
+		short state_f = ObtainKeyState('F');
+		short state_jump = ObtainKeyState(VK_SPACE);
+		short state_walk = ObtainKeyState(VK_SHIFT);
+		short state_confirm = ObtainKeyState(VK_RETURN);
+
+		UpdateKeyState(state_w, checkUp, checkPressedUp);
+		UpdateKeyState(state_a, checkLeft, checkPressedLeft);
+		UpdateKeyState(state_s, checkDown, checkPressedDown);
+		UpdateKeyState(state_d, checkRight, checkPressedRight);
+		UpdateKeyState(state_jump, checkJump, checkPressedJump);
+		UpdateKeyState(state_walk, checkWalk, checkPressedWalk);
+		UpdateKeyState(state_esc, checkESC, checkPressedESC);
+		UpdateKeyState(state_confirm, checkConfirm, checkPressedConfirm);
+
+		if (checkWalk)
 		{
-			auto vector = glm::vec3{ pressSide, 0, pressForward };
+			maxSpeed = walkMaxSpeed;
+			myAccel = walkAccel;
+			myFriction = walkFriction;
+		}
+		else
+		{
+			maxSpeed = moveMaxSpeed;
+			myAccel = moveAccel;
+			myFriction = moveFriction;
+		}
+
+		int press_side = int(checkLeft - checkRight);
+		int press_forward = int(checkUp - checkDown);
+
+		if (0 != press_side || 0 != press_forward)
+		{
+			auto vector = glm::vec3{ press_side, 0, press_forward };
 			glm::vec3 movement;
 
-			if (pressForward < 0)
+			if (press_forward < 0)
 			{
 				vector.z *= 0.6666667f;
 			}
 			movement = glm::normalize(vector);
 
-			const float speed = 10.0f * delta_time;
-			MoveTo(movement, speed);
+			const auto toward = glm::vec4{ movement, 1.0f };
+
+			SetDirection(toward * GetRotation());
+
+			const float aceel = moveAccel * delta_time;
+			//MoveTo(movement, speed);
+
+			AddSpeed(aceel);
 		}
 	}
 
@@ -66,8 +118,6 @@ public:
 
 	void OnKeyboard(const unsigned char& key, const int& x, const int& y)
 	{
-		pressForward = 0;
-		pressSide = 0;
 		//const float delta_time = Timer::GetDeltaTime();
 		//const auto camera_angle = myCamera->GetQuaternion();
 
@@ -76,7 +126,6 @@ public:
 			case 'w':
 			case 'W':
 			{
-				pressForward = 1;
 				//const float move_distance_forward = delta_time * 10.0f;
 				//MoveForward(move_distance_forward);
 			}
@@ -85,7 +134,6 @@ public:
 			case 'd':
 			case 'D':
 			{
-				pressSide = -1;
 				//const float move_distance_right = delta_time * 10.0f;
 				//MoveStrife(-move_distance_right);
 			}
@@ -94,7 +142,6 @@ public:
 			case 'a':
 			case 'A':
 			{
-				pressSide = 1;
 				//const float move_distance_left = delta_time * 10.0f;
 				//MoveStrife(move_distance_left);
 			}
@@ -103,7 +150,6 @@ public:
 			case 's':
 			case 'S':
 			{
-				pressForward = -1;
 				//const float move_distance_backward = delta_time * 4.0f;
 				//MoveForward(-move_distance_backward);
 			}
@@ -122,32 +168,24 @@ public:
 			case 'w':
 			case 'W':
 			{
-				//if (pressForward == 1)
-					pressForward = 0;
 			}
 			break;
 
 			case 'd':
 			case 'D':
 			{
-				//if (pressSide == 1)
-					pressSide = 0;
 			}
 			break;
 
 			case 'a':
 			case 'A':
 			{
-				//if (pressSide == -1)
-					pressSide = 0;
 			}
 			break;
 
 			case 's':
 			case 'S':
 			{
-				//if (pressForward == -1)
-					pressForward = 0;
 			}
 			break;
 
@@ -175,6 +213,29 @@ public:
 	}
 
 	camera::Camera* myCamera;
-	int pressForward;
-	int pressSide;
+
+	bool checkLeft = false;
+	bool checkRight = false;
+	bool checkUp = false;
+	bool checkDown = false;
+	bool checkJump = false;
+	bool checkWalk = false;
+	bool checkConfirm = false;
+	bool checkESC = false;
+	bool checkPressedLeft = false;
+	bool checkPressedRight = false;
+	bool checkPressedUp = false;
+	bool checkPressedDown = false;
+	bool checkPressedJump = false;
+	bool checkPressedWalk = false;
+	bool checkPressedConfirm = false;
+	bool checkPressedESC = false;
+
+	float myAccel;
+	const float moveMaxSpeed;
+	const float walkMaxSpeed;
+	const float moveAccel;
+	const float walkAccel;
+	const float moveFriction;
+	const float walkFriction;
 };

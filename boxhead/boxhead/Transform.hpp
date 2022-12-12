@@ -12,7 +12,7 @@ public:
 	{}
 
 	/// <summary>
-	/// 특정한 회전 축을 따라 거리만큼 이동합니다.
+	/// 특정한 축을 따라 거리만큼 이동합니다.
 	/// </summary>
 	/// <param name="axis">이동 축</param>
 	/// <param name="rotation">회전</param>
@@ -220,7 +220,7 @@ public:
 	/// <summary>
 	/// 현재 회전을 반환합니다.
 	/// </summary>
-	/// <returns></returns>
+	/// <returns>회전 행렬</returns>
 	glm::mat4 GetRotation() const
 	{
 		glm::mat4 result = myMatrix;

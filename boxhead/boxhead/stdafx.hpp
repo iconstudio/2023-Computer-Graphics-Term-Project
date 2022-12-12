@@ -1,4 +1,5 @@
 #pragma once
+#define NOMINMAX
 #define _CRT_SECURE_NO_WARNINGS
 #include <type_traits>
 #include <concepts>
@@ -21,7 +22,6 @@
 #include <span>
 #include <algorithm>
 
-#define NOMINMAX
 #include <GL/glew.h>
 #include <GL/wglew.h>
 #include <GL/glut.h>

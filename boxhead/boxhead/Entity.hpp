@@ -18,6 +18,7 @@ public:
 		, myName(), myHealth(), maxHealth()
 		, myModel()
 		, myCollider(nullptr)
+		, mySpeed(), myDirection(), maxSpeed(8.0f), myFriction()
 	{}
 
 	constexpr Entity(const ModelView& model_view)
@@ -25,6 +26,7 @@ public:
 		, myName(), myHealth(), maxHealth()
 		, myModel(model_view)
 		, myCollider(nullptr)
+		, mySpeed(), myDirection(), maxSpeed(8.0f), myFriction()
 	{}
 
 	Entity(const ModelView& model_view, const glm::vec3& position)
@@ -59,9 +61,19 @@ public:
 
 	virtual void Update(const float& delta_time)
 	{
-		if (0 != mySpeed)
+		if (0 < mySpeed)
 		{
 			MoveTo(myDirection, ogl::identity, mySpeed * delta_time);
+
+			if (0 != myFriction)
+			{
+				mySpeed -= myFriction * delta_time;
+
+				if (mySpeed < 0)
+				{
+					mySpeed = 0;
+				}
+			}
 		}
 	}
 
@@ -91,20 +103,45 @@ public:
 		}
 	}
 #pragma region ¹°¸®
-	void SetSpeed(const float& speed)
+	inline constexpr float SetSpeed(const float& speed)
 	{
-		mySpeed = speed;
+		return mySpeed = std::min(maxSpeed, speed);
 	}
 
-	void SetDirection(const glm::vec3& direction)
+	inline void SetDirection(const glm::vec3& direction)
 	{
 		myDirection = glm::normalize(direction);
 	}
 
-	void SetVelocity(const glm::vec3& vector)
+	inline void SetVelocity(const glm::vec3& vector)
 	{
-		mySpeed = glm::length(vector);
-		myDirection = glm::normalize(vector);
+		SetSpeed(glm::length(vector));
+		SetDirection(vector);
+	}
+
+	inline constexpr float AddSpeed(const float& speed)
+	{
+		return SetSpeed(mySpeed + speed);
+	}
+
+	inline constexpr float& GetSpeed()
+	{
+		return mySpeed;
+	}
+
+	inline constexpr const float& GetSpeed() const
+	{
+		return mySpeed;
+	}
+
+	inline constexpr glm::vec3& GetDirection(const glm::vec3& direction)
+	{
+		return myDirection;
+	}
+
+	inline constexpr const glm::vec3& GetDirection(const glm::vec3& direction) const
+	{
+		return myDirection;
 	}
 #pragma endregion
 
@@ -189,6 +226,8 @@ public:
 	float maxHealth;
 	float mySpeed;
 	glm::vec3 myDirection;
+	float maxSpeed;
+	float myFriction;
 
 	bool isAttacking;
 	float attackDelay;

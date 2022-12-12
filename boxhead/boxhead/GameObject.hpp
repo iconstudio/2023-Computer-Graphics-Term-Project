@@ -349,6 +349,15 @@ public:
 	/// <summary>
 	/// 현재 회전을 반환합니다.
 	/// </summary>
+	/// <returns>회전 행렬</returns>
+	glm::mat4 GetRotation() const
+	{
+		return localTransform.GetRotation();
+	}
+
+	/// <summary>
+	/// 현재 회전을 반환합니다.
+	/// </summary>
 	/// <returns>사원수 회전</returns>
 	glm::quat GetQuaternion() const
 	{
