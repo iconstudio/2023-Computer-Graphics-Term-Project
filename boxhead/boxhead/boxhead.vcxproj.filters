@@ -177,6 +177,9 @@
     <ClCompile Include="TextureCubeModel.cpp">
       <Filter>소스 파일\Contents</Filter>
     </ClCompile>
+    <ClCompile Include="ImageLoader.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -322,6 +325,9 @@
     </ClInclude>
     <ClInclude Include="TexturePlaneModel.hpp">
       <Filter>헤더 파일\Contents\Models</Filter>
+    </ClInclude>
+    <ClInclude Include="ImageLoader.hpp">
+      <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

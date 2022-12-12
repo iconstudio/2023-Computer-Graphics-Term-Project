@@ -12,6 +12,8 @@
 #include "FloorModel.hpp"
 #include "TexturePlaneModel.hpp"
 #include "TextureCubeModel.hpp"
+#define STB_IMAGE_IMPLEMENTATION
+#include "ImageLoader.hpp"
 
 class Framework
 {
@@ -383,7 +385,7 @@ private:
 
 	void CreateTextures()
 	{
-		texLecture6RGB = CreatePngTexture("image1.png");
+		auto tex = CreatePngTexture("image1.png");
 
 		constexpr GLulong checkerboard[] =
 		{
@@ -397,8 +399,8 @@ private:
 		0x00000000, 0xFFFFFFFF, 0x00000000, 0xFFFFFFFF, 0x00000000, 0xFFFFFFFF, 0x00000000, 0xFFFFFFFF,
 		};
 
-		glGenTextures(1, &texLecture6Checker);
-		glBindTexture(GL_TEXTURE_2D, texLecture6Checker);
+		glGenTextures(1, &tex);
+		glBindTexture(GL_TEXTURE_2D, tex);
 
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 8, 8, 0, GL_RGBA, GL_UNSIGNED_BYTE, checkerboard);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
@@ -424,6 +426,26 @@ private:
 		VertexBuffer lecture6_rect_vbo(GL_ARRAY_BUFFER);
 		lecture6_rect_vbo.Bind(myrect, sizeof(myrect), GL_STATIC_DRAW);
 		vboLecture6Positions.Attach(&lecture6_rect_vbo, 1);
+	}
+
+	GLuint LoadTexture(const char* file)
+	{
+		int width, height, number_channels;
+		stbi_set_flip_vertically_on_load(true);
+
+		unsigned char* data = stbi_load("A.png", &width, &height, &number_channels, 0);
+
+		GLuint result;
+		glGenTextures(1, &result);
+
+		glBindTexture(GL_TEXTURE_2D, result);
+		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
+
+		stbi_image_free(data);
+
+		return result;
 	}
 
 	std::vector<Scene*> myScenes;

@@ -192,6 +192,7 @@
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GameScene.cpp" />
     <ClCompile Include="GameViewManger.cpp" />
+    <ClCompile Include="ImageLoader.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainScene.cpp" />
     <ClCompile Include="Model.cpp" />
@@ -248,6 +249,7 @@
     <ClInclude Include="GameObject.hpp" />
     <ClInclude Include="GameScene.hpp" />
     <ClInclude Include="GameViewManger.hpp" />
+    <ClInclude Include="ImageLoader.hpp" />
     <ClInclude Include="Main.hpp" />
     <ClInclude Include="MainScene.hpp" />
     <ClInclude Include="Model.hpp" />
