@@ -6,6 +6,7 @@
 GLvoid Render(GLvoid);
 GLvoid UpdateView(const int w, const int h);
 GLvoid UpdateKeyboard(const unsigned char key, const int x, const int y);
+GLvoid UpdateKeyboardUp(const unsigned char key, const int x, const int y);
 GLvoid UpdateSpecialKeyboard(const int key, const int x, const int y);
 GLvoid UpdateMouse(const int button, const int state, const int x, const int y);
 GLvoid UpdateMouseMotion(const int x, const int y);

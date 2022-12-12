@@ -29,6 +29,7 @@ int main(int argc, char** argv)
 	ogl::SetRenderer(Render);
 	ogl::SetViewportUpdater(UpdateView);
 	ogl::SetKeyboardMethod(UpdateKeyboard);
+	ogl::SetKeyboardUpMethod(UpdateKeyboardUp);
 	ogl::SetSpecialKeyboardMethod(UpdateSpecialKeyboard);
 	ogl::SetMouseMethod(UpdateMouse);
 	ogl::SetMouseMoverMethod(UpdateMouseMotion);
@@ -126,28 +127,35 @@ GLvoid UpdateView(const int w, const int h)
 
 GLvoid UpdateKeyboard(const unsigned char key, const int x, const int y)
 {
-	MySystem.OnUpdateKeyboard(key, x, y);
+	MySystem.OnKeyboard(key, x, y);
+
+	ogl::Refresh();
+}
+
+GLvoid UpdateKeyboardUp(const unsigned char key, const int x, const int y)
+{
+	MySystem.OnKeyboardUp(key, x, y);
 
 	ogl::Refresh();
 }
 
 GLvoid UpdateSpecialKeyboard(const int key, const int x, const int y)
 {
-	MySystem.OnUpdateSpecialKey(key, x, y);
+	MySystem.OnSpecialKey(key, x, y);
 
 	ogl::Refresh();
 }
 
 GLvoid UpdateMouse(const int button, const int state, const int sx, const int sy)
 {
-	MySystem.OnUpdateMouse(button, state, sx, sy);
+	MySystem.OnMouse(button, state, sx, sy);
 
 	ogl::Refresh();
 }
 
 GLvoid UpdateMouseMotion(const int mx, const int my)
 {
-	MySystem.OnUpdateMouseMotion(mx, my);
+	MySystem.OnMouseMotion(mx, my);
 
 	ogl::Refresh();
 }

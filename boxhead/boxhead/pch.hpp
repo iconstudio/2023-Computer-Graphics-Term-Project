@@ -19,7 +19,7 @@
 #include "Entity.hpp"
 #include "Model.hpp"
 #include "ModelView.hpp"
-#include "Map.hpp"
+#include "GameViewManger.hpp"
 
 namespace map
 {

@@ -165,11 +165,11 @@
     <ClCompile Include="Model.cpp">
       <Filter>소스 파일\Core</Filter>
     </ClCompile>
-    <ClCompile Include="GameViewManger.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="Enemy.cpp">
       <Filter>소스 파일\Contents</Filter>
+    </ClCompile>
+    <ClCompile Include="GameViewManger.cpp">
+      <Filter>소스 파일\Core</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

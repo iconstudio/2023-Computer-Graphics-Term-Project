@@ -173,9 +173,9 @@ public:
 		Scene::Start();
 
 		viewManager.Start();
+		playerCharacter->Start();
 
 		UpdateClientRect();
-		ResetCamera();
 		ResetCursorPosNow();
 		FocusCursor();
 
@@ -188,6 +188,8 @@ public:
 		const auto delta_time = Timer::GetDeltaTime();
 
 		Scene::Update();
+
+		playerCharacter->Update(delta_time);
 
 		viewManager.Update(delta_time);
 
@@ -236,17 +238,22 @@ public:
 		FocusCursor();
 	}
 
-	virtual void OnUpdateKeyboard(const unsigned char& key, const int& x, const int& y)
+	virtual void OnKeyboard(const unsigned char& key, const int& x, const int& y)
 	{
 		playerCharacter->OnKeyboard(key, x, y);
 	}
 
-	virtual void OnUpdateSpecialKey(const int& key, const int& x, const int& y)
+	virtual void OnKeyboardUp(const unsigned char& key, const int& x, const int& y)
+	{
+		playerCharacter->OnKeyboard(key, x, y);
+	}
+
+	virtual void OnSpecialKey(const int& key, const int& x, const int& y)
 	{
 		playerCharacter->OnSpecialKey(key, x, y);
 	}
 
-	virtual void OnUpdateMouse(const int& button, const int& state, const int& x, const int& y)
+	virtual void OnMouse(const int& button, const int& state, const int& x, const int& y)
 	{
 		if (ogl::IsMouseClicked(state))
 		{
@@ -273,7 +280,7 @@ public:
 		playerCharacter->OnMouse(button, state, x, y);
 	}
 
-	virtual void OnUpdateMouseMotion(const int& x, const int& y)
+	virtual void OnMouseMotion(const int& x, const int& y)
 	{
 		if (cursorClicked)
 		{

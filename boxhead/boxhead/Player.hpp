@@ -1,4 +1,6 @@
 #pragma once
+#define NOMINMAX
+#include <windows.h>
 
 class Player : public Entity
 {
@@ -33,12 +35,28 @@ public:
 
 	void Start() override
 	{
-
+		pressForward = 0;
+		pressSide = 0;
 	}
 
 	void Update(const float& delta_time) override
 	{
+		Entity::Update(delta_time);
 
+		if (0 != pressSide || 0 != pressForward)
+		{
+			auto vector = glm::vec3{ pressSide, 0, pressForward };
+			glm::vec3 movement;
+
+			if (pressForward < 0)
+			{
+				vector.z *= 0.6666667f;
+			}
+			movement = glm::normalize(vector);
+
+			const float speed = 10.0f * delta_time;
+			MoveTo(movement, speed);
+		}
 	}
 
 	void OnMouse(const int& button, const int& state, const int& x, const int& y)
@@ -46,9 +64,11 @@ public:
 
 	}
 
-	virtual void OnKeyboard(const unsigned char& key, const int& x, const int& y)
+	void OnKeyboard(const unsigned char& key, const int& x, const int& y)
 	{
-		const float delta_time = Timer::GetDeltaTime();
+		pressForward = 0;
+		pressSide = 0;
+		//const float delta_time = Timer::GetDeltaTime();
 		//const auto camera_angle = myCamera->GetQuaternion();
 
 		switch (key)
@@ -56,32 +76,78 @@ public:
 			case 'w':
 			case 'W':
 			{
-				const float move_distance_forward = delta_time * 10.0f;
-				MoveForward(move_distance_forward);
+				pressForward = 1;
+				//const float move_distance_forward = delta_time * 10.0f;
+				//MoveForward(move_distance_forward);
 			}
 			break;
 
 			case 'd':
 			case 'D':
 			{
-				const float move_distance_right = delta_time * 10.0f;
-				MoveStrife(-move_distance_right);
+				pressSide = -1;
+				//const float move_distance_right = delta_time * 10.0f;
+				//MoveStrife(-move_distance_right);
 			}
 			break;
 
 			case 'a':
 			case 'A':
 			{
-				const float move_distance_left = delta_time * 10.0f;
-				MoveStrife(move_distance_left);
+				pressSide = 1;
+				//const float move_distance_left = delta_time * 10.0f;
+				//MoveStrife(move_distance_left);
 			}
 			break;
 
 			case 's':
 			case 'S':
 			{
-				const float move_distance_backward = delta_time * 4.0f;
-				MoveForward(-move_distance_backward);
+				pressForward = -1;
+				//const float move_distance_backward = delta_time * 4.0f;
+				//MoveForward(-move_distance_backward);
+			}
+			break;
+
+			default:
+			{}
+			break;
+		}
+	}
+
+	void OnKeyboardUp(const unsigned char& key, const int& x, const int& y)
+	{
+		switch (key)
+		{
+			case 'w':
+			case 'W':
+			{
+				//if (pressForward == 1)
+					pressForward = 0;
+			}
+			break;
+
+			case 'd':
+			case 'D':
+			{
+				//if (pressSide == 1)
+					pressSide = 0;
+			}
+			break;
+
+			case 'a':
+			case 'A':
+			{
+				//if (pressSide == -1)
+					pressSide = 0;
+			}
+			break;
+
+			case 's':
+			case 'S':
+			{
+				//if (pressForward == -1)
+					pressForward = 0;
 			}
 			break;
 

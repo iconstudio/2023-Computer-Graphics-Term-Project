@@ -157,35 +157,43 @@ public:
 		}
 	}
 
-	void OnUpdateKeyboard(const unsigned char& key, const int& x, const int& y)
+	void OnKeyboard(const unsigned char& key, const int& x, const int& y)
 	{
 		if (currentScene && !currentScene->IsEnded())
 		{
-			currentScene->OnUpdateKeyboard(key, x, y);
+			currentScene->OnKeyboard(key, x, y);
 		}
 	}
 
-	void OnUpdateSpecialKey(const int& key, const int& x, const int& y)
+	void OnKeyboardUp(const unsigned char& key, const int& x, const int& y)
 	{
 		if (currentScene && !currentScene->IsEnded())
 		{
-			currentScene->OnUpdateSpecialKey(key, x, y);
+			currentScene->OnKeyboardUp(key, x, y);
 		}
 	}
 
-	void OnUpdateMouse(const int& button, const int& state, const int& x, const int& y)
+	void OnSpecialKey(const int& key, const int& x, const int& y)
 	{
 		if (currentScene && !currentScene->IsEnded())
 		{
-			currentScene->OnUpdateMouse(button, state, x, y);
+			currentScene->OnSpecialKey(key, x, y);
 		}
 	}
 
-	void OnUpdateMouseMotion(const int& x, const int& y)
+	void OnMouse(const int& button, const int& state, const int& x, const int& y)
 	{
 		if (currentScene && !currentScene->IsEnded())
 		{
-			currentScene->OnUpdateMouseMotion(x, y);
+			currentScene->OnMouse(button, state, x, y);
+		}
+	}
+
+	void OnMouseMotion(const int& x, const int& y)
+	{
+		if (currentScene && !currentScene->IsEnded())
+		{
+			currentScene->OnMouseMotion(x, y);
 		}
 	}
 

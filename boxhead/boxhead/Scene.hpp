@@ -50,16 +50,19 @@ public:
 	virtual void OnUpdateView(const int& w, const int& h)
 	{}
 
-	virtual void OnUpdateKeyboard(const unsigned char& key, const int& x, const int& y)
+	virtual void OnKeyboard(const unsigned char& key, const int& x, const int& y)
 	{}
 
-	virtual void OnUpdateSpecialKey(const int& key, const int& x, const int& y)
+	virtual void OnKeyboardUp(const unsigned char& key, const int& x, const int& y)
 	{}
 
-	virtual void OnUpdateMouse(const int& button, const int& state, const int& x, const int& y)
+	virtual void OnSpecialKey(const int& key, const int& x, const int& y)
 	{}
 
-	virtual void OnUpdateMouseMotion(const int& x, const int& y)
+	virtual void OnMouse(const int& button, const int& state, const int& x, const int& y)
+	{}
+
+	virtual void OnMouseMotion(const int& x, const int& y)
 	{}
 
 	virtual void PrepareRendering() = 0;

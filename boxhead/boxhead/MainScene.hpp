@@ -10,7 +10,7 @@ public:
 		SetName("MainScene");
 	}
 
-	void OnUpdateKeyboard(const unsigned char& key, const int& x, const int& y) override
+	void OnKeyboard(const unsigned char& key, const int& x, const int& y) override
 	{
 		switch (key)
 		{
@@ -34,7 +34,7 @@ public:
 		}
 	}
 
-	void OnUpdateSpecialKey(const int& key, const int& x, const int& y) override
+	void OnSpecialKey(const int& key, const int& x, const int& y) override
 	{
 		switch (key)
 		{
@@ -70,7 +70,7 @@ public:
 		}
 	}
 
-	void OnUpdateMouse(const int& button, const int& state, const int& x, const int& y) override
+	void OnMouse(const int& button, const int& state, const int& x, const int& y) override
 	{
 		if (ogl::IsMouseClicked(state))
 		{
