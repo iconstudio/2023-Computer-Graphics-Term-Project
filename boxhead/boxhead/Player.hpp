@@ -37,9 +37,7 @@ public:
 	}
 
 	void Awake()
-	{
-
-	}
+	{}
 
 	void Start() override
 	{}
@@ -101,8 +99,6 @@ public:
 			const auto toward = glm::vec4{ movement, 1.0f };
 			const auto direction = toward * GetRotation();
 
-			//SetDirection(direction);
-
 			bool was_overflow = maxSpeed < mySpeed;
 
 			const float aceel = moveAccel * delta_time;
@@ -122,41 +118,11 @@ public:
 
 	void OnKeyboard(const unsigned char& key, const int& x, const int& y)
 	{
-		//const float delta_time = Timer::GetDeltaTime();
-		//const auto camera_angle = myCamera->GetQuaternion();
-
 		switch (key)
 		{
 			case 'w':
 			case 'W':
-			{
-				//const float move_distance_forward = delta_time * 10.0f;
-				//MoveForward(move_distance_forward);
-			}
-			break;
-
-			case 'd':
-			case 'D':
-			{
-				//const float move_distance_right = delta_time * 10.0f;
-				//MoveStrife(-move_distance_right);
-			}
-			break;
-
-			case 'a':
-			case 'A':
-			{
-				//const float move_distance_left = delta_time * 10.0f;
-				//MoveStrife(move_distance_left);
-			}
-			break;
-
-			case 's':
-			case 'S':
-			{
-				//const float move_distance_backward = delta_time * 4.0f;
-				//MoveForward(-move_distance_backward);
-			}
+			{}
 			break;
 
 			default:
@@ -171,26 +137,7 @@ public:
 		{
 			case 'w':
 			case 'W':
-			{
-			}
-			break;
-
-			case 'd':
-			case 'D':
-			{
-			}
-			break;
-
-			case 'a':
-			case 'A':
-			{
-			}
-			break;
-
-			case 's':
-			case 'S':
-			{
-			}
+			{}
 			break;
 
 			default:
@@ -200,9 +147,7 @@ public:
 	}
 
 	virtual void OnSpecialKey(const int& key, const int& x, const int& y)
-	{
-
-	}
+	{}
 
 	Entity* Raycast(GameObject obj_list[], const size_t& count, const float& distance, const glm::vec3& direction) const
 	{
