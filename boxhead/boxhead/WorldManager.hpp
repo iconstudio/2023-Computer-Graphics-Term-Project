@@ -7,14 +7,13 @@ public:
 	{}
 };
 
-class Block
+struct HeightBlock
 {
-public:
-	constexpr Block(size_t ix, size_t iy, const float& height = 1.0f)
+	constexpr HeightBlock(size_t ix, size_t iy, const float& height = 1.0f)
 		: x(ix), y(iy), myHeight(height)
 	{}
 
-	constexpr Block& operator=(const float& height)
+	constexpr HeightBlock& operator=(const float& height)
 	{
 		myHeight = height;
 
@@ -28,4 +27,10 @@ public:
 
 	size_t x, y;
 	float myHeight;
+};
+
+struct TileCell
+{
+	float x, y;
+	GLint textureID;
 };

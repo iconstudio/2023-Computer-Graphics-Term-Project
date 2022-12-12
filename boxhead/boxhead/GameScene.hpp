@@ -18,6 +18,7 @@ public:
 		: heightMap()
 		, stageFilepath("Stage.txt")
 		, boardScaleW(xscale), boardScaleH(yscale), boardScaleD(zscale)
+		, tileMap()
 	{
 		heightMap.reserve(boardSizeW * boardSizeH + 1);
 	}
@@ -25,78 +26,40 @@ public:
 	~WorldManager()
 	{}
 
-	void Awake()
+	void Awake();
+
+	void Start(Scene* scene);
+
+	void Render(ModelView model, ogl::Uniform& world_uniform, ogl::Uniform& texture_uniform)
 	{
-		// 딱 한번만 높이 맵 생성
-		std::fstream stage_file{ stageFilepath, std::ios::in };
+		glm::mat4 matrix = glm::scale(ogl::identity, glm::vec3{ 4.0f });
 
-		if (stage_file)
+		for (size_t i = 0; i < tileCountH; i++)
 		{
-			terrainMap = new int* [boardSizeH];
-			for (size_t y = 0; y < boardSizeW; y++)
+			for (size_t j = 0; j < tileCountW; j++)
 			{
-				terrainMap[y] = new int[boardSizeW];
-			}
+				auto& tile = tileMap[i][j];
 
-			char piece{};
-			size_t x = 0, y = 0;
+				world_uniform.AssignMatrix4x4(glm::translate(matrix, { tile.x, 0.0f, tile.y }));
 
-			while (stage_file >> piece)
-			{
-				if (' ' == piece) continue;
+				const GLint texid = tile.textureID;
+				texture_uniform.Assign(texid);
+				texture_uniform.ActiveTexture(texid - 1);
+				texture_uniform.BindTexture(texid);
 
-				SetTerrainAt(x, y, int(piece - '0'));
-
-				x++;
-				if (boardSizeW <= x)
-				{
-					x = 0;
-					y++;
-				}
-			}
-
-			for (size_t i = 0; i < boardSizeW; i++)
-			{
-				for (size_t j = 0; j < boardSizeH; j++)
-				{
-					// 열 우선으로 삽입
-					auto& terrain_cell = GetTerrainAt(i, j);
-
-					if (0 < terrain_cell)
-					{
-						float cell_height = 1.0f * float(terrain_cell);
-						heightMap.emplace_back(i, j, cell_height);
-					}
-				}
+				model.Render();
 			}
 		}
 	}
 
-	void Start(Scene* scene)
-	{
-		// 모델 가져오기
-		auto wall_model_view = ModelView::GetReference<SideCubeModel>();
-
-		// 높이 맵의 내용대로 벽 생성
-		for (auto& height_block : heightMap)
-		{
-			const float cx = boardScaleW * static_cast<float>(height_block.x);
-			const float cy = -(1 - height_block.myHeight) * 0.5f;
-			const float cz = boardScaleD * static_cast<float>(height_block.y);
-
-			Entity* wall = scene->CreateEntity<Entity>(wall_model_view, cx, cy, cz);
-			wall->Scale(boardScaleW, height_block.myHeight, boardScaleD);
-		}
-	}
-
-	constexpr Block& CellAt(const size_t& x, const size_t& y)
+	constexpr HeightBlock& CellAt(const size_t& x, const size_t& y)
 	{
 		const auto pos = x * boardSizeH + y;
 
 		return heightMap.at(pos);
 	}
 
-	constexpr const Block& CellAt(const size_t& x, const size_t& y) const
+	constexpr const HeightBlock& CellAt(const size_t& x, const size_t& y) const
 	{
 		const auto pos = x * boardSizeH + y;
 
@@ -113,29 +76,29 @@ public:
 
 	constexpr int& GetTerrainAt(const size_t& x, const size_t& y)
 	{
-		//return terrainMap.at(y).at(x);
 		return terrainMap[y][x];
 	}
 
 	constexpr const int& GetTerrainAt(const size_t& x, const size_t& y) const
 	{
-		//return terrainMap.at(y).at(x);
 		return terrainMap[y][x];
 	}
 
 	static inline constexpr size_t boardSizeW = 40;
 	static inline constexpr size_t boardSizeH = 40;
+	static inline constexpr size_t tileCountW = 20;
+	static inline constexpr size_t tileCountH = 20;
 
 private:
 	float boardScaleW;
 	float boardScaleD;
 	float boardScaleH;
 
-	//int terrainMap[boardSizeH][boardSizeW];
+	std::vector<HeightBlock> heightMap;
 	int** terrainMap;
 	std::string stageFilepath;
 
-	std::vector<Block> heightMap;
+	TileCell tileMap[tileCountH][tileCountW];
 };
 
 class GameScene : public Scene
@@ -313,7 +276,7 @@ public:
 
 		ClipCursor(NULL);
 	}
-	
+
 private:
 	void UpdateClientRect()
 	{
@@ -377,9 +340,9 @@ private:
 	Player* playerCharacter;
 	const glm::vec3 playerSpawnPosition;
 
-	const float tileSizeX = 1.0f;
+	const float tileSizeX = 2.0f;
 	const float tileSizeY = 1.0f;
-	const float tileSizeZ = 1.0f;
+	const float tileSizeZ = 2.0f;
 	WorldManager worldManager;
 
 	float gameStartDelay;

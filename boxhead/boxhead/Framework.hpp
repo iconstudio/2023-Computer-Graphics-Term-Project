@@ -241,9 +241,9 @@ public:
 		return gameModels.at(FindModelID(name));
 	}
 	
-	GLint LoadTexture(std::string_view filepath)
+	GLint LoadTexture(std::string_view name, std::string_view filepath)
 	{
-		AddTextureID(filepath, gameTextureIDs.size());
+		AddTextureID(name, gameTextureIDs.size());
 
 		GLint texture = InternalLoadTexture(filepath);
 
@@ -257,9 +257,14 @@ public:
 		return Instance->textureBuffer.At(id);
 	}
 
-	static GLint GetTextureID(const size_t& index)
+	static GLint GetTexture(const size_t& index)
 	{
 		return Instance->gameTextures.at(index);
+	}
+
+	static GLint GetTexture(std::string_view name)
+	{
+		return Instance->gameTextures.at(Instance->FindTextureID(name));
 	}
 
 	void AddModelID(std::string_view name, const size_t& id)
@@ -412,7 +417,12 @@ private:
 
 	void CreateTextures()
 	{
-		auto dirt_tex_0 = LoadTexture("textures/TDX0.bmp");
+		auto dirt_tex_0 = LoadTexture("Dirt 0", "textures/TDX0.bmp");
+		auto dirt_tex_1 = LoadTexture("Dirt 1", "textures/TDX3.bmp");
+		auto dirt_tex_2 = LoadTexture("Dirt 2", "textures/TDF1.bmp");
+		auto dirt_tex_3 = LoadTexture("Dirt 3", "textures/TDF2.bmp");
+		auto dirt_tex_4 = LoadTexture("Dirt 4", "textures/TDF3.bmp");
+		auto dirt_tex_5 = LoadTexture("Dirt 5", "textures/TDF7.bmp");
 	}
 
 	GLuint InternalLoadTexture(std::string_view filepath);
