@@ -143,7 +143,7 @@ class GameScene : public Scene
 public:
 	constexpr GameScene(const size_t& id)
 		: Scene(id)
-		, myRenderer()
+		, myRenderer(), textureRenderer()
 		, worldManager(1.0f, 1.0f, 1.0f), viewManager()
 		, windowFocused(false), cursorClicked(false), cursorPosition(), clientRect()
 		, playerCharacter(nullptr), playerSpawnPosition(1.0f, 1.0f, 1.0f)
@@ -159,6 +159,11 @@ public:
 		myRenderer.LoadVertexShader("..\\Shaders\\PlainV.glsl");
 		myRenderer.LoadFragmentShader("..\\Shaders\\PlainP.glsl");
 		myRenderer.Ready();
+
+		textureRenderer.Awake();
+		textureRenderer.LoadVertexShader("..\\Shaders\\TextureV.glsl");
+		textureRenderer.LoadFragmentShader("..\\Shaders\\TextureP.glsl");
+		textureRenderer.Ready();
 
 		viewManager.Awake();
 
@@ -177,12 +182,13 @@ public:
 		viewManager.Start();
 		playerCharacter->Start();
 
+		windowFocused = true;
 		UpdateClientRect();
 		ResetCursorPosNow();
 		FocusCursor();
 
-		windowFocused = true;
 		myRenderer.Start();
+		textureRenderer.Start();
 	}
 
 	void Update() override
@@ -417,6 +423,7 @@ private:
 	}
 
 	ogl::Pipeline myRenderer;
+	ogl::Pipeline textureRenderer;
 
 	bool windowFocused;
 	bool cursorClicked;

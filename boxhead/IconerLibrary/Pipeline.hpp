@@ -67,8 +67,6 @@ namespace ogl
 				return;
 			}
 
-			glUseProgram(myID);
-
 			auto vcaption = CutExtensions(vpath.filename().string());
 			auto fcaption = CutExtensions(fpath.filename().string());
 

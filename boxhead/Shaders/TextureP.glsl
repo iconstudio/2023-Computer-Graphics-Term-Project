@@ -6,5 +6,5 @@ in vec2 vTexCoord;
 
 void main()
 {
-	FragColor = v_Colour;
+	FragColor = vec4(1.0f);
 }
