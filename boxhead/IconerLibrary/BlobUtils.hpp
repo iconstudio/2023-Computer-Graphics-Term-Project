@@ -40,6 +40,45 @@ namespace ogl
 
 		namespace plane
 		{
+			namespace tex
+			{
+				[[nodiscard]]
+				inline constexpr blob::TexturePlane Create
+				(
+					const float& x1, const float& y1, const float& z1, const glm::vec2& coord1, // 첫번째 점
+					const float& x2, const float& y2, const float& z2, const glm::vec2& coord2, // 두번째 점
+					const float& x3, const float& y3, const float& z3, const glm::vec2& coord3, // 세번째 점
+					const float& x4, const float& y4, const float& z4, const glm::vec2& coord4  // 네번째 점
+				)
+				{
+					return
+					{
+						x1, y1, z1, coord1.s, coord1.t,
+						x2, y2, z2, coord2.s, coord2.t,
+						x3, y3, z3, coord3.s, coord3.t,
+						x4, y4, z4, coord4.s, coord4.t,
+					};
+				}
+
+				[[nodiscard]]
+				inline constexpr blob::TexturePlane Create
+				(
+					const Quad& point1, const glm::vec2& coord1, // 첫번째 점
+					const Quad& point2, const glm::vec2& coord2, // 두번째 점
+					const Quad& point3, const glm::vec2& coord3, // 세번째 점
+					const Quad& point4, const glm::vec2& coord4  // 네번째 점
+				)
+				{
+					return
+					{
+						point1.x, point1.y, point1.z, coord1.s, coord1.t,
+						point2.x, point2.y, point2.z, coord2.s, coord2.t,
+						point3.x, point3.y, point3.z, coord3.s, coord3.t,
+						point4.x, point4.y, point4.z, coord4.s, coord4.t,
+					};
+				}
+			}
+
 			[[nodiscard]]
 			inline constexpr blob::ColoredPlane Create
 			(
@@ -123,7 +162,50 @@ namespace ogl
 
 		namespace cube
 		{
-			[[deprecated("asdf"), nodiscard]]
+			namespace tex
+			{
+				[[nodiscard]]
+				inline constexpr blob::TextureCube Create
+				(
+					const TexturePlane(&planes)[6] // 면 6개
+				)
+				{
+					blob::TextureCube result{};
+
+					size_t index = 0;
+					size_t seek = 0;
+					for (size_t i = 0; i < 6; i++)
+					{
+						for (size_t verts = 0; verts < 4; verts++)
+						{
+							result.at(index++) = planes[i].at(seek++); // x
+							result.at(index++) = planes[i].at(seek++); // y
+							result.at(index++) = planes[i].at(seek++); // z
+							result.at(index++) = planes[i].at(seek++); // s
+							result.at(index++) = planes[i].at(seek++); // t
+						}
+						seek = 0;
+					}
+
+					return result;
+				}
+
+				[[nodiscard]]
+				inline constexpr blob::TextureCube Create
+				(
+					const TexturePlane& pn1, // 첫번째 면
+					const TexturePlane& pn2, // 두번째 면
+					const TexturePlane& pn3, // 세번째 면
+					const TexturePlane& pn4, // 네번째 면
+					const TexturePlane& pn5, // 다섯번째 면
+					const TexturePlane& pn6  // 여섯번째 면
+				)
+				{
+					return Create({ pn1, pn2, pn3, pn4, pn5, pn6 });
+				}
+			}
+
+			[[nodiscard]]
 			inline constexpr blob::Cube Create
 			(
 				const float& x1, const float& y1, const float& z1, // 윗면 첫번째 점
@@ -472,10 +554,10 @@ namespace ogl
 					(
 						blob::triangle::Create
 						(
-							x1, y1, color1,
-							x2, y2, color2,
-							x3, y3, color3
-						),
+						x1, y1, color1,
+						x2, y2, color2,
+						x3, y3, color3
+					),
 						index::Triangles
 						{
 							index1, index2, index3

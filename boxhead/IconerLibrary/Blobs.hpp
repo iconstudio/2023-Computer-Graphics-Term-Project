@@ -120,9 +120,9 @@ namespace ogl
 	MAKE_3D_BLOB(ColoredPlane, 28, 7);
 
 	/// <summary>
-	/// 텍스쳐 면 (x, y, z, texid, s, t)
+	/// 텍스쳐 면 (x, y, z, s, t)
 	/// </summary>
-	MAKE_3D_BLOB(TexturePlane, 24, 6);
+	MAKE_3D_BLOB(TexturePlane, 20, 5);
 
 	/// <summary>
 	/// 면 마다 색깔 있는 육면체
@@ -135,9 +135,9 @@ namespace ogl
 	MAKE_3D_BLOB(IndexedColoredCube, 56, 7);
 
 	/// <summary>
-	/// 면 마다 텍스쳐가 있는 육면체 (x, y, z, texid, s, t)
+	/// 면 마다 텍스쳐가 있는 육면체 (x, y, z, s, t)
 	/// </summary>
-	MAKE_3D_BLOB(ColoredCube, 168, 6);
+	MAKE_3D_BLOB(TextureCube, 120, 5);
 
 	/// <summary>
 	/// 2D 직선
