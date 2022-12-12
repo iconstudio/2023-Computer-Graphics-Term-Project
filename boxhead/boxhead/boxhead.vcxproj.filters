@@ -165,14 +165,11 @@
     <ClCompile Include="Model.cpp">
       <Filter>소스 파일\Core</Filter>
     </ClCompile>
-    <ClCompile Include="Map.cpp">
-      <Filter>소스 파일\Contents\World</Filter>
-    </ClCompile>
-    <ClCompile Include="Enemy.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="GameViewManger.cpp">
       <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy.cpp">
+      <Filter>소스 파일\Contents</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -308,17 +305,14 @@
     <ClInclude Include="Model.hpp">
       <Filter>헤더 파일\Core</Filter>
     </ClInclude>
-    <ClInclude Include="Map.hpp">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="resource.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Enemy.hpp">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="GameViewManger.hpp">
       <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy.hpp">
+      <Filter>헤더 파일\Contents\Entities</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
