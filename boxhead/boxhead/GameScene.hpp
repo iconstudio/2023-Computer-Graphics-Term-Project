@@ -296,13 +296,9 @@ public:
 		}
 	}
 
-	void PrepareRendering() override
-	{
-		myRenderer.PrepareRendering();
-	}
-
 	void Render() override
 	{
+		myRenderer.PrepareRendering();
 		auto uniform_mat_world = myRenderer.GetUniform("a_WorldMatrix");
 		auto uniform_mat_camera = myRenderer.GetUniform("a_CameraMatrix");
 		auto uniform_mat_proj = myRenderer.GetUniform("a_ProjMatrix");

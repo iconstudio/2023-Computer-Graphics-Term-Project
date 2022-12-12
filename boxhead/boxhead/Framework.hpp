@@ -66,7 +66,7 @@ public:
 		};
 		const auto raw_cube = ogl::blob::cube::Create(each_sides);
 
-		// 0: Å¥ºê
+		// Model 0: Å¥ºê
 		auto& cube_buffer = modelBuffer.Push(raw_cube);
 
 		constexpr auto axis_color = ogl::Colour{ 0.0f, 0.0f, 0.0f, 1.0f };
@@ -80,7 +80,7 @@ public:
 			{ 0.0f, 0.0f, -400.0f, axis_color }
 		};
 
-		// 1: ÁÂÇ¥Ãà
+		// Model 1: ÁÂÇ¥Ãà
 		auto& axis_buffer = modelBuffer.PushRaw(axis_lines);
 
 		constexpr auto floor_c1 = ogl::Colour{ 0.15f, 0.4f, 0.1f, 1.0f };
@@ -94,13 +94,24 @@ public:
 			{ +10.0f, 0.0f, -10.0f, floor_c2 }
 		);
 
-		// 2: ¹Ù´Ú
+		// Model 2: ¹Ù´Ú
 		auto& floor_buffer = modelBuffer.Push(floor);
 
 		// ¸ðµ¨ ÁØºñ
 		AddModel<SideCubeModel>("Cube", cube_buffer);
 		AddModel<AxisModel>("Axis", axis_buffer);
 		AddModel<FloorModel>("Floor", floor_buffer);
+
+		const ogl::blob::TexturePlane texfloor = ogl::blob::plane::tex::Create
+		(
+			-1.0f, 0.0f, -1.0f, glm::vec2{ 0.0f, 0.0f },
+			-1.0f, 0.0f, +1.0f, glm::vec2{ 0.0f, 1.0f },
+			+1.0f, 0.0f, +1.0f, glm::vec2{ 1.0f, 1.0f },
+			+1.0f, 0.0f, -1.0f, glm::vec2{ 1.0f, 0.0f }
+		);
+
+		// Texture 0: ¹Ù´Ú
+		auto& texfloor_buffer = textureBuffer.Push(texfloor);
 
 		if (0 < myScenes.size())
 		{
@@ -303,11 +314,31 @@ public:
 		return gameModels.at(FindModelID(name));
 	}
 
+	ogl::VertexStream::Buffer& GetTexture(const size_t& id)
+	{
+		return textureBuffer.At(id);
+	}
+
+	const ogl::VertexStream::Buffer& GetTexture(const size_t& id) const
+	{
+		return textureBuffer.At(id);
+	}
+
+	static Model* const GetModel(const size_t& id)
+	{
+		return Instance->GetModel(id);
+	}
+
+	static ogl::VertexStream::Buffer& GetTexture(const size_t& id)
+	{
+		return Instance->GetTexture(id);
+	}
+
 	void AddModelID(std::string_view name, const size_t& id)
 	{
 		gameModelIDs.insert({ std::string{ name }, id });
 	}
-	
+
 	size_t FindModelID(std::string_view name) const
 	{
 		auto it = gameModelIDs.find(std::string{ name });
