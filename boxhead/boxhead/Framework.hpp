@@ -35,90 +35,8 @@ public:
 		modelBuffer.Reserve(20);
 		textureBuffer.Reserve(10);
 
-		// 
-		constexpr auto spatial_c1 = ogl::Colour{ 0.0f, 1.0f, 1.0f, 1.0f };
-		constexpr auto spatial_c2 = ogl::Colour{ 1.0f, 0.0f, 1.0f, 1.0f };
-		constexpr auto spatial_c3 = ogl::Colour{ 1.0f, 1.0f, 0.0f, 1.0f };
-		constexpr auto spatial_c4 = ogl::Colour{ 1.0f, 0.0f, 0.0f, 1.0f };
-		constexpr auto spatial_c5 = ogl::Colour{ 0.0f, 1.0f, 0.0f, 1.0f };
-		constexpr auto spatial_c6 = ogl::Colour{ 0.0f, 0.0f, 1.0f, 1.0f };
-		// °ËÀº»ö
-		constexpr auto spatial_c7 = ogl::Colour{ 0.0f, 0.0f, 0.0f, 1.0f };
-		// Èò»ö
-		constexpr auto spatial_c8 = ogl::Colour{ 1.0f, 1.0f, 1.0f, 1.0f };
-		// ±Ý»ö
-		constexpr auto spatial_c9 = ogl::Colour{ 1.0f, 0.8f, 0.1f, 1.0f };
-
-		constexpr ogl::Quad pt1 = { -0.5f, +0.5f, -0.5f };
-		constexpr ogl::Quad pt2 = { -0.5f, +0.5f, +0.5f };
-		constexpr ogl::Quad pt3 = { +0.5f, +0.5f, +0.5f };
-		constexpr ogl::Quad pt4 = { +0.5f, +0.5f, -0.5f };
-		constexpr ogl::Quad pt5 = { -0.5f, -0.5f, -0.5f };
-		constexpr ogl::Quad pt6 = { -0.5f, -0.5f, +0.5f };
-		constexpr ogl::Quad pt7 = { +0.5f, -0.5f, +0.5f };
-		constexpr ogl::Quad pt8 = { +0.5f, -0.5f, -0.5f };
-
-		constexpr ogl::blob::ColoredPlane each_sides[] =
-		{
-			ogl::blob::plane::Create(pt1, pt2, pt3, pt4, spatial_c1),
-			ogl::blob::plane::Create(pt1, pt5, pt6, pt2, spatial_c2),
-			ogl::blob::plane::Create(pt2, pt6, pt7, pt3, spatial_c3),
-			ogl::blob::plane::Create(pt1, pt4, pt8, pt5, spatial_c9),
-			ogl::blob::plane::Create(pt3, pt7, pt8, pt4, spatial_c5),
-			ogl::blob::plane::Create(pt5, pt8, pt7, pt6, spatial_c6)
-		};
-		const auto raw_cube = ogl::blob::cube::Create(each_sides);
-
-		// Model 0: Å¥ºê
-		auto& cube_buffer = modelBuffer.Push(raw_cube);
-
-		// 
-		constexpr auto axis_color = ogl::Colour{ 0.0f, 0.0f, 0.0f, 1.0f };
-		const ogl::Vertex axis_lines[] =
-		{
-			{ +400.0f, 0.0f, 0.0f, axis_color },
-			{ -400.0f, 0.0f, 0.0f, axis_color },
-			{ 0.0f, +300.0f, 0.0f, axis_color },
-			{ 0.0f, -300.0f, 0.0f, axis_color },
-			{ 0.0f, 0.0f, -400.0f, axis_color },
-			{ 0.0f, 0.0f, -400.0f, axis_color }
-		};
-
-		// Model 1: ÁÂÇ¥Ãà
-		auto& axis_buffer = modelBuffer.PushRaw(axis_lines);
-
-		// 
-		constexpr auto floor_c1 = ogl::Colour{ 0.15f, 0.4f, 0.1f, 1.0f };
-		constexpr auto floor_c2 = ogl::Colour{ 0.6f, 0.2f, 0.0f, 1.0f };
-		constexpr auto floor_c3 = ogl::Colour{ 0.0f, 0.6f, 0.0f, 1.0f };
-		constexpr ogl::blob::ColoredPlane floor = ogl::blob::plane::Create
-		(
-			{ -10.0f, 0.0f, -10.0f, floor_c1 },
-			{ -10.0f, 0.0f, +10.0f, floor_c2 },
-			{ +10.0f, 0.0f, +10.0f, floor_c3 },
-			{ +10.0f, 0.0f, -10.0f, floor_c2 }
-		);
-
-		// Model 2: ¹Ù´Ú
-		auto& floor_buffer = modelBuffer.Push(floor);
-		
-		// 
-		const ogl::blob::TexturePlane texfloor = ogl::blob::plane::tex::Create
-		(
-			-1.0f, 0.0f, -1.0f, glm::vec2{ 0.0f, 0.0f },
-			-1.0f, 0.0f, +1.0f, glm::vec2{ 0.0f, 1.0f },
-			+1.0f, 0.0f, +1.0f, glm::vec2{ 1.0f, 1.0f },
-			+1.0f, 0.0f, -1.0f, glm::vec2{ 1.0f, 0.0f }
-		);
-
-		// Model 3: ÅØ½ºÃÄ ¹Ù´Ú
-		auto& texfloor_buffer = textureBuffer.Push(texfloor);
-
-		// ¸ðµ¨ ÁØºñ
-		AddModel<SideCubeModel>("Cube", cube_buffer);
-		AddModel<AxisModel>("Axis", axis_buffer);
-		AddModel<FloorModel>("Floor", floor_buffer);
-		AddModel<TexturePlaneModel>("TextureFloor", texfloor_buffer);
+		CreateModels();
+		CreateTextures();
 
 		if (0 < myScenes.size())
 		{
@@ -330,7 +248,7 @@ public:
 	{
 		return textureBuffer.At(id);
 	}
-	
+
 	void AddModelID(std::string_view name, const size_t& id)
 	{
 		gameModelIDs.insert({ std::string{ name }, id });
@@ -374,6 +292,138 @@ private:
 	ogl::VertexStream::Buffer& GetVertexBuffer(const size_t& index)
 	{
 		return modelBuffer.At(index);
+	}
+
+	void CreateModels()
+	{
+		constexpr auto spatial_c1 = ogl::Colour{ 0.0f, 1.0f, 1.0f, 1.0f };
+		constexpr auto spatial_c2 = ogl::Colour{ 1.0f, 0.0f, 1.0f, 1.0f };
+		constexpr auto spatial_c3 = ogl::Colour{ 1.0f, 1.0f, 0.0f, 1.0f };
+		constexpr auto spatial_c4 = ogl::Colour{ 1.0f, 0.0f, 0.0f, 1.0f };
+		constexpr auto spatial_c5 = ogl::Colour{ 0.0f, 1.0f, 0.0f, 1.0f };
+		constexpr auto spatial_c6 = ogl::Colour{ 0.0f, 0.0f, 1.0f, 1.0f };
+		// °ËÀº»ö
+		constexpr auto spatial_c7 = ogl::Colour{ 0.0f, 0.0f, 0.0f, 1.0f };
+		// Èò»ö
+		constexpr auto spatial_c8 = ogl::Colour{ 1.0f, 1.0f, 1.0f, 1.0f };
+		// ±Ý»ö
+		constexpr auto spatial_c9 = ogl::Colour{ 1.0f, 0.8f, 0.1f, 1.0f };
+
+		constexpr ogl::Quad pt1 = { -0.5f, +0.5f, -0.5f };
+		constexpr ogl::Quad pt2 = { -0.5f, +0.5f, +0.5f };
+		constexpr ogl::Quad pt3 = { +0.5f, +0.5f, +0.5f };
+		constexpr ogl::Quad pt4 = { +0.5f, +0.5f, -0.5f };
+		constexpr ogl::Quad pt5 = { -0.5f, -0.5f, -0.5f };
+		constexpr ogl::Quad pt6 = { -0.5f, -0.5f, +0.5f };
+		constexpr ogl::Quad pt7 = { +0.5f, -0.5f, +0.5f };
+		constexpr ogl::Quad pt8 = { +0.5f, -0.5f, -0.5f };
+
+		constexpr ogl::blob::ColoredPlane each_sides[] =
+		{
+			ogl::blob::plane::Create(pt1, pt2, pt3, pt4, spatial_c1),
+			ogl::blob::plane::Create(pt1, pt5, pt6, pt2, spatial_c2),
+			ogl::blob::plane::Create(pt2, pt6, pt7, pt3, spatial_c3),
+			ogl::blob::plane::Create(pt1, pt4, pt8, pt5, spatial_c9),
+			ogl::blob::plane::Create(pt3, pt7, pt8, pt4, spatial_c5),
+			ogl::blob::plane::Create(pt5, pt8, pt7, pt6, spatial_c6)
+		};
+		const auto raw_cube = ogl::blob::cube::Create(each_sides);
+
+		// Model 0: Å¥ºê
+		auto& cube_buffer = modelBuffer.Push(raw_cube);
+
+		// 
+		constexpr auto axis_color = ogl::Colour{ 0.0f, 0.0f, 0.0f, 1.0f };
+		const ogl::Vertex axis_lines[] =
+		{
+			{ +400.0f, 0.0f, 0.0f, axis_color },
+			{ -400.0f, 0.0f, 0.0f, axis_color },
+			{ 0.0f, +300.0f, 0.0f, axis_color },
+			{ 0.0f, -300.0f, 0.0f, axis_color },
+			{ 0.0f, 0.0f, -400.0f, axis_color },
+			{ 0.0f, 0.0f, -400.0f, axis_color }
+		};
+
+		// Model 1: ÁÂÇ¥Ãà
+		auto& axis_buffer = modelBuffer.PushRaw(axis_lines);
+
+		// 
+		constexpr auto floor_c1 = ogl::Colour{ 0.15f, 0.4f, 0.1f, 1.0f };
+		constexpr auto floor_c2 = ogl::Colour{ 0.6f, 0.2f, 0.0f, 1.0f };
+		constexpr auto floor_c3 = ogl::Colour{ 0.0f, 0.6f, 0.0f, 1.0f };
+		constexpr ogl::blob::ColoredPlane floor = ogl::blob::plane::Create
+		(
+			{ -10.0f, 0.0f, -10.0f, floor_c1 },
+			{ -10.0f, 0.0f, +10.0f, floor_c2 },
+			{ +10.0f, 0.0f, +10.0f, floor_c3 },
+			{ +10.0f, 0.0f, -10.0f, floor_c2 }
+		);
+
+		// Model 2: ¹Ù´Ú
+		auto& floor_buffer = modelBuffer.Push(floor);
+
+		// 
+		const ogl::blob::TexturePlane texfloor = ogl::blob::plane::tex::Create
+		(
+			-1.0f, 0.0f, -1.0f, glm::vec2{ 0.0f, 0.0f },
+			-1.0f, 0.0f, +1.0f, glm::vec2{ 0.0f, 1.0f },
+			+1.0f, 0.0f, +1.0f, glm::vec2{ 1.0f, 1.0f },
+			+1.0f, 0.0f, -1.0f, glm::vec2{ 1.0f, 0.0f }
+		);
+
+		// Model 3: ÅØ½ºÃÄ ¹Ù´Ú
+		auto& texfloor_buffer = textureBuffer.Push(texfloor);
+
+		// ¸ðµ¨ ÁØºñ
+		AddModel<SideCubeModel>("Cube", cube_buffer);
+		AddModel<AxisModel>("Axis", axis_buffer);
+		AddModel<FloorModel>("Floor", floor_buffer);
+		AddModel<TexturePlaneModel>("TextureFloor", texfloor_buffer);
+	}
+
+	void CreateTextures()
+	{
+		texLecture6RGB = CreatePngTexture("image1.png");
+
+		constexpr GLulong checkerboard[] =
+		{
+		0xFFFFFFFF, 0x00000000, 0xFFFFFFFF, 0x00000000, 0xFFFFFFFF, 0x00000000, 0xFFFFFFFF, 0x00000000,
+		0x00000000, 0xFFFFFFFF, 0x00000000, 0xFFFFFFFF, 0x00000000, 0xFFFFFFFF, 0x00000000, 0xFFFFFFFF,
+		0xFFFFFFFF, 0x00000000, 0xFFFFFFFF, 0x00000000, 0xFFFFFFFF, 0x00000000, 0xFFFFFFFF, 0x00000000,
+		0x00000000, 0xFFFFFFFF, 0x00000000, 0xFFFFFFFF, 0x00000000, 0xFFFFFFFF, 0x00000000, 0xFFFFFFFF,
+		0xFFFFFFFF, 0x00000000, 0xFFFFFFFF, 0x00000000, 0xFFFFFFFF, 0x00000000, 0xFFFFFFFF, 0x00000000,
+		0x00000000, 0xFFFFFFFF, 0x00000000, 0xFFFFFFFF, 0x00000000, 0xFFFFFFFF, 0x00000000, 0xFFFFFFFF,
+		0xFFFFFFFF, 0x00000000, 0xFFFFFFFF, 0x00000000, 0xFFFFFFFF, 0x00000000, 0xFFFFFFFF, 0x00000000,
+		0x00000000, 0xFFFFFFFF, 0x00000000, 0xFFFFFFFF, 0x00000000, 0xFFFFFFFF, 0x00000000, 0xFFFFFFFF,
+		};
+
+		glGenTextures(1, &texLecture6Checker);
+		glBindTexture(GL_TEXTURE_2D, texLecture6Checker);
+
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 8, 8, 0, GL_RGBA, GL_UNSIGNED_BYTE, checkerboard);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+
+		constexpr float rect_sz = 0.5f;
+		// (x, y, z, u, v)
+		constexpr float myrect[] =
+		{
+			// Triangle1 pos
+			-rect_sz, -rect_sz, 0.0f, 0.0f, 0.0f,
+			+rect_sz, -rect_sz, 0.0f, 1.0f, 0.0f,
+			+rect_sz, +rect_sz, 0.0f, 1.0f, 1.0f,
+
+			// Triangle2 pos
+			-rect_sz, -rect_sz, 0.0f, 0.0f, 0.0f,
+			-rect_sz, +rect_sz, 0.0f, 0.0f, 1.0f,
+			+rect_sz, +rect_sz, 0.0f, 1.0f, 1.0f,
+		};
+
+		VertexBuffer lecture6_rect_vbo(GL_ARRAY_BUFFER);
+		lecture6_rect_vbo.Bind(myrect, sizeof(myrect), GL_STATIC_DRAW);
+		vboLecture6Positions.Attach(&lecture6_rect_vbo, 1);
 	}
 
 	std::vector<Scene*> myScenes;

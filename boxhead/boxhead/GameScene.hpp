@@ -308,10 +308,12 @@ public:
 		auto tex_uniform_world = textureRenderer.GetUniform("a_WorldMatrix");
 		auto tex_uniform_camera = textureRenderer.GetUniform("a_CameraMatrix");
 		auto tex_uniform_proj = textureRenderer.GetUniform("a_ProjMatrix");
+		auto tex_uniform_sample = textureRenderer.GetUniform("u_Texture");
 
 		tex_uniform_world.AssignMatrix4x4(ogl::identity);
 		tex_uniform_camera.AssignMatrix4x4(matrix_cam);
 		tex_uniform_proj.AssignMatrix4x4(matrix_view);
+		tex_uniform_sample.Assign(0);
 
 		// x, y, z, s, t
 		constexpr GLsizei shade_tex = sizeof(float) * 5;
