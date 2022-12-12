@@ -215,6 +215,8 @@
   <ItemGroup>
     <None Include="..\Shaders\PlainP.glsl" />
     <None Include="..\Shaders\PlainV.glsl" />
+    <None Include="..\Shaders\TextureP.glsl" />
+    <None Include="..\Shaders\TextureV.glsl" />
     <None Include="fragment.glsl" />
     <None Include="packages.config" />
     <None Include="vertex.glsl" />

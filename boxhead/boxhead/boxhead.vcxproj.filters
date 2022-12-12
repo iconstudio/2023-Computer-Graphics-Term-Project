@@ -186,6 +186,12 @@
     <None Include="vertex.glsl">
       <Filter>리소스 파일\Shaders</Filter>
     </None>
+    <None Include="..\Shaders\TextureP.glsl">
+      <Filter>리소스 파일\Shaders</Filter>
+    </None>
+    <None Include="..\Shaders\TextureV.glsl">
+      <Filter>리소스 파일\Shaders</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.hpp">
