@@ -147,7 +147,7 @@ public:
 		const auto focus = GetFocus();
 		const auto capture = GetCapture();
 
-		if (focus == WindowManager::windowHandle)
+		if (focus == WindowManager::windowHandle && capture == WindowManager::windowHandle)
 		{
 			if (windowFocused)
 			{
