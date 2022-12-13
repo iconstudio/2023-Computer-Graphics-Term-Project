@@ -94,7 +94,7 @@ public:
 			{
 				vector.z *= 0.6666667f;
 			}
-			
+
 			const auto movement = glm::normalize(vector);
 			const auto toward = glm::vec4{ movement, 1.0f };
 			const auto direction = toward * GetRotation();
@@ -103,7 +103,7 @@ public:
 
 			const float aceel = moveAccel * delta_time;
 			AddVelocity(aceel, direction);
-			
+
 			if (!was_overflow && maxSpeed < mySpeed)
 			{
 				mySpeed = maxSpeed;
@@ -149,14 +149,59 @@ public:
 	virtual void OnSpecialKey(const int& key, const int& x, const int& y)
 	{}
 
-	Entity* Raycast(GameObject obj_list[], const size_t& count, const float& distance, const glm::vec3& direction) const
+	Entity* Raycast(GameObject(&obj_list)[], const size_t& count, const float& mx, const float& my, const float& radius) const
 	{
+		std::vector<GameObject*> filter{};
+		filter.reserve(count);
 
+		Entity* result = nullptr;
+
+		for (size_t i = 0; i < count; i++)
+		{
+			auto& obj = obj_list[i];
+
+			auto mid = RaycastOne(std::addressof(obj), mx, my, radius);
+			if (mid)
+			{
+				filter.push_back(mid);
+			}
+		}
+
+		if (0 < filter.size())
+		{
+			const float my_pos = GetPosition();
+
+			std::ranges::sort
+			(
+				filter,
+				[my_pos](const GameObject* lhs, const GameObject* rhs) -> bool {
+				const float ldist = glm::distance(lhs->GetPosition(), my_pos);
+			const float rdist = glm::distance(rhs->GetPosition(), my_pos);
+
+			return (ldist < rdist);
+			});
+
+			result = dynamic_cast<Entity*>(filter[0]);
+		}
+
+		return result;
 	}
 
-	GameObject* Raycast(const GameObject& target, const float& distance, const glm::vec3& direction) const
+	GameObject* RaycastOne(GameObject* target, const float& mx, const float& my, const float& radius) const
 	{
+		const auto& obj_mat = target->worldTransform;
+		const auto& cam_mat = myCamera->GetCameraMatrix();
+		const auto& per_mat = myCamera->GetPerspectiveViewMatrix();
 
+		// 객체를 투영 변환
+		const auto& view_mat = per_mat * cam_mat * obj_mat;
+		const auto& view_pos = view_mat[3];
+
+		const float dist = glm::distance(view_pos, glm::vec3{ mx, my, 0.0f });
+		if (dist < radius)
+		{
+			return target;
+		}
 
 		return nullptr;
 	}
