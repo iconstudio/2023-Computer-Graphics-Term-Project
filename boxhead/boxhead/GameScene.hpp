@@ -32,15 +32,15 @@ public:
 
 	void Render(ModelView model, ogl::Uniform& world_uniform, ogl::Uniform& texture_uniform)
 	{
-		glm::mat4 matrix = glm::scale(ogl::identity, glm::vec3{ 4.0f });
-
 		for (size_t i = 0; i < tileCountH; i++)
 		{
 			for (size_t j = 0; j < tileCountW; j++)
 			{
 				auto& tile = tileMap[i][j];
 
-				world_uniform.AssignMatrix4x4(glm::translate(matrix, { tile.x, 0.0f, tile.y }));
+				glm::mat4 matrix = glm::translate(ogl::identity, { tile.x * 2, 0.0f, tile.y * 2 });
+
+				world_uniform.AssignMatrix4x4(glm::scale(matrix, glm::vec3{ 4.0f }));
 
 				const GLint texid = tile.textureID;
 				texture_uniform.Assign(texid);

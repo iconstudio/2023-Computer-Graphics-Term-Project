@@ -240,7 +240,7 @@ public:
 	{
 		return gameModels.at(FindModelID(name));
 	}
-	
+
 	GLint LoadTexture(std::string_view name, std::string_view filepath)
 	{
 		AddTextureID(name, gameTextureIDs.size());
@@ -399,10 +399,10 @@ private:
 		// 
 		const ogl::blob::TexturePlane texfloor = ogl::blob::plane::tex::Create
 		(
-			-1.0f, 0.0f, -1.0f, glm::vec2{ 0.0f, 0.0f },
-			-1.0f, 0.0f, +1.0f, glm::vec2{ 0.0f, 1.0f },
-			+1.0f, 0.0f, +1.0f, glm::vec2{ 1.0f, 1.0f },
-			+1.0f, 0.0f, -1.0f, glm::vec2{ 1.0f, 0.0f }
+			0.0f, 0.0f, 0.0f, glm::vec2{ 0.0f, 0.0f },
+			0.0f, 0.0f, 1.0f, glm::vec2{ 0.0f, 1.0f },
+			1.0f, 0.0f, 1.0f, glm::vec2{ 1.0f, 1.0f },
+			1.0f, 0.0f, 0.0f, glm::vec2{ 1.0f, 0.0f }
 		);
 
 		// Model 3: ÅØ½ºÃÄ ¹Ù´Ú

@@ -83,8 +83,8 @@ void WorldManager::Start(Scene* scene)
 		{
 			auto& tile = tileMap[i][j];
 
-			tile.x = static_cast<float>(j) * boardScaleW * 2 + boardScaleW * 0.5f;
-			tile.y = static_cast<float>(i) * boardScaleH * 2 + boardScaleH * 0.5f;
+			tile.x = static_cast<float>(j) * boardScaleW;
+			tile.y = static_cast<float>(i) * boardScaleD;
 			tile.textureID = ground_textures[(::rand() % 6)];
 		}
 	}
