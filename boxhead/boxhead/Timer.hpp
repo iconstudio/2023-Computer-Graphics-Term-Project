@@ -39,7 +39,7 @@ public:
 		elapsed_timer = before;
 	}
 
-	static inline constexpr float GetDeltaTime() noexcept
+	static inline float GetDeltaTime() noexcept
 	{
 		return delta_time;
 	}
@@ -48,7 +48,7 @@ public:
 	{
 		return performance_clock.now();
 	}
-	
+
 private:
 	static inline constexpr std::chrono::system_clock performance_clock{};
 	static inline std::chrono::system_clock::time_point elapsed_timer{};
