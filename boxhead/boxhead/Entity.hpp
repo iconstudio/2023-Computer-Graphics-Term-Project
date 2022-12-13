@@ -246,7 +246,9 @@ public:
 protected:
 	virtual void EnumerateTransform()
 	{
+		GameObject::EnumerateTransform();
 
+		myCollider.SetCenter(GetPosition());
 	}
 #pragma endregion
 

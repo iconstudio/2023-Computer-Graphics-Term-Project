@@ -40,9 +40,19 @@ public:
 		worldTransform.SetPosition(x, y, z);
 	}
 
-	constexpr void SetExtent(const glm::vec3& extents)
+	constexpr void SetExtent(const float& length, const glm::vec3& dir)
 	{
-		colliderExtent = extents;
+		SetExtent(dir * length);
+	}
+
+	constexpr void SetExtent(const glm::vec3& vector)
+	{
+		colliderExtent = vector;
+	}
+
+	constexpr void SetExtent(glm::vec3&& vector)
+	{
+		colliderExtent = std::move(vector);
 	}
 
 	Transform worldTransform;
