@@ -59,7 +59,7 @@ void WorldManager::Start(Scene* scene)
 	{
 		const float cheight = boardScaleH * static_cast<float>(height_block.myHeight);
 		const float cx = boardScaleW * static_cast<float>(height_block.x);
-		const float cy = 0.5f * cheight;
+		const float cy = constants::GROUND_Y + 0.5f * cheight;
 		const float cz = boardScaleD * static_cast<float>(height_block.y);
 
 		Entity* wall = scene->CreateEntity<Entity>(wall_model_view, cx, cy, cz);
@@ -85,7 +85,7 @@ void WorldManager::Start(Scene* scene)
 			const float cx = static_cast<float>(j) * boardScaleW * 2;
 			const float cy = static_cast<float>(i) * boardScaleD * 2;
 
-			tile.worldMatrix = glm::scale(glm::translate(ogl::identity, { cx, 0.0f, cy }), glm::vec3{ 4.0f });
+			tile.worldMatrix = glm::scale(glm::translate(ogl::identity, { cx, constants::GROUND_Y, cy }), glm::vec3{ 4.0f });
 			tile.textureID = ground_textures[(::rand() % 6)];
 
 			tileMap.push_back(tile);
