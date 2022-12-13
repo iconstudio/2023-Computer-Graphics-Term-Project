@@ -169,7 +169,7 @@ public:
 
 		if (0 < filter.size())
 		{
-			const float my_pos = GetPosition();
+			const auto my_pos = GetPosition();
 
 			std::ranges::sort
 			(
@@ -189,7 +189,7 @@ public:
 
 	GameObject* RaycastOne(GameObject* target, const float& mx, const float& my, const float& radius) const
 	{
-		const auto& obj_mat = target->worldTransform;
+		const auto& obj_mat = target->worldTransform.myMatrix;
 		const auto& cam_mat = myCamera->GetCameraMatrix();
 		const auto& per_mat = myCamera->GetPerspectiveViewMatrix();
 
@@ -197,7 +197,7 @@ public:
 		const auto& view_mat = per_mat * cam_mat * obj_mat;
 		const auto& view_pos = view_mat[3];
 
-		const float dist = glm::distance(view_pos, glm::vec3{ mx, my, 0.0f });
+		const float dist = glm::distance(view_pos, glm::vec4{ mx, my, 0.0f, 0.0f });
 		if (dist < radius)
 		{
 			return target;
