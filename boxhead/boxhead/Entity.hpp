@@ -73,7 +73,8 @@ public:
 			Translate(0, -dist_ground, 0);
 
 			//mySpeed = 0.0f;
-			mySpeed /= 5;
+			//mySpeed /= 5;
+			myDirection.y = 0.0f;
 		}
 
 		if (0 < mySpeed)
