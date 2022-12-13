@@ -64,6 +64,9 @@ void WorldManager::Start(Scene* scene)
 
 		Entity* wall = scene->CreateEntity<Entity>(wall_model_view, cx, cy, cz);
 		wall->Scale(boardScaleW, cheight, boardScaleD);
+
+		auto& collider = wall->GetCollider();
+		collider.SetExtent(boardScaleW * 0.5f, cheight * 0.5f, boardScaleD * 0.5f);
 	}
 
 	// 타일 텍스쳐 가져오기
