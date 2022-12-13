@@ -1,7 +1,7 @@
 #pragma once
-#include "GameObject.hpp"
-#include "ModelView.hpp"
 #include "BoxCollider.hpp"
+#include "GravityHelper.hpp"
+#include "MoveHelper.hpp"
 
 class Entity : public GameObject
 {
@@ -19,17 +19,14 @@ public:
 		, myModel()
 		, myCollider()
 		, mySpeed(), myDirection()
-		, maxSpeed(8.0f), myFriction(), airDamping(30.0f)
+		, maxSpeed(8.0f), myFriction(), reposeDamping(30.0f)
 	{}
 
 	constexpr Entity(const ModelView& model_view)
-		: GameObject()
-		, myName(), myHealth(), maxHealth()
-		, myModel(model_view)
-		, myCollider()
-		, mySpeed(), myDirection()
-		, maxSpeed(8.0f), myFriction(), airDamping(30.0f)
-	{}
+		: Entity()
+	{
+		myModel = model_view;
+	}
 
 	Entity(const ModelView& model_view, const glm::vec3& position)
 		: Entity(model_view)
@@ -63,6 +60,22 @@ public:
 
 	virtual void Update(const float& delta_time)
 	{
+		myCollider.SetCenter(GetPosition());
+
+		const float dist_ground = myCollider.DistanceGround(constants::GROUND_Y);
+
+		if (0 < dist_ground)
+		{
+			AddVelocity({ 0, -constants::GRAIVTY * delta_time, 0 });
+		}
+		else if (dist_ground < 0)
+		{
+			Translate(0, -dist_ground, 0);
+
+			//mySpeed = 0.0f;
+			mySpeed /= 5;
+		}
+
 		if (0 < mySpeed)
 		{
 			MoveTo(myDirection, ogl::identity, mySpeed * delta_time);
@@ -79,7 +92,7 @@ public:
 
 			if (0 < maxSpeed && maxSpeed < std::abs(mySpeed))
 			{
-				mySpeed = std::max(maxSpeed, mySpeed - airDamping * delta_time * 1.5f);
+				mySpeed = std::max(maxSpeed, mySpeed - reposeDamping * delta_time * 1.5f);
 			}
 		}
 	}
@@ -109,7 +122,11 @@ public:
 			myModel.Render();
 		}
 	}
+
 #pragma region 물리
+	bool MoveContact(const glm::vec3& vector);
+	bool MoveContact(const float& distance, const glm::vec3& direction);
+
 	inline constexpr float SetSpeed(const float& speed)
 	{
 		return mySpeed = speed;
@@ -241,13 +258,16 @@ public:
 	std::string myName;
 	float myHealth;
 	float maxHealth;
+
+	MoveHelper moveHelper;
+
 	float mySpeed;
 	glm::vec3 myDirection;
 	float maxSpeed;
 	// 마찰력
 	float myFriction;
-	// 공기 저항력
-	float airDamping;
+	// 자세 변동 속도
+	float reposeDamping;
 
 	bool isAttacking;
 	float attackDelay;
