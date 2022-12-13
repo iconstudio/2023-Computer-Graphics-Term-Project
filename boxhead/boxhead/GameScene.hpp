@@ -30,27 +30,7 @@ public:
 
 	void Start(Scene* scene);
 
-	void Render(ModelView model, ogl::Uniform& world_uniform, ogl::Uniform& texture_uniform)
-	{
-		for (size_t i = 0; i < tileCountH; i++)
-		{
-			for (size_t j = 0; j < tileCountW; j++)
-			{
-				auto& tile = tileMap[i][j];
-
-				glm::mat4 matrix = glm::translate(ogl::identity, { tile.x * 2, 0.0f, tile.y * 2 });
-
-				world_uniform.AssignMatrix4x4(glm::scale(matrix, glm::vec3{ 4.0f }));
-
-				const GLint texid = tile.textureID;
-				texture_uniform.Assign(texid);
-				texture_uniform.ActiveTexture(texid - 1);
-				texture_uniform.BindTexture(texid);
-
-				model.Render();
-			}
-		}
-	}
+	void Render(ModelView model, ogl::Uniform& world_uniform, ogl::Uniform& texture_uniform);
 
 	constexpr HeightBlock& CellAt(const size_t& x, const size_t& y)
 	{
