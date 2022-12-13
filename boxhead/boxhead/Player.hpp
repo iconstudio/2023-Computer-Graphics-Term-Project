@@ -10,6 +10,7 @@ public:
 		, moveMaxSpeed(7.0f), walkMaxSpeed(2.5f)
 		, moveAccel(40.0f), walkAccel(20.0f)
 		, moveFriction(16.0f), walkFriction(30.0f)
+		, myLife(10), maxLife(10)
 	{
 		maxSpeed = moveMaxSpeed;
 		myAccel = moveAccel;
@@ -84,6 +85,15 @@ public:
 			myFriction = moveFriction;
 		}
 
+		const bool on_ground = CheckGround();
+		if (on_ground)
+		{
+			if (checkPressedJump)
+			{
+				vSpeed = 10.0f;
+			}
+		}
+
 		int press_side = int(checkLeft - checkRight);
 		int press_forward = int(checkUp - checkDown);
 
@@ -97,7 +107,8 @@ public:
 
 			const auto movement = glm::normalize(vector);
 			const auto toward = glm::vec4{ movement, 1.0f };
-			const auto direction = toward * GetRotation();
+			auto direction = toward * GetRotation();
+			direction.y = 0;
 
 			bool was_overflow = maxSpeed < mySpeed;
 
@@ -113,21 +124,19 @@ public:
 
 	void OnMouse(const int& button, const int& state, const int& x, const int& y)
 	{
-
+		if (ogl::IsMouseClicked(state))
+		{
+			if (ogl::IsLeftMouseButton(button))
+			{
+				
+			}
+		}
 	}
 
 	void OnKeyboard(const unsigned char& key, const int& x, const int& y)
 	{
 		switch (key)
 		{
-			case 'w':
-			case 'W':
-			{}
-			break;
-
-			default:
-			{}
-			break;
 		}
 	}
 
@@ -149,7 +158,7 @@ public:
 	virtual void OnSpecialKey(const int& key, const int& x, const int& y)
 	{}
 
-	Entity* Raycast(GameObject(&obj_list)[], const size_t& count, const float& mx, const float& my, const float& radius) const
+	Entity* Raycast(GameObject* (&obj_list)[], const size_t& count, const float& mx, const float& my, const float& radius) const
 	{
 		std::vector<GameObject*> filter{};
 		filter.reserve(count);
@@ -160,7 +169,7 @@ public:
 		{
 			auto& obj = obj_list[i];
 
-			auto mid = RaycastOne(std::addressof(obj), mx, my, radius);
+			auto mid = RaycastOne(obj, mx, my, radius);
 			if (mid)
 			{
 				filter.push_back(mid);
@@ -207,6 +216,8 @@ public:
 	}
 
 	camera::Camera* myCamera;
+	int myLife;
+	const int maxLife;
 
 	bool checkLeft = false;
 	bool checkRight = false;

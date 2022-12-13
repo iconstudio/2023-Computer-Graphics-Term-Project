@@ -10,15 +10,15 @@
 
 #include "WindowManager.hpp"
 #include "Timer.hpp"
-#include "Constants.hpp"
-#include "Transform.hpp"
-#include "Camera.hpp"
-#include "Scene.hpp"
-#include "Collider.hpp"
-#include "GameObject.hpp"
-#include "Entity.hpp"
 #include "Model.hpp"
 #include "ModelView.hpp"
+#include "Constants.hpp"
+#include "Transform.hpp"
+#include "GameObject.hpp"
+#include "Camera.hpp"
+#include "Scene.hpp"
+#include "Entity.hpp"
+#include "Collider.hpp"
 #include "GameViewManger.hpp"
 
 float RandomizeColour();

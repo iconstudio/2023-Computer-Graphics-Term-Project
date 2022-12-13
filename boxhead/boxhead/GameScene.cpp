@@ -30,12 +30,11 @@ void GameScene::Render()
 	textureRenderer.ReadBuffer(attr_texpos, 3);
 	textureRenderer.ReadBuffer(attr_texcoord, 2);
 
-	auto tile_matrix = ogl::identity;
-	tex_uniform_world.AssignMatrix4x4(tile_matrix);
 	worldManager.Render(model_texfloor, tex_uniform_world, tex_uniform_sample);
-
-	//model_texfloor.Render();
 	textureRenderer.ResetSeekBuffer();
+
+	attr_texpos.DisableVertexArray();
+	attr_texcoord.DisableVertexArray();
 
 	myRenderer.PrepareRendering();
 	auto uniform_mat_world = myRenderer.GetUniform("a_WorldMatrix");
@@ -64,14 +63,23 @@ void GameScene::Render()
 	model_axis.Render();
 	myRenderer.ResetSeekBuffer();
 
-	for (auto& instance : myInstances)
+	for (auto it = myInstances.begin(); it != myInstances.end(); it++)
 	{
+		auto& instance = *it;
+
 		//  0: 큐브
 		instance->PrepareRendering();
 
 		myRenderer.ReadBuffer(attr_pos, 3);
 		myRenderer.ReadBuffer(attr_col, 4);
 
+		//if (mid != 0)
+		{
+			//std::cout << "다른 모델 ID: " << mid << "\n";
+			//std::cout << instance->myName << ";\n";
+
+			//throw 1;
+		}
 		instance->Render(uniform_mat_world);
 		myRenderer.ResetSeekBuffer();
 	}

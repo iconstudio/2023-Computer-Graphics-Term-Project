@@ -41,8 +41,7 @@ void WorldManager::Awake()
 
 				if (0 < terrain_cell)
 				{
-					float cell_height = 1.0f * float(terrain_cell);
-					heightMap.emplace_back(i, j, cell_height);
+					heightMap.emplace_back(i, j, float(terrain_cell));
 				}
 			}
 		}
@@ -53,20 +52,30 @@ void WorldManager::Start(Scene* scene)
 {
 	// 모델 가져오기
 	auto wall_model_view = ModelView::GetReference<SideCubeModel>();
-
+	
+	int test = 0;
+	
 	// 높이 맵의 내용대로 벽 생성
 	for (auto& height_block : heightMap)
 	{
-		const float cheight = boardScaleH * static_cast<float>(height_block.myHeight);
+		const float cheight = MakeHeight(height_block.myHeight);
 		const float cx = boardScaleW * static_cast<float>(height_block.x);
 		const float cy = constants::GROUND_Y + 0.5f * cheight;
 		const float cz = boardScaleD * static_cast<float>(height_block.y);
 
 		Entity* wall = scene->CreateEntity<Entity>(wall_model_view, cx, cy, cz);
 		wall->Scale(boardScaleW, cheight, boardScaleD);
+		wall->myName = "Wall";
+		wall->isStatic = true;
 
 		auto& collider = wall->GetCollider();
+		collider.SetCenter(wall->GetPosition());
 		collider.SetExtent(boardScaleW * 0.5f, cheight * 0.5f, boardScaleD * 0.5f);
+		
+		if (2 < ++test)
+		{
+			break;
+		}
 	}
 
 	// 타일 텍스쳐 가져오기

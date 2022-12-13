@@ -9,7 +9,7 @@ public:
 
 	virtual void Render() const override
 	{
-		ogl::Render(ogl::PRIMITIVE_TYPES::LINES, 6);
+		ogl::Render(ogl::PRIMITIVE_TYPES::LINES, 4);
 	}
 
 	static constexpr size_t GetID()

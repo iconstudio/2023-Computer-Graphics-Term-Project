@@ -50,7 +50,58 @@ public:
 
 	void Render(ModelView model, ogl::Uniform& world_uniform, ogl::Uniform& texture_uniform);
 
+	constexpr float GetActualHeight(const float& x, const float& z) const
+	{
+		const auto area_index = GetIndex(x, z);
+
+
+
+		return constants::GROUND_Y;
+	}
+
 private:
+	constexpr float MakeHeight(const float& block_height) const
+	{
+		return boardScaleH * block_height;
+	}
+
+	constexpr float MakeHeight(const size_t& x, const size_t& z) const
+	{
+		return MakeHeight(GetTerrainAt(x, z));
+	}
+
+	constexpr std::pair<size_t, size_t> GetIndex(const float& x, const float& z) const
+	{
+		float dx, dz;
+		if (x < 0)
+		{
+			dx = 0.0f;
+		}
+		else
+		{
+			const float limit = boardScaleW * static_cast<float>(boardSizeW);
+			if (limit <= x)
+				dx = limit;
+			else
+				dx = x / boardScaleW;
+		}
+
+		if (z < 0)
+		{
+			dz = 0.0f;
+		}
+		else
+		{
+			const float limit = boardScaleD * static_cast<float>(boardSizeH);
+			if (limit <= z)
+				dz = limit;
+			else
+				dz = z / boardScaleD;
+		}
+
+		return std::make_pair(static_cast<size_t>(dx), static_cast<size_t>(dz));
+	}
+
 	constexpr HeightBlock& CellAt(const size_t& x, const size_t& y)
 	{
 		const auto pos = x * boardSizeH + y;

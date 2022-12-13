@@ -404,8 +404,6 @@ protected:
 	GameObject* nextSibling;
 	GameObject* myParent;
 	GameObject* myChild;
-
-	static inline constexpr glm::vec3 wrongCollisionCoord = glm::vec3{ std::numeric_limits<float>::min() };
 };
 
 template<typename Ty, typename ...ArgTy>

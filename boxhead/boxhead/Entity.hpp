@@ -15,11 +15,14 @@ public:
 
 	constexpr Entity()
 		: GameObject()
-		, myName(), myHealth(), maxHealth()
+		, myName("Entity"), myHealth(), maxHealth()
 		, myModel()
 		, myCollider()
-		, mySpeed(), myDirection()
-		, maxSpeed(8.0f), myFriction(), reposeDamping(30.0f)
+		, isStatic(false)
+		, mySpeed(), vSpeed()
+		, myDirection()
+		, maxSpeed(8.0f), minVSpeed(-8.0f), maxVSpeed(10.0f)
+		, myFriction(), reposeDamping(30.0f)
 	{}
 
 	constexpr Entity(const ModelView& model_view)
@@ -63,18 +66,25 @@ public:
 		myCollider.SetCenter(GetPosition());
 
 		const float dist_ground = myCollider.DistanceGround(constants::GROUND_Y);
+		const float gravity = constants::GRAIVTY * delta_time;
 
 		if (0 < dist_ground)
 		{
-			AddVelocity({ 0, -constants::GRAIVTY * delta_time, 0 });
+			vSpeed -= gravity;
 		}
-		else if (dist_ground < 0)
-		{
-			Translate(0, -dist_ground, 0);
 
-			//mySpeed = 0.0f;
-			//mySpeed /= 5;
-			myDirection.y = 0.0f;
+		if (0 != vSpeed)
+		{
+			if (dist_ground < 0)
+			{
+				localTransform.myMatrix[3].y = constants::GROUND_Y + myCollider.GetGroundHeight();
+				//Translate(0, -dist_ground, 0);
+				vSpeed = 0;
+			} 
+			else
+			{
+				Translate(0, vSpeed * delta_time, 0);
+			}
 		}
 
 		if (0 < mySpeed)
@@ -93,7 +103,19 @@ public:
 
 			if (0 < maxSpeed && maxSpeed < std::abs(mySpeed))
 			{
-				mySpeed = std::max(maxSpeed, mySpeed - reposeDamping * delta_time * 1.5f);
+				const float reduction = glm::sign(mySpeed) * reposeDamping * delta_time * 1.5f;
+				mySpeed = std::max(maxSpeed, mySpeed - reduction);
+			}
+
+			if (0 != minVSpeed && vSpeed < maxVSpeed)
+			{
+				const float addition = reposeDamping * delta_time * 1.5f;
+				vSpeed = std::min(minVSpeed, vSpeed + addition);
+			}
+			if (0 != maxVSpeed && maxVSpeed < vSpeed)
+			{
+				const float reduction = reposeDamping * delta_time * 1.5f;
+				vSpeed = std::max(maxVSpeed, vSpeed - reduction);
 			}
 		}
 	}
@@ -184,6 +206,11 @@ public:
 	{
 		return myDirection;
 	}
+
+	inline constexpr bool CheckGround() const
+	{
+		return 0 == myDirection.y;
+	}
 #pragma endregion
 
 #pragma region 충돌
@@ -264,12 +291,15 @@ public:
 
 	MoveHelper moveHelper;
 
+	bool isStatic;
 	float mySpeed;
-	glm::vec3 myDirection;
 	float maxSpeed;
-	// 마찰력
+	float vSpeed;
+	float minVSpeed;
+	float maxVSpeed;
+	glm::vec3 myDirection;
+
 	float myFriction;
-	// 자세 변동 속도
 	float reposeDamping;
 
 	bool isAttacking;
@@ -279,6 +309,8 @@ public:
 
 	ModelView myModel;
 	BoxCollider myCollider;
+
+	static inline constexpr glm::vec3 wrongCollisionCoord = glm::vec3{ std::numeric_limits<float>::min() };
 };
 
 template<typename Ty, typename ...ArgTy>

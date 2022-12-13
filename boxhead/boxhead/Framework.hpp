@@ -374,7 +374,7 @@ private:
 			{ -400.0f, 0.0f, 0.0f, axis_color },
 			{ 0.0f, +300.0f, 0.0f, axis_color },
 			{ 0.0f, -300.0f, 0.0f, axis_color },
-			{ 0.0f, 0.0f, -400.0f, axis_color },
+			{ 0.0f, 0.0f, +400.0f, axis_color },
 			{ 0.0f, 0.0f, -400.0f, axis_color }
 		};
 

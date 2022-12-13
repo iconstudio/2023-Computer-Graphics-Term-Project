@@ -58,9 +58,14 @@ public:
 	constexpr float DistanceGround(const float& ground_y) const
 	{
 		const auto& this_pos = worldTransform.GetPosition();
-		const auto lb_point = this_pos - colliderExtent;
+		const auto lb_point = this_pos.y - GetGroundHeight();
 
-		return ground_y - lb_point.y;
+		return (lb_point - ground_y);
+	}
+
+	constexpr float GetGroundHeight() const
+	{
+		return colliderExtent.y / 2;
 	}
 
 	constexpr bool CheckGround(const float& ground_y) const

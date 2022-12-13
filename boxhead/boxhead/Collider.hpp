@@ -45,6 +45,11 @@ public:
 		SetExtent(dir * length);
 	}
 
+	constexpr void SetExtent(const float& vx, const float& vy, const float& vz)
+	{
+		SetExtent({ vx, vy, vz });
+	}
+
 	constexpr void SetExtent(const glm::vec3& vector)
 	{
 		colliderExtent = vector;

@@ -285,6 +285,15 @@
     <Text Include="Stage.txt" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="textures\big_dripleaf_stem.png" />
+    <Image Include="textures\big_dripleaf_tip.png" />
+    <Image Include="textures\brewing_stand_base.png" />
+    <Image Include="textures\chiseled_deepslate.png" />
+    <Image Include="textures\chiseled_polished_blackstone.png" />
+    <Image Include="textures\chiseled_stone_bricks_side.png" />
+    <Image Include="textures\dark_oak_log.png" />
+    <Image Include="textures\dark_oak_log_top.png" />
+    <Image Include="textures\dark_oak_planks.png" />
     <Image Include="textures\TDF1.bmp" />
     <Image Include="textures\TDF2.bmp" />
     <Image Include="textures\TDF3.bmp" />

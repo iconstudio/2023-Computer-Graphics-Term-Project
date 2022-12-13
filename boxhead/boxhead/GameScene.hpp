@@ -55,6 +55,11 @@ public:
 	{
 		Scene::Start();
 
+		auto cube_model = ModelView::GetReference<SideCubeModel>();
+		auto aa = CreateEnemy<Enemy>(cube_model, glm::vec3{ 1.0f, 0.0f, 4.0f });
+		auto bb = CreateEnemy<Enemy>(cube_model, glm::vec3{ 1.0f, 0.0f, 6.0f });
+		auto cc = CreateEnemy<Enemy>(cube_model, glm::vec3{ 3.0f, 0.0f, 8.0f });
+
 		viewManager.Start();
 		playerCharacter->Start();
 
@@ -125,6 +130,22 @@ public:
 
 	void OnKeyboard(const unsigned char& key, const int& x, const int& y) override
 	{
+		switch (key)
+		{
+			case 't':
+			case 'T':
+			{
+				const auto capture = GetCapture();
+
+				if (capture == WindowManager::windowHandle)
+				{
+					windowFocused = false;
+					ReleaseCapture();
+				}
+			}
+			break;
+		}
+
 		playerCharacter->OnKeyboard(key, x, y);
 	}
 
@@ -172,10 +193,7 @@ public:
 			//SetCapture(WindowManager::windowHandle);
 		}
 	}
-
-	void PrepareRendering() override
-	{}
-
+	
 	void Render() override;
 
 	void Cleanup() override

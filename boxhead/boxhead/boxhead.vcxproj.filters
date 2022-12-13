@@ -375,5 +375,32 @@
     <Image Include="textures\TDX3.bmp">
       <Filter>리소스 파일\Textures</Filter>
     </Image>
+    <Image Include="textures\big_dripleaf_stem.png">
+      <Filter>리소스 파일\Textures</Filter>
+    </Image>
+    <Image Include="textures\big_dripleaf_tip.png">
+      <Filter>리소스 파일\Textures</Filter>
+    </Image>
+    <Image Include="textures\brewing_stand_base.png">
+      <Filter>리소스 파일\Textures</Filter>
+    </Image>
+    <Image Include="textures\chiseled_deepslate.png">
+      <Filter>리소스 파일\Textures</Filter>
+    </Image>
+    <Image Include="textures\chiseled_polished_blackstone.png">
+      <Filter>리소스 파일\Textures</Filter>
+    </Image>
+    <Image Include="textures\chiseled_stone_bricks_side.png">
+      <Filter>리소스 파일\Textures</Filter>
+    </Image>
+    <Image Include="textures\dark_oak_log.png">
+      <Filter>리소스 파일\Textures</Filter>
+    </Image>
+    <Image Include="textures\dark_oak_log_top.png">
+      <Filter>리소스 파일\Textures</Filter>
+    </Image>
+    <Image Include="textures\dark_oak_planks.png">
+      <Filter>리소스 파일\Textures</Filter>
+    </Image>
   </ItemGroup>
 </Project>

@@ -65,7 +65,8 @@ public:
 	virtual void OnMouseMotion(const int& x, const int& y)
 	{}
 
-	virtual void PrepareRendering() = 0;
+	virtual void PrepareRendering()
+	{}
 
 	virtual void Render() = 0;
 
