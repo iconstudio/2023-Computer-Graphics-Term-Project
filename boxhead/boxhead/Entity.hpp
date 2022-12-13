@@ -17,7 +17,7 @@ public:
 		: GameObject()
 		, myName(), myHealth(), maxHealth()
 		, myModel()
-		, myCollider(nullptr)
+		, myCollider()
 		, mySpeed(), myDirection()
 		, maxSpeed(8.0f), myFriction(), airDamping(30.0f)
 	{}
@@ -26,7 +26,7 @@ public:
 		: GameObject()
 		, myName(), myHealth(), maxHealth()
 		, myModel(model_view)
-		, myCollider(nullptr)
+		, myCollider()
 		, mySpeed(), myDirection()
 		, maxSpeed(8.0f), myFriction(), airDamping(30.0f)
 	{}
@@ -130,7 +130,7 @@ public:
 		SetSpeed(glm::length(vector));
 		SetDirection(glm::normalize(vector));
 	}
-	
+
 	inline void AddVelocity(const glm::vec3& velocity)
 	{
 		auto my_velocity = myDirection * mySpeed;
@@ -173,29 +173,16 @@ public:
 	/// 충돌체를 설정합니다.
 	/// </summary>
 	/// <param name="collider">충돌체</param>
-	constexpr void SetCollider(BoxCollider* const collider)
+	constexpr void SetCollider(const BoxCollider& collider)
 	{
-		if (!collider) return;
-
 		myCollider = collider;
-	}
-
-	/// <summary>
-	/// 충돌체를 해제합니다.
-	/// </summary>
-	constexpr void DetachCollider()
-	{
-		if (myCollider)
-		{
-			myCollider = nullptr;
-		}
 	}
 
 	/// <summary>
 	/// 충돌체를 반환합니다.
 	/// </summary>
 	/// <returns></returns>
-	constexpr BoxCollider* GetCollider()
+	constexpr BoxCollider& GetCollider()
 	{
 		return myCollider;
 	}
@@ -204,7 +191,7 @@ public:
 	/// 충돌체를 반환합니다.
 	/// </summary>
 	/// <returns></returns>
-	constexpr const BoxCollider* GetCollider() const
+	constexpr const BoxCollider& GetCollider() const
 	{
 		return myCollider;
 	}
@@ -214,7 +201,7 @@ public:
 	/// </summary>
 	/// <param name="other"></param>
 	/// <returns></returns>
-	bool IsCollideWith(const Collider* const other) const
+	bool IsCollideWith(const Collider& other) const
 	{
 		const auto place = WhereCollideWith(other);
 
@@ -233,12 +220,19 @@ public:
 	/// </summary>
 	/// <param name="other">다른 충돌체</param>
 	/// <returns>로컬 좌표계의 충돌 지점</returns>
-	glm::vec3 WhereCollideWith(const Collider* const other) const
+	glm::vec3 WhereCollideWith(const Collider& other) const
 	{
 		return wrongCollisionCoord;
 	}
+
+protected:
+	virtual void EnumerateTransform()
+	{
+
+	}
 #pragma endregion
 
+public:
 	Entity(const Entity& other) = default;
 	Entity(Entity&& other) = default;
 	Entity& operator=(const Entity& other) = default;
@@ -261,7 +255,7 @@ public:
 	float attackPreDelay;
 
 	ModelView myModel;
-	BoxCollider* myCollider;
+	BoxCollider myCollider;
 };
 
 template<typename Ty, typename ...ArgTy>

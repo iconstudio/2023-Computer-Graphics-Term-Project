@@ -55,6 +55,24 @@ public:
 
 	constexpr ~BoxCollider() = default;
 
+	constexpr float DistanceGround(const float& ground_y) const
+	{
+		const auto& this_pos = worldTransform.GetPosition();
+		const auto lb_point = this_pos - colliderExtent;
+
+		return ground_y - lb_point.y;
+	}
+
+	constexpr bool CheckGround(const float& ground_y) const
+	{
+		return 0 <= DistanceGround(ground_y);
+	}
+
+	constexpr bool CheckGround(float&& ground_y) const
+	{
+		return 0 <= DistanceGround(std::move(ground_y));
+	}
+
 	constexpr bool Check(const BoxCollider& other) const
 	{
 		const auto& this_pos = worldTransform.GetPosition();
