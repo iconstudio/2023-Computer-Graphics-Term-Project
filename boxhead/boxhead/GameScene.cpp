@@ -83,13 +83,14 @@ void WorldManager::Start(Scene* scene)
 		{
 			auto& tile = tileMap[i][j];
 
-			tile.x = static_cast<float>(j) * boardScaleW * 2;
-			tile.y = static_cast<float>(i) * boardScaleD * 2;
+			const float cx = static_cast<float>(j) * boardScaleW * 2;
+			const float cy = static_cast<float>(i) * boardScaleD * 2;
+
+			tile.worldMatrix = glm::scale(glm::translate(ogl::identity, { cx, 0.0f, cy }), glm::vec3{ 4.0f });
 			tile.textureID = ground_textures[(::rand() % 6)];
 		}
 	}
 }
-
 
 void WorldManager::Render(ModelView model, ogl::Uniform& world_uniform, ogl::Uniform& texture_uniform)
 {
@@ -99,12 +100,10 @@ void WorldManager::Render(ModelView model, ogl::Uniform& world_uniform, ogl::Uni
 		{
 			auto& tile = tileMap[i][j];
 
-			glm::mat4 matrix = glm::translate(ogl::identity, { tile.x, 0.0f, tile.y });
+			world_uniform.AssignMatrix4x4(tile.worldMatrix);
 
-			world_uniform.AssignMatrix4x4(glm::scale(matrix, glm::vec3{ 4.0f }));
+			const GLint& texid = tile.textureID;
 
-			const GLint texid = tile.textureID;
-			texture_uniform.Assign(texid);
 			texture_uniform.ActiveTexture(texid - 1);
 			texture_uniform.BindTexture(texid);
 

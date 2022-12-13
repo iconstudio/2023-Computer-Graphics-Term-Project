@@ -31,7 +31,6 @@ struct HeightBlock
 
 struct TileCell
 {
-	glm::mat4 matrix;
-	float x, y;
+	glm::mat4 worldMatrix;
 	GLint textureID;
 };
