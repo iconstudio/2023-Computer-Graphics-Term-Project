@@ -14,6 +14,22 @@ public:
 		: Entity()
 	{}
 
+	constexpr Enemy(const ModelView& model_view)
+		: Entity()
+	{}
+
+	Enemy(const ModelView& model_view, const glm::vec3& position)
+		: Enemy(model_view)
+	{
+		SetPosition(position);
+	}
+
+	Enemy(const ModelView& model_view, const float& x, const float& y, const float& z)
+		: Enemy(model_view)
+	{
+		SetPosition(x, y, z);
+	}
+
 	Enemy(const glm::vec3& position)
 		: Enemy()
 	{
@@ -30,7 +46,6 @@ public:
 	{}
 
 	float moveSpeed;
-	float
 };
 
 template<typename Ty, typename ...ArgTy>
