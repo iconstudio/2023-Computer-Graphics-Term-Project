@@ -3,7 +3,6 @@
 #include "Framework.hpp"
 
 void WorldManager::Awake()
-
 {
 	// µü ÇÑ¹ø¸¸ ³ôÀÌ ¸Ê »ý¼º
 	std::fstream stage_file{ stageFilepath, std::ios::in };
@@ -81,7 +80,7 @@ void WorldManager::Start(Scene* scene)
 	{
 		for (size_t j = 0; j < tileCountW; j++)
 		{
-			auto& tile = tileData[i][j];
+			TileCell tile{};
 
 			const float cx = static_cast<float>(j) * boardScaleW * 2;
 			const float cy = static_cast<float>(i) * boardScaleD * 2;
@@ -91,29 +90,20 @@ void WorldManager::Start(Scene* scene)
 
 			tileMap.push_back(tile);
 		}
-
-		delete tileData[i];
 	}
-
-	delete& tileData;
 }
 
 void WorldManager::Render(ModelView model, ogl::Uniform& world_uniform, ogl::Uniform& texture_uniform)
 {
-	for (size_t i = 0; i < tileCountH; i++)
+	for (auto& tile : tileMap)
 	{
-		for (size_t j = 0; j < tileCountW; j++)
-		{
-			auto& tile = tileData[i][j];
+		world_uniform.AssignMatrix4x4(tile.worldMatrix);
 
-			world_uniform.AssignMatrix4x4(tile.worldMatrix);
+		const GLint& texid = tile.textureID;
 
-			const GLint& texid = tile.textureID;
+		texture_uniform.ActiveTexture(texid - 1);
+		texture_uniform.BindTexture(texid);
 
-			texture_uniform.ActiveTexture(texid - 1);
-			texture_uniform.BindTexture(texid);
-
-			model.Render();
-		}
+		model.Render();
 	}
 }

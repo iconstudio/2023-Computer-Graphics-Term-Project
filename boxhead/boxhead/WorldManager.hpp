@@ -35,9 +35,10 @@ public:
 		: heightMap(), tileMap()
 		, stageFilepath("Stage.txt")
 		, boardScaleW(xscale), boardScaleH(yscale), boardScaleD(zscale)
-		, terrainData(), tileData()
+		, terrainData()
 	{
 		heightMap.reserve(boardSizeW * boardSizeH + 1);
+		tileMap.reserve(boardSizeW * boardSizeH + 1);
 	}
 
 	~WorldManager()
@@ -95,6 +96,4 @@ private:
 	std::vector<TileCell> tileMap;
 	int** terrainData;
 	std::string stageFilepath;
-
-	TileCell tileData[tileCountH][tileCountW];
 };

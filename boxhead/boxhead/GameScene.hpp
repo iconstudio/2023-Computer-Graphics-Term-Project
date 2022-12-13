@@ -4,6 +4,7 @@
 
 #include "GameViewManger.hpp"
 #include "Player.hpp"
+#include "Enemy.hpp"
 #include "WorldManager.hpp"
 #include "AxisModel.hpp"
 #include "FloorModel.hpp"
@@ -20,8 +21,10 @@ public:
 		, worldManager(tileSizeX, tileSizeY, tileSizeZ), viewManager()
 		, windowFocused(false), cursorClicked(false), cursorPosition(), clientRect()
 		, playerCharacter(nullptr), playerSpawnPosition(1.0f, 1.0f, 1.0f)
+		, everyEnemy()
 	{
 		SetName("GameScene");
+		everyEnemy.reserve(50);
 	}
 
 	void Awake() override
@@ -71,6 +74,7 @@ public:
 		Scene::Update();
 
 		playerCharacter->Update(delta_time);
+		UpdateEnemyList();
 
 		viewManager.Update(delta_time);
 
@@ -188,6 +192,33 @@ public:
 	}
 
 private:
+	template<typename Ty, typename... Args>
+		requires EnemyType<Ty, Args...>
+	Ty* CreateEnemy(Args... args)
+	{
+		auto* result = Enemy::Instantiate<Ty>(std::forward<Args>(args)...);
+		everyEnemy.push_back(result);
+
+		return result;
+	}
+
+	void UpdateEnemyList()
+	{
+		for (auto it = everyEnemy.begin(); it != everyEnemy.end();)
+		{
+			auto inst = *it;
+
+			if (inst->myHealth)
+			{
+				it = everyEnemy.erase(it);
+			}
+			else
+			{
+				it++;
+			}
+		}
+	}
+
 	void UpdateClientRect()
 	{
 		GetClientRect(WindowManager::windowHandle, &clientRect);
@@ -249,6 +280,7 @@ private:
 
 	Player* playerCharacter;
 	const glm::vec3 playerSpawnPosition;
+	std::vector<Enemy*> everyEnemy;
 
 	const float tileSizeX = 2.0f;
 	const float tileSizeY = 1.0f;
