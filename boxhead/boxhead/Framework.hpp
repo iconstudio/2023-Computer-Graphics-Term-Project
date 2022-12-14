@@ -426,6 +426,12 @@ private:
 		// 7
 		auto title_tex = LoadTexture("Title", "textures/title.png", GL_RGBA, GL_RGBA);
 		// 8
+		auto menu1_tex = LoadTexture("Menu 1", "textures/menu_start.png", GL_RGBA, GL_RGBA);
+		// 9
+		auto menu2_tex = LoadTexture("Menu 2", "textures/menu_help.png", GL_RGBA, GL_RGBA);
+		// 10
+		auto menu3_tex = LoadTexture("Menu 3", "textures/menu_exit.png", GL_RGBA, GL_RGBA);
+		// 11
 		auto shadow_tex = LoadTexture("Shadow", "textures/shadow.png");
 	}
 

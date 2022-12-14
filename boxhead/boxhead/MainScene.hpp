@@ -15,49 +15,25 @@ private:
 public:
 	MainScene(const size_t& id)
 		: Scene(id)
-		, fadeRenderer(), fadeBuffer()
 		, textureRenderer()
-		, titleCoords(0.0f, 0.2f, 0.0f)
+		, titleCoords(0.0f, 0.4f, 0.0f)
+		, menuSelected(0)
 		, myStatus(State::INTRO), doingAppQuit(false)
+		, introFadePeriod(0.8f), outroFadePeriod(1.0f)
 		, introFadeTime(introFadePeriod), outroFadeTime(outroFadePeriod)
 	{
 		SetName("MainScene");
 	}
 
-	void Awake() override
-	{
-		textureRenderer.Awake();
-		textureRenderer.LoadVertexShader("..\\Shaders\\TextureV.glsl");
-		textureRenderer.LoadFragmentShader("..\\Shaders\\TextureP.glsl");
-		textureRenderer.Ready();
-
-		fadeRenderer.Awake();
-		fadeRenderer.LoadVertexShader("..\\Shaders\\CircleV.glsl");
-		fadeRenderer.LoadFragmentShader("..\\Shaders\\CircleP.glsl");
-		fadeRenderer.Ready();
-
-		fadeBuffer.Reserve(20);
-		
-		constexpr auto fade_color = ogl::Colour{ 1.0f, 1.0f, 1.0f, 1.0f };
-		const ogl::Vertex2D rect[] =
-		{
-			{ -1.0f, -1.0f, fade_color },
-			{ +1.0f, -1.0f, fade_color },
-			{ +1.0f, +1.0f, fade_color },
-			{ -1.0f, +1.0f, fade_color }
-		};
-		
-		auto& floor_buffer = fadeBuffer.Push(rect);
-
-		ogl::background_color = { 0.1f, 0.1f, 0.1f, 1.0f };
-	}
+	void Awake() override;
 
 	void Start() override
 	{
 		Scene::Start();
 
 		textureRenderer.Start();
-		fadeRenderer.Start();
+
+		titleCoords.y = 0.4f;
 
 		myStatus = State::INTRO;
 		introFadeTime = introFadePeriod;
@@ -199,16 +175,16 @@ public:
 		myStatus = state;
 	}
 
-	ogl::Pipeline fadeRenderer;
 	ogl::Pipeline textureRenderer;
-	ogl::VertexStream fadeBuffer;
 	
 	glm::vec3 titleCoords;
+
+	int menuSelected;
 
 	State myStatus;
 	bool doingAppQuit;
 	float introFadeTime;
-	const float introFadePeriod = 0.8f;
+	const float introFadePeriod;
 	float outroFadeTime;
-	const float outroFadePeriod = 1.0f;
+	const float outroFadePeriod;
 };
