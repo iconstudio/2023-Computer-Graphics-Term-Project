@@ -58,13 +58,13 @@ void MainScene::Render()
 	ogl::TurnOffOption(GL_TEXTURE_2D);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glTranslatef(0, 0, 1);
-	
+
 	float fade_alpha = 0.0f;
 	switch (myStatus)
 	{
 		case State::INTRO:
 		{
-			fade_alpha = std::pow(introFadeTime / introFadePeriod, 2);
+			fade_alpha = std::pow(introFadeTime / introFadePeriod, 3.0f);
 		}
 		break;
 
@@ -76,7 +76,14 @@ void MainScene::Render()
 
 		case State::OUTRO:
 		{
-			fade_alpha = 1.0f - outroFadeTime / introFadePeriod;
+			fade_alpha = 1.0f - std::pow(outroFadeTime / introFadePeriod, 2.0f);
+		}
+		break;
+
+		case State::EXIT:
+		case State::NEXT_ROOM:
+		{
+			fade_alpha = 1.0f;
 		}
 		break;
 	}

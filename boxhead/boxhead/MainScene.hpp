@@ -9,7 +9,7 @@ class MainScene : public Scene
 private:
 	enum class State
 	{
-		INTRO, MENU, OUTRO, EXIT, NEXT_ROOM
+		INTRO, MENU, HELP, OUTRO, EXIT, NEXT_ROOM
 	};
 
 public:
@@ -132,13 +132,25 @@ public:
 		{
 			case 13: // Enter
 			{
-				
+				if (State::HELP == myStatus)
+				{
+					SetState(State::MENU);
+				}
+				else if (State::MENU == myStatus)
+				{
+					SetState(State::OUTRO);
+				}
+				else
+				{
+					
+				}
 			}
 			break;
 
 			case 27: // Escape
 			{
-				std::quick_exit(0);
+				SetState(State::OUTRO);
+				doingAppQuit = true;
 			}
 			break;
 		}
@@ -174,7 +186,7 @@ public:
 
 			case GLUT_KEY_F4:
 			{
-				SetState(State::EXIT);
+				std::quick_exit(0);
 			}
 			break;
 		}
@@ -195,10 +207,8 @@ public:
 
 	State myStatus;
 	bool doingAppQuit;
-	
 	float introFadeTime;
 	const float introFadePeriod = 0.8f;
-
 	float outroFadeTime;
 	const float outroFadePeriod = 1.0f;
 };
