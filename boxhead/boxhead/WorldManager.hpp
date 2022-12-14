@@ -54,9 +54,7 @@ public:
 	{
 		const auto area_index = GetIndex(x, z);
 
-
-
-		return constants::GROUND_Y;
+		return constants::GROUND_Y + MakeHeight(area_index.first, area_index.second);
 	}
 
 private:
@@ -67,7 +65,7 @@ private:
 
 	constexpr float MakeHeight(const size_t& x, const size_t& z) const
 	{
-		return MakeHeight(GetTerrainAt(x, z));
+		return MakeHeight(static_cast<float>(GetTerrainAt(x, z)));
 	}
 
 	constexpr std::pair<size_t, size_t> GetIndex(const float& x, const float& z) const
@@ -116,22 +114,22 @@ private:
 		return heightMap.at(pos);
 	}
 
-	constexpr int& SetTerrainAt(const size_t& x, const size_t& y, const int& value)
+	constexpr int& SetTerrainAt(const size_t& x, const size_t& z, const int& value)
 	{
-		auto& cell = GetTerrainAt(x, y);
+		auto& cell = GetTerrainAt(x, z);
 		cell = value;
 
 		return cell;
 	}
 
-	constexpr int& GetTerrainAt(const size_t& x, const size_t& y)
+	constexpr int& GetTerrainAt(const size_t& x, const size_t& z)
 	{
-		return terrainData[y][x];
+		return terrainData[z][x];
 	}
 
-	constexpr const int& GetTerrainAt(const size_t& x, const size_t& y) const
+	constexpr const int& GetTerrainAt(const size_t& x, const size_t& z) const
 	{
-		return terrainData[y][x];
+		return terrainData[z][x];
 	}
 
 	static inline constexpr size_t boardSizeW = 40;

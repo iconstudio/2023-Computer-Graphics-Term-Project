@@ -22,7 +22,7 @@ public:
 		, mySpeed(), vSpeed()
 		, myDirection()
 		, maxSpeed(8.0f), minVSpeed(-8.0f), maxVSpeed(10.0f)
-		, myFriction(), reposeDamping(30.0f)
+		, myFriction(20.0f), airDamping(5.0f), reposeDamping(30.0f)
 	{}
 
 	constexpr Entity(const ModelView& model_view)
@@ -80,7 +80,7 @@ public:
 				localTransform.myMatrix[3].y = constants::GROUND_Y + myCollider.GetGroundHeight();
 				//Translate(0, -dist_ground, 0);
 				vSpeed = 0;
-			} 
+			}
 			else
 			{
 				Translate(0, vSpeed * delta_time, 0);
@@ -95,9 +95,17 @@ public:
 			{
 				mySpeed -= myFriction * delta_time;
 
-				const int sign_dir_y = myDirection.y < 0 ? -1 : 1;
-				myDirection.y -= myFriction * delta_time;
-				
+				if (myDirection.y != 0)
+				{
+					const int sign_dir_y = myDirection.y < 0 ? -1 : 1;
+					myDirection.y -= sign_dir_y * myFriction * delta_time;
+					const int sign_now_dir_y = myDirection.y < 0 ? -1 : 1;
+
+					if (0 != sign_dir_y && sign_dir_y != sign_now_dir_y)
+					{
+						myDirection.y = 0;
+					}
+				}
 
 				if (mySpeed < 0)
 				{
@@ -213,7 +221,7 @@ public:
 
 	inline constexpr bool CheckGround() const
 	{
-		return 0 == myDirection.y;
+		return myCollider.CheckGround(constants::GROUND_Y);
 	}
 #pragma endregion
 
@@ -304,6 +312,7 @@ public:
 	glm::vec3 myDirection;
 
 	float myFriction;
+	float airDamping;
 	float reposeDamping;
 
 	bool isAttacking;

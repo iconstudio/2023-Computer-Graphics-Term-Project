@@ -80,7 +80,6 @@ public:
 
 		Scene::Update();
 
-		//playerCharacter->Update(delta_time);
 		UpdateEnemyList();
 
 		viewManager.Update(delta_time);

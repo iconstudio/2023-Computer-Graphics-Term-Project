@@ -8,10 +8,11 @@ class Player : public Entity
 public:
 	constexpr Player()
 		: Entity()
-		, moveMaxSpeed(7.0f), walkMaxSpeed(2.5f)
-		, moveAccel(40.0f), walkAccel(20.0f)
+		, moveMaxSpeed(5.0f), walkMaxSpeed(1.5f)
+		, moveAccel(30.0f), walkAccel(10.0f)
 		, moveFriction(16.0f), walkFriction(30.0f)
 		, myLife(10), maxLife(10)
+		, flashCooltime(0), flashCooldown(5.0f), flashTime(0), flashPeriod(2.0f)
 	{
 		maxSpeed = moveMaxSpeed;
 		myAccel = moveAccel;
@@ -60,7 +61,7 @@ public:
 
 	inline constexpr bool IsJumpable() const
 	{
-		return CheckGround();
+		return 0 == vSpeed && CheckGround();
 	}
 
 	void Awake()
@@ -268,4 +269,10 @@ public:
 	const float walkAccel;
 	const float moveFriction;
 	const float walkFriction;
+
+	float flashCooltime;
+	const float flashCooldown;
+
+	float flashTime;
+	const float flashPeriod;
 };
