@@ -420,11 +420,36 @@ private:
 		// Model 4: 화면 암등 효과
 		auto& tex_vig_buffer = textureBuffer.Push(vignette);
 
+		//
+		const ogl::blob::TexturePlane tex_side_0 = ogl::blob::plane::tex::Create
+		(
+			0.0f, 0.0f, 0.0f, glm::vec2{ 0.0f, 0.0f },
+			0.0f, 0.0f, 1.0f, glm::vec2{ 0.0f, 1.0f },
+			1.0f, 0.0f, 1.0f, glm::vec2{ 1.0f, 1.0f },
+			1.0f, 0.0f, 0.0f, glm::vec2{ 1.0f, 0.0f }
+		);
+
+		/*
+		const ogl::blob::TexturePlane tex_each_sides[] =
+		{
+			ogl::blob::plane::tex::Create(pt1, pt2, pt3, pt4, glm::vec2{ 0.0f, 0.0f }),
+			ogl::blob::plane::tex::Create(pt1, pt5, pt6, pt2, {}),
+			ogl::blob::plane::tex::Create(pt2, pt6, pt7, pt3, {}),
+			ogl::blob::plane::tex::Create(pt1, pt4, pt8, pt5, {}),
+			ogl::blob::plane::tex::Create(pt3, pt7, pt8, pt4, {}),
+			ogl::blob::plane::tex::Create(pt5, pt8, pt7, pt6, {})
+		};
+		const ogl::blob::TextureCube raw_texcube = ogl::blob::cube::tex::Create(tex_each_sides);
+
+		// Model 5: 텍스쳐 큐브
+		auto& texcube_buffer = modelBuffer.Push(raw_cube);
+		//*/
+		
 		// 모델 준비
 		AddModel<SideCubeModel>("Cube", cube_buffer);
 		AddModel<AxisModel>("Axis", axis_buffer);
 		AddModel<FloorModel>("Floor", floor_buffer);
-		
+
 		auto aa = AddModel<TexturePlaneModel>("TextureFloor", texfloor_buffer);
 
 		auto bb = AddModel<TexturePlaneModel>("Vignette", tex_vig_buffer);
@@ -453,7 +478,7 @@ private:
 		auto menu_help = LoadTexture("Menu 4", "textures/help.png", GL_RGBA, GL_RGBA);
 		// 12
 		auto shadow_tex = LoadTexture("Shadow", "textures/shadow.png", GL_RGBA, GL_RGBA);
-		
+
 		// 13
 		auto vignette_tex = LoadTexture("Vignette", "textures/vignette.png", GL_RGBA, GL_RGBA);
 	}

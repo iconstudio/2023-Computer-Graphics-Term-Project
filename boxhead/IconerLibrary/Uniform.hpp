@@ -162,11 +162,12 @@ namespace ogl
 		void ActiveTexture(const GLint& index)
 		{
 			glActiveTexture(GL_TEXTURE0 + index);
-			glUniform1i(myID, index);
+			glTexGeni(GL_S, GL_TEXTURE_GEN_MODE, GL_SPHERE_MAP);
 		}
 
 		void BindTexture(const GLint& texid)
 		{
+			glUniform1i(myID, texid);
 			glBindTexture(GL_TEXTURE_2D, texid);
 		}
 

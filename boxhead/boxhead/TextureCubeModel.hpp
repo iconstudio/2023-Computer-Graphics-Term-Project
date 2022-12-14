@@ -11,9 +11,6 @@ public:
 	void PrepareRendering(ogl::Uniform& tex_uniform) const
 	{
 		Model::PrepareRendering();
-
-		//tex_uniform.BindTexture(textureID);
-		//tex_uniform.Assign(textureID);
 	}
 
 	virtual void Render() const override

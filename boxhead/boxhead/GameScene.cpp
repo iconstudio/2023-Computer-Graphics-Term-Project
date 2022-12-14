@@ -32,11 +32,8 @@ void GameScene::Render()
 	// 3: 텍스쳐 바닥
 	auto model_texfloor = ModelView::GetReference(3);
 	model_texfloor.PrepareRendering();
-	textureRenderer.ReadBuffer(attr_texpos, 3);
-	textureRenderer.ReadBuffer(attr_texcoord, 2);
-
-	worldManager.Render(model_texfloor, tex_uniform_world, tex_uniform_sample);
-	textureRenderer.ResetSeekBuffer();
+	
+	worldManager.Render(model_texfloor, textureRenderer, attr_texpos, attr_texcoord, tex_uniform_world, tex_uniform_sample);
 
 	// 12: 화면 암등 효과
 	auto model_vignette = ModelView::GetReference(4);
@@ -88,6 +85,7 @@ void GameScene::Render()
 		objet->PrepareRendering();
 		myRenderer.ReadBuffer(attr_pos, 3);
 		myRenderer.ReadBuffer(attr_col, 4);
+
 		objet->Render(uniform_mat_world);
 		myRenderer.ResetSeekBuffer();
 	}
@@ -102,13 +100,6 @@ void GameScene::Render()
 		myRenderer.ReadBuffer(attr_pos, 3);
 		myRenderer.ReadBuffer(attr_col, 4);
 
-		//if (mid != 0)
-		{
-			//std::cout << "다른 모델 ID: " << mid << "\n";
-			//std::cout << instance->myName << ";\n";
-
-			//throw 1;
-		}
 		instance->Render(uniform_mat_world);
 		myRenderer.ResetSeekBuffer();
 	}

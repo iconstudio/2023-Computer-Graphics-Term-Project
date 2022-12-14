@@ -57,9 +57,9 @@ void WorldManager::Start(Scene* scene)
 {
 	// 모델 가져오기
 	auto wall_model_view = ModelView::GetReference<SideCubeModel>();
-	
+
 	bool skip_first = false;
-	
+
 	// 높이 맵의 내용대로 벽 생성
 	for (auto& height_block : heightMap)
 	{
@@ -89,11 +89,11 @@ void WorldManager::Start(Scene* scene)
 	GLint ground_textures[6]{};
 
 	ground_textures[0] = Framework::GetTexture(0); // ("Dirt 0");
-	ground_textures[1] = Framework::GetTexture(1); // ("Dirt 0");
-	ground_textures[2] = Framework::GetTexture(2); // ("Dirt 0");
-	ground_textures[3] = Framework::GetTexture(3); // ("Dirt 0");
-	ground_textures[4] = Framework::GetTexture(4); // ("Dirt 0");
-	ground_textures[5] = Framework::GetTexture(5); // ("Dirt 0");
+	ground_textures[1] = Framework::GetTexture(1); // ("Dirt 1");
+	ground_textures[2] = Framework::GetTexture(2); // ("Dirt 2");
+	ground_textures[3] = Framework::GetTexture(3); // ("Dirt 3");
+	ground_textures[4] = Framework::GetTexture(4); // ("Dirt 4");
+	ground_textures[5] = Framework::GetTexture(5); // ("Dirt 5");
 
 	for (size_t i = 0; i < tileCountH; i++)
 	{
@@ -112,7 +112,7 @@ void WorldManager::Start(Scene* scene)
 	}
 }
 
-void WorldManager::Render(ModelView model, ogl::Uniform& world_uniform, ogl::Uniform& texture_uniform)
+void WorldManager::Render(ModelView model, ogl::Pipeline& renderer, ogl::Attribute& position, ogl::Attribute& texcoords, ogl::Uniform& world_uniform, ogl::Uniform& texture_uniform)
 {
 	for (auto& tile : tileMap)
 	{
@@ -120,9 +120,12 @@ void WorldManager::Render(ModelView model, ogl::Uniform& world_uniform, ogl::Uni
 
 		const GLint& texid = tile.textureID;
 
-		texture_uniform.ActiveTexture(texid - 1);
+		renderer.ReadBuffer(position, 3);
+		renderer.ReadBuffer(texcoords, 2);
+		
+		texture_uniform.ActiveTexture(texid);
 		texture_uniform.BindTexture(texid);
-
 		model.Render();
+		renderer.ResetSeekBuffer();
 	}
 }
