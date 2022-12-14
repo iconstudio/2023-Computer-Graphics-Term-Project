@@ -89,12 +89,15 @@ public:
 
 		if (0 < mySpeed)
 		{
-			myDirection.y = 0;
 			MoveTo(myDirection, ogl::identity, mySpeed * delta_time);
 
 			if (0 != myFriction)
 			{
 				mySpeed -= myFriction * delta_time;
+
+				const int sign_dir_y = myDirection.y < 0 ? -1 : 1;
+				myDirection.y -= myFriction * delta_time;
+				
 
 				if (mySpeed < 0)
 				{
@@ -107,17 +110,17 @@ public:
 				const float reduction = glm::sign(mySpeed) * reposeDamping * delta_time * 1.5f;
 				mySpeed = std::max(maxSpeed, mySpeed - reduction);
 			}
+		}
 
-			if (0 != minVSpeed && vSpeed < maxVSpeed)
-			{
-				const float addition = reposeDamping * delta_time * 1.5f;
-				vSpeed = std::min(minVSpeed, vSpeed + addition);
-			}
-			if (0 != maxVSpeed && maxVSpeed < vSpeed)
-			{
-				const float reduction = reposeDamping * delta_time * 1.5f;
-				vSpeed = std::max(maxVSpeed, vSpeed - reduction);
-			}
+		if (0 != minVSpeed && vSpeed < minVSpeed)
+		{
+			const float addition = reposeDamping * delta_time * 1.5f;
+			vSpeed = std::min(minVSpeed, vSpeed + addition);
+		}
+		if (0 != maxVSpeed && maxVSpeed < vSpeed)
+		{
+			const float reduction = reposeDamping * delta_time * 1.5f;
+			vSpeed = std::max(maxVSpeed, vSpeed - reduction);
 		}
 	}
 

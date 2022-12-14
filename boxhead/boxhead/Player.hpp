@@ -1,6 +1,7 @@
 #pragma once
 #define NOMINMAX
 #include <windows.h>
+#include "Enemy.hpp"
 
 class Player : public Entity
 {
@@ -47,19 +48,19 @@ public:
 
 	}
 
-	void Jump()
+	inline constexpr void Jump()
+	{
+		vSpeed = 5.0f;
+	}
+
+	inline constexpr void FlashJump()
 	{
 
 	}
 
-	void FlashJump()
+	inline constexpr bool IsJumpable() const
 	{
-
-	}
-
-	bool IsJumpable() const
-	{
-
+		return CheckGround();
 	}
 
 	void Awake()
@@ -110,12 +111,12 @@ public:
 			myFriction = moveFriction;
 		}
 
-		const bool on_ground = CheckGround();
+		const bool on_ground = IsJumpable();
 		if (on_ground)
 		{
 			if (checkPressedJump)
 			{
-				vSpeed = 10.0f;
+				Jump();
 			}
 		}
 
@@ -133,7 +134,6 @@ public:
 			const auto movement = glm::normalize(vector);
 			const auto toward = glm::vec4{ movement, 1.0f };
 			auto direction = toward * GetRotation();
-			direction.y = 0;
 
 			bool was_overflow = maxSpeed < mySpeed;
 
