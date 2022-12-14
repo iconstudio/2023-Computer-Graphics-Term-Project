@@ -59,51 +59,58 @@ void MainScene::Render()
 	glPopMatrix();
 
 	// 메뉴 항목
-	glPushMatrix();
-	glLoadIdentity();
-	glTranslatef(titleCoords.x, titleCoords.y - himgh - 0.06f, 0);
-	glRotatef(90, 0, 0, 1);
-
-	constexpr float hmenuw = 200.0f / 960.0f;
-	constexpr float hmenuh = hmenuw * 0.4f;
-
-	// 메뉴 텍스쳐
-	constexpr GLint item_textures[] = { 8, 9, 10 };
-	constexpr ogl::Colour normal_color = { 1.0f, 1.0f, 1.0f, 1.0f };
-	constexpr ogl::Colour selected_color = { 0.1f, 1.0f, 0.4f, 1.0f };
-
-	const float client_height = ogl::gl_height;
-
-	// 메뉴 항목 렌더링
-	int index = 0;
-	for (auto& texid : item_textures)
+	if (State::HELP != myStatus)
 	{
-		glBindTexture(GL_TEXTURE_2D, texid);
-		glTexGeni(GL_S, GL_TEXTURE_GEN_MODE, GL_SPHERE_MAP);
-		glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
+		glPushMatrix();
+		glLoadIdentity();
+		glTranslatef(titleCoords.x, titleCoords.y - himgh - 0.06f, 0);
+		glRotatef(90, 0, 0, 1);
 
-		if (menuSelected == index)
+		constexpr float hmenuw = 200.0f / 960.0f;
+		constexpr float hmenuh = hmenuw * 0.4f;
+
+		// 메뉴 텍스쳐
+		constexpr GLint item_textures[] = { 8, 9, 10 };
+		constexpr ogl::Colour normal_color = { 1.0f, 1.0f, 1.0f, 1.0f };
+		constexpr ogl::Colour selected_color = { 0.1f, 1.0f, 0.4f, 1.0f };
+
+		const float client_height = ogl::gl_height;
+
+		// 메뉴 항목 렌더링
+		int index = 0;
+		for (auto& texid : item_textures)
 		{
-			ogl::DrawSetColor(selected_color);
-		}
-		else
-		{
-			ogl::DrawSetColor(normal_color);
-		}
+			glBindTexture(GL_TEXTURE_2D, texid);
+			glTexGeni(GL_S, GL_TEXTURE_GEN_MODE, GL_SPHERE_MAP);
+			glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
 
-		ogl::PrimitivesBegin(ogl::PRIMITIVE_TYPES::QUADS);
-		glVertex2f(-hmenuh, +hmenuw);
-		glTexCoord2f(1.0f, 0.0f);
-		glVertex2f(-hmenuh, -hmenuw);
-		glTexCoord2f(1.0f, 1.0f);
-		glVertex2f(+hmenuh, -hmenuw);
-		glTexCoord2f(0.0f, 1.0f);
-		glVertex2f(+hmenuh, +hmenuw);
-		glTexCoord2f(0.0f, 0.0f);
-		ogl::PrimitivesEnd();
+			if (menuSelected == index)
+			{
+				ogl::DrawSetColor(selected_color);
+			}
+			else
+			{
+				ogl::DrawSetColor(normal_color);
+			}
 
-		glTranslatef(-0.2f, 0, 0);
-		index++;
+			ogl::PrimitivesBegin(ogl::PRIMITIVE_TYPES::QUADS);
+			glVertex2f(-hmenuh, +hmenuw);
+			glTexCoord2f(1.0f, 0.0f);
+			glVertex2f(-hmenuh, -hmenuw);
+			glTexCoord2f(1.0f, 1.0f);
+			glVertex2f(+hmenuh, -hmenuw);
+			glTexCoord2f(0.0f, 1.0f);
+			glVertex2f(+hmenuh, +hmenuw);
+			glTexCoord2f(0.0f, 0.0f);
+			ogl::PrimitivesEnd();
+
+			glTranslatef(-0.2f, 0, 0);
+			index++;
+		}
+	}
+	else // 도움말
+	{
+		
 	}
 
 	glPopMatrix();

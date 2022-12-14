@@ -114,7 +114,19 @@ public:
 				}
 				else if (State::MENU == myStatus)
 				{
-					SetState(State::OUTRO);
+					if (0 == menuSelected) // 시작
+					{
+						SetState(State::OUTRO);
+					}
+					else if (1 == menuSelected) // 도움말
+					{
+						SetState(State::HELP);
+					}
+					else if (1 == menuSelected) // 종료
+					{
+						SetState(State::OUTRO);
+						doingAppQuit = true;
+					}
 				}
 				else
 				{
@@ -125,8 +137,15 @@ public:
 
 			case 27: // Escape
 			{
-				SetState(State::OUTRO);
-				doingAppQuit = true;
+				if (State::HELP == myStatus)
+				{
+					SetState(State::MENU);
+				}
+				else if (State::MENU == myStatus)
+				{
+					SetState(State::OUTRO);
+					doingAppQuit = true;
+				}
 			}
 			break;
 		}
