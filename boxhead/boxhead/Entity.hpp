@@ -89,6 +89,7 @@ public:
 
 		if (0 < mySpeed)
 		{
+			myDirection.y = 0;
 			MoveTo(myDirection, ogl::identity, mySpeed * delta_time);
 
 			if (0 != myFriction)
