@@ -241,11 +241,11 @@ public:
 		return gameModels.at(FindModelID(name));
 	}
 
-	GLint LoadTexture(std::string_view name, std::string_view filepath)
+	GLint LoadTexture(std::string_view name, std::string_view filepath, GLenum format = GL_RGB)
 	{
 		AddTextureID(name, gameTextureIDs.size());
 
-		GLint texture = InternalLoadTexture(filepath);
+		GLint texture = InternalLoadTexture(filepath, format);
 
 		gameTextures.push_back(texture);
 
@@ -387,10 +387,10 @@ private:
 		constexpr auto floor_c3 = ogl::Colour{ 0.0f, 0.6f, 0.0f, 1.0f };
 		constexpr ogl::blob::ColoredPlane floor = ogl::blob::plane::Create
 		(
-			{ -10.0f, 0.0f, -10.0f, floor_c1 },
-			{ -10.0f, 0.0f, +10.0f, floor_c2 },
-			{ +10.0f, 0.0f, +10.0f, floor_c3 },
-			{ +10.0f, 0.0f, -10.0f, floor_c2 }
+			{ -0.5f, 0.0f, -0.5f, floor_c1 },
+			{ -0.5f, 0.0f, +0.5f, floor_c2 },
+			{ +0.5f, 0.0f, +0.5f, floor_c3 },
+			{ +0.5f, 0.0f, -0.5f, floor_c2 }
 		);
 
 		// Model 2: ¹Ù´Ú
@@ -423,11 +423,13 @@ private:
 		auto dirt_tex_3 = LoadTexture("Dirt 3", "textures/TDF2.bmp");
 		auto dirt_tex_4 = LoadTexture("Dirt 4", "textures/TDF3.bmp");
 		auto dirt_tex_5 = LoadTexture("Dirt 5", "textures/TDF7.bmp");
-		auto title_tex = LoadTexture("Title", "textures/title.png");
-		auto shadow_tex = LoadTexture("Shadow", "textures/title.png");
+		// 6
+		auto title_tex = LoadTexture("Title", "textures/title.png", GL_RGBA);
+		// 7
+		auto shadow_tex = LoadTexture("Shadow", "textures/shadow.png");
 	}
 
-	GLuint InternalLoadTexture(std::string_view filepath);
+	GLuint InternalLoadTexture(std::string_view filepath, GLenum format = GL_RGB);
 
 	std::vector<Scene*> myScenes;
 	Scene* currentScene;

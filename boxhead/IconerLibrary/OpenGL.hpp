@@ -198,7 +198,7 @@ namespace ogl
 	inline void PrimitivesEnd()
 	{
 		glEnd();
-		glFlush();
+		//glFlush();
 	}
 
 	inline void DrawVertex(float x, float y)

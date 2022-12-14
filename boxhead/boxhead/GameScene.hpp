@@ -49,6 +49,11 @@ public:
 
 		AddEntity(playerCharacter);
 
+		auto cube_model = ModelView::GetReference<SideCubeModel>();
+		auto aa = CreateEnemy<Enemy>(cube_model, glm::vec3{ 1.0f, 0.0f, 4.0f });
+		auto bb = CreateEnemy<Enemy>(cube_model, glm::vec3{ 1.0f, 0.0f, 6.0f });
+		auto cc = CreateEnemy<Enemy>(cube_model, glm::vec3{ 3.0f, 0.0f, 8.0f });
+
 		worldManager.Awake();
 		worldManager.Start(this);
 	}
@@ -56,11 +61,6 @@ public:
 	void Start() override
 	{
 		Scene::Start();
-
-		auto cube_model = ModelView::GetReference<SideCubeModel>();
-		auto aa = CreateEnemy<Enemy>(cube_model, glm::vec3{ 1.0f, 0.0f, 4.0f });
-		auto bb = CreateEnemy<Enemy>(cube_model, glm::vec3{ 1.0f, 0.0f, 6.0f });
-		auto cc = CreateEnemy<Enemy>(cube_model, glm::vec3{ 3.0f, 0.0f, 8.0f });
 
 		viewManager.Start();
 		playerCharacter->Start();
@@ -183,6 +183,39 @@ public:
 	void OnSpecialKey(const int& key, const int& x, const int& y)
 	{
 		playerCharacter->OnSpecialKey(key, x, y);
+
+		switch (key)
+		{
+			case GLUT_KEY_LEFT:
+			{
+
+			}
+			break;
+
+			case GLUT_KEY_RIGHT:
+			{
+
+			}
+			break;
+
+			case GLUT_KEY_UP:
+			{
+
+			}
+			break;
+
+			case GLUT_KEY_DOWN:
+			{
+
+			}
+			break;
+
+			case GLUT_KEY_F4:
+			{
+				std::quick_exit(0);
+			}
+			break;
+		}
 	}
 
 	void OnMouse(const int& button, const int& state, const int& x, const int& y) override
