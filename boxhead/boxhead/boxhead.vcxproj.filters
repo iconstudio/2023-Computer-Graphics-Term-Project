@@ -408,5 +408,14 @@
     <Image Include="textures\TDX3.bmp">
       <Filter>리소스 파일\Textures\Tiles</Filter>
     </Image>
+    <Image Include="textures\menu_exit.png">
+      <Filter>리소스 파일\Textures</Filter>
+    </Image>
+    <Image Include="textures\menu_help.png">
+      <Filter>리소스 파일\Textures</Filter>
+    </Image>
+    <Image Include="textures\menu_start.png">
+      <Filter>리소스 파일\Textures</Filter>
+    </Image>
   </ItemGroup>
 </Project>
