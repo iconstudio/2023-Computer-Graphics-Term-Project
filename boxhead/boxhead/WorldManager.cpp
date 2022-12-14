@@ -46,6 +46,11 @@ void WorldManager::Awake()
 			}
 		}
 	}
+
+	minPositionX = 0.6f;
+	minPositionZ = 0.6f;
+	maxPositionX = boardScaleW * (boardSizeW - 1) - 0.6f;
+	maxPositionZ = boardScaleD * (boardSizeH - 1) - 0.7f;
 }
 
 void WorldManager::Start(Scene* scene)

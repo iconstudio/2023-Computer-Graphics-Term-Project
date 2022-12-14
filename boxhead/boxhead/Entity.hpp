@@ -228,38 +228,21 @@ public:
 #pragma endregion
 
 #pragma region 충돌
-	/// <summary>
-	/// 충돌체를 설정합니다.
-	/// </summary>
-	/// <param name="collider">충돌체</param>
 	constexpr void SetCollider(const BoxCollider& collider)
 	{
 		myCollider = collider;
 	}
-
-	/// <summary>
-	/// 충돌체를 반환합니다.
-	/// </summary>
-	/// <returns></returns>
+	
 	constexpr BoxCollider& GetCollider()
 	{
 		return myCollider;
 	}
 
-	/// <summary>
-	/// 충돌체를 반환합니다.
-	/// </summary>
-	/// <returns></returns>
 	constexpr const BoxCollider& GetCollider() const
 	{
 		return myCollider;
 	}
-
-	/// <summary>
-	/// 충돌 검사를 수행합니다.
-	/// </summary>
-	/// <param name="other"></param>
-	/// <returns></returns>
+	
 	bool IsCollideWith(const BoxCollider& other) const
 	{
 		if (myCollider.Check(other))
@@ -271,6 +254,12 @@ public:
 			return true;
 		}
 	}
+
+	glm::vec3 GetBounds() const
+	{
+		return myCollider.colliderExtent;
+	}
+
 protected:
 	virtual void EnumerateTransform()
 	{

@@ -37,6 +37,7 @@ public:
 		, stageFilepath("Stage.txt")
 		, boardScaleW(xscale), boardScaleH(yscale), boardScaleD(zscale)
 		, terrainData()
+		, minPositionX(), minPositionZ(), maxPositionX(), maxPositionZ()
 	{
 		heightMap.reserve(boardSizeW * boardSizeH + 1);
 		tileMap.reserve(boardSizeW * boardSizeH + 1);
@@ -56,6 +57,26 @@ public:
 		const auto area_index = GetIndex(x, z);
 
 		return constants::GROUND_Y + MakeHeight(area_index.first, area_index.second);
+	}
+
+	constexpr float GetMinX() const
+	{
+		return minPositionX;
+	}
+
+	constexpr float GetMaxX() const
+	{
+		return maxPositionX;
+	}
+
+	constexpr float GetMinZ() const
+	{
+		return minPositionZ;
+	}
+
+	constexpr float GetMaxZ() const
+	{
+		return maxPositionZ;
 	}
 
 private:
@@ -141,6 +162,11 @@ private:
 	float boardScaleW;
 	float boardScaleD;
 	float boardScaleH;
+
+	float minPositionX;
+	float minPositionZ;
+	float maxPositionX;
+	float maxPositionZ;
 
 	std::vector<HeightBlock> heightMap;
 	std::vector<TileCell> tileMap;

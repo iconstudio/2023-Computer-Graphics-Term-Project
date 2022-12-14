@@ -20,7 +20,7 @@ public:
 		, myRenderer(), textureRenderer()
 		, worldManager(tileSizeX, tileSizeY, tileSizeZ), viewManager()
 		, windowFocused(false), cursorClicked(false), cursorPosition(), clientRect()
-		, playerCharacter(nullptr), playerSpawnPosition(2.0f, 1.0f, 2.0f)
+		, playerCharacter(nullptr), playerSpawnPosition(3.0f, 1.0f, 3.0f)
 		, everyEnemy()
 	{
 		SetName("GameScene");
@@ -79,6 +79,31 @@ public:
 		const auto delta_time = Timer::GetDeltaTime();
 
 		Scene::Update();
+		
+		auto pl_position = playerCharacter->GetPosition();
+		const auto pl_bounds = playerCharacter->GetBounds();
+		const auto bound_x = pl_bounds.x / 2;
+		const auto bound_z = pl_bounds.z / 2;
+
+		if (pl_position.x - bound_x < worldManager.GetMinX())
+		{
+			pl_position.x = worldManager.GetMinX() + bound_x;
+		}
+		else if (worldManager.GetMaxX() < pl_position.x + bound_x)
+		{
+			pl_position.x = worldManager.GetMaxX() - bound_x;
+		}
+
+		if (pl_position.z - bound_x < worldManager.GetMinZ())
+		{
+			pl_position.z = worldManager.GetMinZ() + bound_z;
+		}
+		else if (worldManager.GetMaxZ() < pl_position.z + bound_z)
+		{
+			pl_position.z = worldManager.GetMaxZ() - bound_z;
+		}
+
+		playerCharacter->SetPosition(pl_position);
 
 		UpdateEnemyList();
 
