@@ -18,11 +18,11 @@ public:
 		, myHealth(), maxHealth()
 		, myModel()
 		, myCollider()
-		, isStatic(false)
+		, onGround(false)
 		, mySpeed(), vSpeed()
 		, myDirection()
 		, maxSpeed(8.0f), minVSpeed(-8.0f), maxVSpeed(10.0f)
-		, myFriction(20.0f), airDamping(5.0f), reposeDamping(30.0f)
+		, myFriction(15.0f), airDamping(2.0f), reposeDamping(20.0f)
 	{
 		myName = "Entity";
 	}
@@ -93,14 +93,16 @@ public:
 		{
 			MoveTo(myDirection, ogl::identity, mySpeed * delta_time);
 
-			if (0 != myFriction)
+			const auto friction = (dist_ground <= 0) ? myFriction : airDamping;
+
+			if (0 != friction)
 			{
-				mySpeed -= myFriction * delta_time;
+				mySpeed -= friction * delta_time;
 
 				if (myDirection.y != 0)
 				{
 					const int sign_dir_y = myDirection.y < 0 ? -1 : 1;
-					myDirection.y -= sign_dir_y * myFriction * delta_time;
+					myDirection.y -= sign_dir_y * friction * delta_time;
 					const int sign_now_dir_y = myDirection.y < 0 ? -1 : 1;
 
 					if (0 != sign_dir_y && sign_dir_y != sign_now_dir_y)
@@ -132,6 +134,8 @@ public:
 			const float reduction = reposeDamping * delta_time * 1.5f;
 			vSpeed = std::max(maxVSpeed, vSpeed - reduction);
 		}
+		
+		onGround = myCollider.CheckGround(constants::GROUND_Y);
 	}
 
 	virtual void PrepareRendering()
@@ -211,17 +215,22 @@ public:
 		return mySpeed;
 	}
 
-	inline constexpr glm::vec3& GetDirection(const glm::vec3& direction)
+	inline constexpr glm::vec3& GetDirection()
 	{
 		return myDirection;
 	}
 
-	inline constexpr const glm::vec3& GetDirection(const glm::vec3& direction) const
+	inline constexpr const glm::vec3& GetDirection() const
 	{
 		return myDirection;
 	}
 
-	inline constexpr bool CheckGround() const
+	inline constexpr glm::vec3 GetVelocity() const
+	{
+		return myDirection * mySpeed;
+	}
+
+	inline constexpr bool CheckGroundNow() const
 	{
 		return myCollider.CheckGround(constants::GROUND_Y);
 	}
@@ -280,7 +289,7 @@ public:
 
 	MoveHelper moveHelper;
 
-	bool isStatic;
+	bool onGround;
 	float mySpeed;
 	float maxSpeed;
 	float vSpeed;

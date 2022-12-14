@@ -8,11 +8,13 @@ class Player : public Entity
 public:
 	constexpr Player()
 		: Entity()
-		, moveMaxSpeed(5.0f), walkMaxSpeed(1.5f)
+		, moveMaxSpeed(4.0f), walkMaxSpeed(1.5f)
 		, moveAccel(30.0f), walkAccel(10.0f)
 		, moveFriction(16.0f), walkFriction(30.0f)
 		, myLife(10), maxLife(10)
-		, flashCooltime(0), flashCooldown(5.0f), flashTime(0), flashPeriod(2.0f)
+		, jumpSpeed(3)
+		, startingFlash(false), flashStartTime(0), flashStartPeriod(0.2f)
+		, flashCooltime(0), flashCooldown(5.0f), flashJumpSpeed(1.8f), flashAccelSpeed(27.0f)
 	{
 		maxSpeed = moveMaxSpeed;
 		myAccel = moveAccel;
@@ -53,17 +55,33 @@ public:
 
 	inline constexpr void Jump()
 	{
-		vSpeed = 5.0f;
+		vSpeed = jumpSpeed;
+	}
+
+	inline void StartFlashJump()
+	{
+		startingFlash = true;
+		flashStartTime = flashStartPeriod;
+
+		SetSpeed(GetSpeed() * 0.5f);
 	}
 
 	inline constexpr void FlashJump()
 	{
+		flashCooltime = flashCooldown;
 
+		vSpeed = flashJumpSpeed;
+		SetSpeed(flashAccelSpeed);
 	}
 
-	inline constexpr bool IsJumpable() const
+	inline constexpr bool CanJump() const
 	{
-		return 0 == vSpeed && CheckGround();
+		return 0 == vSpeed && onGround;
+	}
+
+	constexpr bool CanFlash()
+	{
+		return (CanJump() && !startingFlash && flashCooltime <= 0);
 	}
 
 	void Awake()
@@ -89,6 +107,7 @@ public:
 		short state_q = ObtainKeyState('Q');
 		short state_f = ObtainKeyState('F');
 		short state_jump = ObtainKeyState(VK_SPACE);
+		short state_flash = state_f;
 		short state_walk = ObtainKeyState(VK_SHIFT);
 		short state_confirm = ObtainKeyState(VK_RETURN);
 
@@ -97,6 +116,7 @@ public:
 		UpdateKeyState(state_s, checkDown, checkPressedDown);
 		UpdateKeyState(state_d, checkRight, checkPressedRight);
 		UpdateKeyState(state_jump, checkJump, checkPressedJump);
+		UpdateKeyState(state_flash, checkFlashJump, checkPressedFlashJump);
 		UpdateKeyState(state_walk, checkWalk, checkPressedWalk);
 		UpdateKeyState(state_esc, checkESC, checkPressedESC);
 		UpdateKeyState(state_confirm, checkConfirm, checkPressedConfirm);
@@ -114,13 +134,31 @@ public:
 			myFriction = moveFriction;
 		}
 
-		const bool on_ground = IsJumpable();
-		if (on_ground)
+		if (startingFlash)
 		{
-			if (checkPressedJump)
+			if (0 < flashStartTime)
 			{
-				Jump();
+				flashStartTime -= delta_time;
 			}
+			else
+			{
+				startingFlash = false;
+				FlashJump();
+			}
+		}
+
+		if (0 < flashCooltime)
+		{
+			flashCooltime -= delta_time;
+		}
+
+		if (CanJump() && checkPressedJump)
+		{
+			Jump();
+		}
+		else if (CanFlash() && checkPressedFlashJump)
+		{
+			StartFlashJump();
 		}
 
 		int press_side = int(checkLeft - checkRight);
@@ -252,6 +290,7 @@ public:
 	bool checkUp = false;
 	bool checkDown = false;
 	bool checkJump = false;
+	bool checkFlashJump = false;
 	bool checkWalk = false;
 	bool checkConfirm = false;
 	bool checkESC = false;
@@ -260,6 +299,7 @@ public:
 	bool checkPressedUp = false;
 	bool checkPressedDown = false;
 	bool checkPressedJump = false;
+	bool checkPressedFlashJump = false;
 	bool checkPressedWalk = false;
 	bool checkPressedConfirm = false;
 	bool checkPressedESC = false;
@@ -271,10 +311,13 @@ public:
 	const float walkAccel;
 	const float moveFriction;
 	const float walkFriction;
+	float jumpSpeed;
 
+	bool startingFlash;
+	float flashStartTime;
+	const float flashStartPeriod;
 	float flashCooltime;
 	const float flashCooldown;
-
-	float flashTime;
-	const float flashPeriod;
+	float flashJumpSpeed;
+	float flashAccelSpeed;
 };
