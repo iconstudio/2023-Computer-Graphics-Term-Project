@@ -252,7 +252,7 @@ public:
 		return texture;
 	}
 
-	static ogl::VertexStream::Buffer& GetTextureBuffer(const size_t& id)
+	static ogl::VertexStream::Buffer& GetTextureBuffer(const size_t& id = 0)
 	{
 		return Instance->textureBuffer.At(id);
 	}
@@ -408,21 +408,37 @@ private:
 		// Model 3: 텍스쳐 바닥
 		auto& texfloor_buffer = textureBuffer.Push(texfloor);
 
+		// 
+		const ogl::blob::TexturePlane vignette = ogl::blob::plane::tex::Create
+		(
+			0.0f, 0.0f, 0.0f, glm::vec2{ 0.0f, 0.0f },
+			0.0f, 0.0f, 1.0f, glm::vec2{ 0.0f, 1.0f },
+			1.0f, 0.0f, 1.0f, glm::vec2{ 1.0f, 1.0f },
+			1.0f, 0.0f, 0.0f, glm::vec2{ 1.0f, 0.0f }
+		);
+
+		// Model 4: 화면 암등 효과
+		auto& tex_vig_buffer = textureBuffer.Push(vignette);
+
 		// 모델 준비
 		AddModel<SideCubeModel>("Cube", cube_buffer);
 		AddModel<AxisModel>("Axis", axis_buffer);
 		AddModel<FloorModel>("Floor", floor_buffer);
 		AddModel<TexturePlaneModel>("TextureFloor", texfloor_buffer);
+		AddModel<TexturePlaneModel>("Vignette", tex_vig_buffer);
 	}
 
 	void CreateTextures()
 	{
+		// 0
 		auto dirt_tex_0 = LoadTexture("Dirt 0", "textures/TDX0.bmp");
 		auto dirt_tex_1 = LoadTexture("Dirt 1", "textures/TDX3.bmp");
 		auto dirt_tex_2 = LoadTexture("Dirt 2", "textures/TDF1.bmp");
 		auto dirt_tex_3 = LoadTexture("Dirt 3", "textures/TDF2.bmp");
 		auto dirt_tex_4 = LoadTexture("Dirt 4", "textures/TDF3.bmp");
+		// 6
 		auto dirt_tex_5 = LoadTexture("Dirt 5", "textures/TDF7.bmp");
+
 		// 7
 		auto title_tex = LoadTexture("Title", "textures/title.png", GL_RGBA, GL_RGBA);
 		// 8
@@ -435,6 +451,9 @@ private:
 		auto menu_help = LoadTexture("Menu 4", "textures/help.png", GL_RGBA, GL_RGBA);
 		// 12
 		auto shadow_tex = LoadTexture("Shadow", "textures/shadow.png", GL_RGBA, GL_RGBA);
+		
+		// 13
+		auto vignette_tex = LoadTexture("Vignette", "textures/vignette.png", GL_RGBA, GL_RGBA);
 	}
 
 	GLuint InternalLoadTexture(std::string_view filepath, GLint px_format, GLenum format);

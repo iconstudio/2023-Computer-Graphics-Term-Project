@@ -4,6 +4,10 @@
 
 void GameScene::Render()
 {
+	ogl::TurnOnOption(GL_TEXTURE_2D);
+	glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
+
+	glPushMatrix();
 	const auto& matrix_cam = viewManager.GetCameraMatrix();
 	const auto& matrix_view = viewManager.GetPerspectiveViewMatrix();
 
@@ -33,10 +37,22 @@ void GameScene::Render()
 	worldManager.Render(model_texfloor, tex_uniform_world, tex_uniform_sample);
 	textureRenderer.ResetSeekBuffer();
 
+	auto model_vignette = ModelView::GetReference(4);
+	model_vignette.PrepareRendering();
+	textureRenderer.ReadBuffer(attr_texpos, 3);
+	textureRenderer.ReadBuffer(attr_texcoord, 2);
+
+	tex_uniform_sample.BindTexture(13);
+	model_vignette.Render();
+	textureRenderer.ResetSeekBuffer();
+
 	attr_texpos.DisableVertexArray();
 	attr_texcoord.DisableVertexArray();
 	ogl::ResetProgram();
+	glPopMatrix();
 
+	ogl::TurnOffOption(GL_TEXTURE_2D);
+	glPushMatrix();
 	myRenderer.PrepareRendering();
 	auto uniform_mat_world = myRenderer.GetUniform("a_WorldMatrix");
 	auto uniform_mat_camera = myRenderer.GetUniform("a_CameraMatrix");
@@ -48,7 +64,7 @@ void GameScene::Render()
 
 	// x, y, z, r, g, b, a
 	constexpr GLsizei shade_stride = sizeof(float) * 7;
-	
+
 	auto attr_pos = myRenderer.BeginAttribute("a_Position", shade_stride);
 	auto attr_col = myRenderer.BeginAttribute("a_Colour", shade_stride);
 
@@ -89,4 +105,34 @@ void GameScene::Render()
 
 	attr_pos.DisableVertexArray();
 	attr_col.DisableVertexArray();
+	ogl::ResetProgram();
+	glPopMatrix();
+
+	// 12: 화면 암등 효과
+	glPushMatrix();
+	glOrtho(-1, 1, -1, 1, -1, 10);
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+
+	//textureRenderer.PrepareRendering();
+	ogl::TurnOnOption(GL_TEXTURE_2D);
+	glTexGeni(GL_S, GL_TEXTURE_GEN_MODE, GL_SPHERE_MAP);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+	ogl::DrawSetColor(1.0f, 1.0f, 1.0f, 0.12f);
+	ogl::PrimitivesBegin(ogl::PRIMITIVE_TYPES::QUADS);
+	glVertex2f(-1, +1);
+	glTexCoord2f(1.0f, 0.0f);
+	glVertex2f(-1, -1);
+	glTexCoord2f(1.0f, 1.0f);
+	glVertex2f(+1, -1);
+	glTexCoord2f(0.0f, 1.0f);
+	glVertex2f(+1, +1);
+	glTexCoord2f(0.0f, 0.0f);
+	ogl::PrimitivesEnd();
+	textureRenderer.ResetSeekBuffer();
+	
+	glPopMatrix();
+	ogl::ResetProgram();
+	ogl::TurnOffOption(GL_TEXTURE_2D);
 }

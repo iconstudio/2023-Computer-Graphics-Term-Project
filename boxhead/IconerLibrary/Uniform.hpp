@@ -161,8 +161,8 @@ namespace ogl
 
 		void ActiveTexture(const GLint& index)
 		{
-			glUniform1i(myID, index);
 			glActiveTexture(GL_TEXTURE0 + index);
+			glUniform1i(myID, index);
 		}
 
 		void BindTexture(const GLint& texid)
