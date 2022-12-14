@@ -66,4 +66,12 @@ inline constexpr void UpdateKeyState(const short state, bool& pressing, bool& pr
 	}
 }
 
+inline constexpr float catmull_rom_spline(float factor, float p1, float p2, float p3, float p4)
+{
+	const float __c3 = p1 - p2 * 2.5f + p3 * 2.0f - p4 * 0.5f;
+	const float __c4 = (p4 - p1) * 0.5f + (p2 - p3) * 1.5f;
+
+	return (((__c4 * factor + __c3) * factor + (p3 - p1) * 0.5f) * factor + p2);
+}
+
 #endif

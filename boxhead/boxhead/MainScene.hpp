@@ -19,8 +19,9 @@ public:
 		, titleCoords(0.0f, 0.4f, 0.0f)
 		, menuSelected(0), lastMenuIndex(2)
 		, myStatus(State::INTRO), doingAppQuit(false)
-		, introFadePeriod(0.8f), outroFadePeriod(1.0f)
+		, introFadePeriod(0.8f), outroFadePeriod(1.0f), outroTitlePeriod(0.7f)
 		, introFadeTime(introFadePeriod), outroFadeTime(outroFadePeriod)
+		, outroTitleTime()
 	{
 		SetName("MainScene");
 	}
@@ -37,6 +38,7 @@ public:
 
 		myStatus = State::INTRO;
 		introFadeTime = introFadePeriod;
+		outroTitleTime = outroTitlePeriod;
 		outroFadeTime = outroFadePeriod;
 	}
 
@@ -68,22 +70,41 @@ public:
 
 			case State::OUTRO:
 			{
-				if (0 < outroFadeTime)
+				if (!doingAppQuit)
 				{
-					outroFadeTime -= delta_time;
-				}
-				else
-				{
-					if (doingAppQuit)
+					if (0 < outroTitleTime)
 					{
-						myStatus = State::EXIT;
+						outroTitleTime -= delta_time;
 					}
 					else
 					{
-						myStatus = State::NEXT_ROOM;
+						outroTitleTime = 0;
 					}
 
-					outroFadeTime = 0;
+					if (outroTitleTime < outroTitlePeriod * 0.6f)
+					{
+						if (0 < outroFadeTime)
+						{
+							outroFadeTime -= delta_time;
+						}
+						else
+						{
+							myStatus = State::NEXT_ROOM;
+
+							outroFadeTime = 0;
+						}
+					}
+				}
+				else
+				{
+					if (0 < outroFadeTime)
+					{
+						outroFadeTime -= delta_time;
+					}
+					else
+					{
+						myStatus = State::EXIT;
+					}
 				}
 			}
 			break;
@@ -101,7 +122,7 @@ public:
 			return;
 		}
 	}
-	
+
 	void OnKeyboard(const unsigned char& key, const int& x, const int& y) override
 	{
 		switch (key)
@@ -122,7 +143,7 @@ public:
 					{
 						SetState(State::HELP);
 					}
-					else if (1 == menuSelected) // 종료
+					else if (2 == menuSelected) // 종료
 					{
 						SetState(State::OUTRO);
 						doingAppQuit = true;
@@ -130,7 +151,7 @@ public:
 				}
 				else
 				{
-					
+
 				}
 			}
 			break;
@@ -186,7 +207,7 @@ public:
 			break;
 		}
 	}
-	
+
 	void Render() override;
 
 	constexpr void SetState(const State& state)
@@ -217,9 +238,9 @@ public:
 			menuSelected = 0;
 		}
 	}
-	
+
 	ogl::Pipeline textureRenderer;
-	
+
 	glm::vec3 titleCoords;
 
 	int menuSelected;
@@ -229,6 +250,8 @@ public:
 	bool doingAppQuit;
 	float introFadeTime;
 	const float introFadePeriod;
+	float outroTitleTime;
+	const float outroTitlePeriod;
 	float outroFadeTime;
 	const float outroFadePeriod;
 };

@@ -58,8 +58,29 @@ void MainScene::Render()
 	ogl::PrimitivesEnd();
 	glPopMatrix();
 
-	// 메뉴 항목
-	if (State::HELP != myStatus)
+	float menu_item_alpha = 1.0f;
+
+	if (State::OUTRO == myStatus)
+	{
+		if (doingAppQuit)
+		{
+			const float menu_item_fade = std::pow(outroFadeTime / outroFadePeriod, 2.0f);
+
+			menu_item_alpha = catmull_rom_spline(menu_item_fade, 1.0f, 0.9f, 0.8f, 0.0f);
+		}
+		else
+		{
+			const float menu_item_fade = (1.0f - outroTitleTime / outroTitlePeriod);
+
+			menu_item_alpha = catmull_rom_spline(menu_item_fade, 1.0f, 0.6, 0.55, 0.0f);
+		}
+	}
+	else if (State::NEXT_ROOM == myStatus || State::EXIT == myStatus)
+	{
+		menu_item_alpha = 0.0f;
+	}
+
+	if (State::HELP != myStatus) // 메뉴 항목
 	{
 		glPushMatrix();
 		glLoadIdentity();
@@ -71,8 +92,8 @@ void MainScene::Render()
 
 		// 메뉴 텍스쳐
 		constexpr GLint item_textures[] = { 8, 9, 10 };
-		constexpr ogl::Colour normal_color = { 1.0f, 1.0f, 1.0f, 1.0f };
-		constexpr ogl::Colour selected_color = { 0.1f, 1.0f, 0.4f, 1.0f };
+		const ogl::Colour normal_color = { 1.0f, 1.0f, 1.0f, menu_item_alpha };
+		const ogl::Colour selected_color = { 0.1f, 1.0f, 0.4f, menu_item_alpha };
 
 		const float client_height = ogl::gl_height;
 
@@ -82,7 +103,7 @@ void MainScene::Render()
 		{
 			glBindTexture(GL_TEXTURE_2D, texid);
 			glTexGeni(GL_S, GL_TEXTURE_GEN_MODE, GL_SPHERE_MAP);
-			glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
+			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 			if (menuSelected == index)
 			{
@@ -110,7 +131,7 @@ void MainScene::Render()
 	}
 	else // 도움말
 	{
-		
+
 	}
 
 	glPopMatrix();
