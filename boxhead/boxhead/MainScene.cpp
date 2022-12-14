@@ -43,7 +43,7 @@ void MainScene::Render()
 	glTranslatef(titleCoords.x, titleCoords.y, 0);
 	glRotatef(90, 0, 0, 2);
 
-	// 렌더링
+	// 렌더링 시작
 
 	// 타이틀
 	ogl::PrimitivesBegin(ogl::PRIMITIVE_TYPES::QUADS);

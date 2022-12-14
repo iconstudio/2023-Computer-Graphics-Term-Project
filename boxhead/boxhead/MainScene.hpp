@@ -17,7 +17,7 @@ public:
 		: Scene(id)
 		, textureRenderer()
 		, titleCoords(0.0f, 0.4f, 0.0f)
-		, menuSelected(0)
+		, menuSelected(0), lastMenuIndex(2)
 		, myStatus(State::INTRO), doingAppQuit(false)
 		, introFadePeriod(0.8f), outroFadePeriod(1.0f)
 		, introFadeTime(introFadePeriod), outroFadeTime(outroFadePeriod)
@@ -138,25 +138,25 @@ public:
 		{
 			case GLUT_KEY_LEFT:
 			{
-
+				if (State::MENU == myStatus) SelectPrevMenu();
 			}
 			break;
 
 			case GLUT_KEY_RIGHT:
 			{
-
+				if (State::MENU == myStatus) SelectNextMenu();
 			}
 			break;
 
 			case GLUT_KEY_UP:
 			{
-
+				if (State::MENU == myStatus) SelectPrevMenu();
 			}
 			break;
 
 			case GLUT_KEY_DOWN:
 			{
-
+				if (State::MENU == myStatus) SelectNextMenu();
 			}
 			break;
 
@@ -175,11 +175,36 @@ public:
 		myStatus = state;
 	}
 
+	constexpr void SelectPrevMenu()
+	{
+		if (0 < menuSelected)
+		{
+			menuSelected--;
+		}
+		else
+		{
+			menuSelected = lastMenuIndex;
+		}
+	}
+
+	constexpr void SelectNextMenu()
+	{
+		if (menuSelected < lastMenuIndex)
+		{
+			menuSelected++;
+		}
+		else
+		{
+			menuSelected = 0;
+		}
+	}
+	
 	ogl::Pipeline textureRenderer;
 	
 	glm::vec3 titleCoords;
 
 	int menuSelected;
+	const int lastMenuIndex;
 
 	State myStatus;
 	bool doingAppQuit;
