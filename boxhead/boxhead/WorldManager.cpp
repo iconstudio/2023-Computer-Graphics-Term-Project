@@ -53,11 +53,17 @@ void WorldManager::Start(Scene* scene)
 	// 모델 가져오기
 	auto wall_model_view = ModelView::GetReference<SideCubeModel>();
 	
-	int test = 0;
+	bool skip_first = false;
 	
 	// 높이 맵의 내용대로 벽 생성
 	for (auto& height_block : heightMap)
 	{
+		if (skip_first)
+		{
+			skip_first = false;
+			continue;
+		}
+
 		const float cheight = MakeHeight(height_block.myHeight);
 		const float cx = boardScaleW * static_cast<float>(height_block.x);
 		const float cy = constants::GROUND_Y + 0.5f * cheight;

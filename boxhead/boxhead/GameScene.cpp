@@ -35,6 +35,7 @@ void GameScene::Render()
 
 	attr_texpos.DisableVertexArray();
 	attr_texcoord.DisableVertexArray();
+	ogl::ResetProgram();
 
 	myRenderer.PrepareRendering();
 	auto uniform_mat_world = myRenderer.GetUniform("a_WorldMatrix");
@@ -47,21 +48,14 @@ void GameScene::Render()
 
 	// x, y, z, r, g, b, a
 	constexpr GLsizei shade_stride = sizeof(float) * 7;
-
-	// x, y, z, r, g, b, a, nx, ny, nz
-	constexpr GLsizei normal_stride = sizeof(float) * 10;
-
+	
 	auto attr_pos = myRenderer.BeginAttribute("a_Position", shade_stride);
 	auto attr_col = myRenderer.BeginAttribute("a_Colour", shade_stride);
 
-	// 1: 좌표축
-	auto model_axis = ModelView::GetReference(1);
-	model_axis.PrepareRendering();
+	// 버그 있음
 	myRenderer.ReadBuffer(attr_pos, 3);
-	myRenderer.ReadBuffer(attr_col, 4);
-
-	model_axis.Render();
-	myRenderer.ResetSeekBuffer();
+	myRenderer.ReadBuffer(attr_col, 2);
+	ogl::Render(ogl::PRIMITIVE_TYPES::POINTS, 8);
 
 	for (auto& objet : everyWall)
 	{
