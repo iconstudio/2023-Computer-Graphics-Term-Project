@@ -32,9 +32,34 @@ public:
 	~Player()
 	{}
 
-	Entity* Shot()
+	std::vector<Entity*> FindTargets(Entity* enemylist[], const size_t& count) const
 	{
-		return nullptr;
+		return {};
+	}
+
+	void Attack(const std::vector<Enemy*>& enemylist)
+	{
+
+	}
+
+	void GiveDamageTo(Entity* const target)
+	{
+
+	}
+
+	void Jump()
+	{
+
+	}
+
+	void FlashJump()
+	{
+
+	}
+
+	bool IsJumpable() const
+	{
+
 	}
 
 	void Awake()
@@ -128,7 +153,7 @@ public:
 		{
 			if (ogl::IsLeftMouseButton(button))
 			{
-				
+
 			}
 		}
 	}
