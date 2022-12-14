@@ -183,12 +183,6 @@
     <ClCompile Include="ImageLoader.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="MoveHelper.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="GravityHelper.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="StaticObject.cpp">
       <Filter>소스 파일\Core</Filter>
     </ClCompile>
@@ -339,12 +333,6 @@
       <Filter>헤더 파일\Contents\Models</Filter>
     </ClInclude>
     <ClInclude Include="ImageLoader.hpp">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="MoveHelper.hpp">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="GravityHelper.hpp">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="StaticObject.hpp">

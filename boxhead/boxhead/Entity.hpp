@@ -1,7 +1,5 @@
 #pragma once
 #include "BoxCollider.hpp"
-#include "GravityHelper.hpp"
-#include "MoveHelper.hpp"
 
 class Entity : public GameObject
 {
@@ -286,9 +284,7 @@ public:
 	
 	float myHealth;
 	float maxHealth;
-
-	MoveHelper moveHelper;
-
+	
 	bool onGround;
 	float mySpeed;
 	float maxSpeed;
