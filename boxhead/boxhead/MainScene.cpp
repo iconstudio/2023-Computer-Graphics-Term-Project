@@ -28,12 +28,9 @@ void MainScene::Render()
 	constexpr float img_ratio = 64.0f / 256.0f;
 	constexpr float himgw = 0.1;
 	constexpr float himgh = himgw / (img_ratio);
-
-	constexpr float dx = 0.0f;
-	constexpr float dy = 0.2f;
-
+	
 	// 기하 변환
-	glTranslatef(dx, dy, 0.0f);
+	glTranslatef(titleCoords.x, titleCoords.y, titleCoords.z);
 	glRotatef(90, 0, 0, 1);
 	
 	// 렌더링
@@ -52,6 +49,30 @@ void MainScene::Render()
 	glTexCoord2f(0.0f, 0.0f);
 
 	ogl::PrimitivesEnd();
+
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	
+	switch (myStatus)
+	{
+		case State::INTRO:
+		{
+			ogl::DrawSetColor(0.0f, 0.0f, 0.0f);
+			glRectf(-1, -1, 1, 1);
+		}
+		break;
+		
+		case State::MENU:
+		{
+
+		}
+		break;
+
+		case State::OUTRO:
+		{
+
+		}
+		break;
+	}
 
 	glPopMatrix();
 }

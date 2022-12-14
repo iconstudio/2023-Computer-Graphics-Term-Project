@@ -225,6 +225,8 @@
     <ClCompile Include="WorldManager.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\Shaders\CircleP.glsl" />
+    <None Include="..\Shaders\CircleV.glsl" />
     <None Include="..\Shaders\PlainP.glsl" />
     <None Include="..\Shaders\PlainV.glsl" />
     <None Include="..\Shaders\TextureP.glsl" />

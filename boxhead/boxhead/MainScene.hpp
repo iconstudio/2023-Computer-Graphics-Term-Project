@@ -3,11 +3,19 @@
 
 class MainScene : public Scene
 {
+private:
+	enum class State
+	{
+		INTRO, MENU, OUTRO
+	};
+
 public:
 	MainScene(const size_t& id)
 		: Scene(id)
 		, textureRenderer(), mainCamera(ogl::up)
-		, titleCoords(0.5f, 0.5f, 0.5f)
+		, titleCoords(0.0f, 0.2f, 0.0f)
+		, myStatus(State::INTRO)
+		, introFadeTime(introFadePeriod), outroFadeTime(outroFadePeriod)
 	{
 		SetName("MainScene");
 	}
@@ -43,13 +51,41 @@ public:
 		Scene::Start();
 
 		textureRenderer.Start();
+
+		myStatus = State::INTRO;
+		introFadeTime = introFadePeriod;
+		outroFadeTime = outroFadePeriod;
 	}
 
 	void Update() override
 	{
 		const auto delta_time = Timer::GetDeltaTime();
 
-		
+		if (0 < introFadeTime)
+		{
+			
+		}
+
+		switch (myStatus)
+		{
+			case State::INTRO:
+			{
+
+			}
+			break;
+
+			case State::MENU:
+			{
+
+			}
+			break;
+
+			case State::OUTRO:
+			{
+
+			}
+			break;
+		}
 	}
 	
 	void OnKeyboard(const unsigned char& key, const int& x, const int& y) override
@@ -126,9 +162,11 @@ public:
 	
 	glm::vec3 titleCoords;
 
-	float introFadeTime = 2.0f;
-	float introFadePeriod = 2.0f;
+	State myStatus;
+	
+	float introFadeTime;
+	const float introFadePeriod = 2.0f;
 
-	float outroFadeTime = 4.0f;
-	float outroFadePeriod = 4.0f;
+	float outroFadeTime;
+	const float outroFadePeriod = 4.0f;
 };
