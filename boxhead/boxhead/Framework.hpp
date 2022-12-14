@@ -423,6 +423,8 @@ private:
 		auto dirt_tex_3 = LoadTexture("Dirt 3", "textures/TDF2.bmp");
 		auto dirt_tex_4 = LoadTexture("Dirt 4", "textures/TDF3.bmp");
 		auto dirt_tex_5 = LoadTexture("Dirt 5", "textures/TDF7.bmp");
+		auto title_tex = LoadTexture("Title", "textures/title.png");
+		auto shadow_tex = LoadTexture("Shadow", "textures/title.png");
 	}
 
 	GLuint InternalLoadTexture(std::string_view filepath);

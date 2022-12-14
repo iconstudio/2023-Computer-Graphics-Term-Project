@@ -55,6 +55,9 @@
     <Filter Include="리소스 파일\Models">
       <UniqueIdentifier>{f315cda2-85fa-4eb1-8224-b24461e52df9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="리소스 파일\Textures\Tiles">
+      <UniqueIdentifier>{b505d806-87fc-4964-b7a9-55533776ded1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -357,56 +360,65 @@
     </Text>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="textures\TDF1.bmp">
+    <Image Include="textures\shadow.png">
       <Filter>리소스 파일\Textures</Filter>
     </Image>
-    <Image Include="textures\TDF2.bmp">
+    <Image Include="textures\title.png">
       <Filter>리소스 파일\Textures</Filter>
     </Image>
-    <Image Include="textures\TDF3.bmp">
-      <Filter>리소스 파일\Textures</Filter>
-    </Image>
-    <Image Include="textures\TDF4.bmp">
-      <Filter>리소스 파일\Textures</Filter>
-    </Image>
-    <Image Include="textures\TDF5.bmp">
-      <Filter>리소스 파일\Textures</Filter>
-    </Image>
-    <Image Include="textures\TDF7.bmp">
-      <Filter>리소스 파일\Textures</Filter>
-    </Image>
-    <Image Include="textures\TDX0.bmp">
-      <Filter>리소스 파일\Textures</Filter>
-    </Image>
-    <Image Include="textures\TDX3.bmp">
+    <Image Include="textures\vignette.png">
       <Filter>리소스 파일\Textures</Filter>
     </Image>
     <Image Include="textures\big_dripleaf_stem.png">
-      <Filter>리소스 파일\Textures</Filter>
+      <Filter>리소스 파일\Textures\Tiles</Filter>
     </Image>
     <Image Include="textures\big_dripleaf_tip.png">
-      <Filter>리소스 파일\Textures</Filter>
+      <Filter>리소스 파일\Textures\Tiles</Filter>
     </Image>
     <Image Include="textures\brewing_stand_base.png">
-      <Filter>리소스 파일\Textures</Filter>
+      <Filter>리소스 파일\Textures\Tiles</Filter>
     </Image>
     <Image Include="textures\chiseled_deepslate.png">
-      <Filter>리소스 파일\Textures</Filter>
+      <Filter>리소스 파일\Textures\Tiles</Filter>
     </Image>
     <Image Include="textures\chiseled_polished_blackstone.png">
-      <Filter>리소스 파일\Textures</Filter>
+      <Filter>리소스 파일\Textures\Tiles</Filter>
     </Image>
     <Image Include="textures\chiseled_stone_bricks_side.png">
-      <Filter>리소스 파일\Textures</Filter>
+      <Filter>리소스 파일\Textures\Tiles</Filter>
     </Image>
     <Image Include="textures\dark_oak_log.png">
-      <Filter>리소스 파일\Textures</Filter>
+      <Filter>리소스 파일\Textures\Tiles</Filter>
     </Image>
     <Image Include="textures\dark_oak_log_top.png">
-      <Filter>리소스 파일\Textures</Filter>
+      <Filter>리소스 파일\Textures\Tiles</Filter>
     </Image>
     <Image Include="textures\dark_oak_planks.png">
-      <Filter>리소스 파일\Textures</Filter>
+      <Filter>리소스 파일\Textures\Tiles</Filter>
+    </Image>
+    <Image Include="textures\TDF1.bmp">
+      <Filter>리소스 파일\Textures\Tiles</Filter>
+    </Image>
+    <Image Include="textures\TDF2.bmp">
+      <Filter>리소스 파일\Textures\Tiles</Filter>
+    </Image>
+    <Image Include="textures\TDF3.bmp">
+      <Filter>리소스 파일\Textures\Tiles</Filter>
+    </Image>
+    <Image Include="textures\TDF4.bmp">
+      <Filter>리소스 파일\Textures\Tiles</Filter>
+    </Image>
+    <Image Include="textures\TDF5.bmp">
+      <Filter>리소스 파일\Textures\Tiles</Filter>
+    </Image>
+    <Image Include="textures\TDF7.bmp">
+      <Filter>리소스 파일\Textures\Tiles</Filter>
+    </Image>
+    <Image Include="textures\TDX0.bmp">
+      <Filter>리소스 파일\Textures\Tiles</Filter>
+    </Image>
+    <Image Include="textures\TDX3.bmp">
+      <Filter>리소스 파일\Textures\Tiles</Filter>
     </Image>
   </ItemGroup>
 </Project>

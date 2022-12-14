@@ -296,6 +296,7 @@
     <Image Include="textures\dark_oak_log.png" />
     <Image Include="textures\dark_oak_log_top.png" />
     <Image Include="textures\dark_oak_planks.png" />
+    <Image Include="textures\shadow.png" />
     <Image Include="textures\TDF1.bmp" />
     <Image Include="textures\TDF2.bmp" />
     <Image Include="textures\TDF3.bmp" />
@@ -304,6 +305,8 @@
     <Image Include="textures\TDF7.bmp" />
     <Image Include="textures\TDX0.bmp" />
     <Image Include="textures\TDX3.bmp" />
+    <Image Include="textures\title.png" />
+    <Image Include="textures\vignette.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
