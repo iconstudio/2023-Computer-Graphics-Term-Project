@@ -183,6 +183,7 @@ public:
 	}
 
 	std::vector<Entity*> myInstances;
+	std::vector<StaticObject*> everyWall;
 
 private:
 	std::string myName;

@@ -1,4 +1,5 @@
 #pragma once
+#include "Wall.hpp"
 
 struct HeightBlock
 {

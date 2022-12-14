@@ -16,8 +16,9 @@
 #include "Transform.hpp"
 #include "GameObject.hpp"
 #include "Camera.hpp"
-#include "Scene.hpp"
 #include "Entity.hpp"
+#include "StaticObject.hpp"
+#include "Scene.hpp"
 #include "Collider.hpp"
 #include "GameViewManger.hpp"
 

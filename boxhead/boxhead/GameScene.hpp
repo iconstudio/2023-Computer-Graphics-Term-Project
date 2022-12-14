@@ -311,4 +311,7 @@ private:
 	float waveTime;
 	float wavePeriod;
 	float waveBetweenDelay;
+
+	friend class WorldManager;
+	friend class Scene;
 };

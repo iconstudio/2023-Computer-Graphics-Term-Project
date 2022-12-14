@@ -216,6 +216,7 @@
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SideCubeModel.cpp" />
+    <ClCompile Include="StaticObject.cpp" />
     <ClCompile Include="stdafx.cpp" />
     <ClCompile Include="TextureCubeModel.cpp" />
     <ClCompile Include="TexturePlaneModel.cpp" />
@@ -271,6 +272,7 @@
     <ClInclude Include="resource.h" />
     <ClInclude Include="Scene.hpp" />
     <ClInclude Include="SideCubeModel.hpp" />
+    <ClInclude Include="StaticObject.hpp" />
     <ClInclude Include="stdafx.hpp" />
     <ClInclude Include="TextureCubeModel.hpp" />
     <ClInclude Include="TexturePlaneModel.hpp" />

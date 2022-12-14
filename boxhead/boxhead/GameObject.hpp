@@ -365,6 +365,8 @@ public:
 	}
 #pragma endregion
 
+	std::string myName;
+
 	Transform localTransform;
 	Transform worldTransform;
 
@@ -399,7 +401,6 @@ protected:
 		}
 	}
 
-	std::string myName;
 	GameObject* prevSibling;
 	GameObject* nextSibling;
 	GameObject* myParent;

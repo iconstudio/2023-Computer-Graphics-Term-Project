@@ -63,6 +63,15 @@ void GameScene::Render()
 	model_axis.Render();
 	myRenderer.ResetSeekBuffer();
 
+	for (auto& objet : everyWall)
+	{
+		objet->PrepareRendering();
+		myRenderer.ReadBuffer(attr_pos, 3);
+		myRenderer.ReadBuffer(attr_col, 4);
+		objet->Render(uniform_mat_world);
+		myRenderer.ResetSeekBuffer();
+	}
+
 	for (auto it = myInstances.begin(); it != myInstances.end(); it++)
 	{
 		auto& instance = *it;

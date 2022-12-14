@@ -15,7 +15,7 @@ public:
 
 	constexpr Entity()
 		: GameObject()
-		, myName("Entity"), myHealth(), maxHealth()
+		, myHealth(), maxHealth()
 		, myModel()
 		, myCollider()
 		, isStatic(false)
@@ -23,7 +23,9 @@ public:
 		, myDirection()
 		, maxSpeed(8.0f), minVSpeed(-8.0f), maxVSpeed(10.0f)
 		, myFriction(20.0f), airDamping(5.0f), reposeDamping(30.0f)
-	{}
+	{
+		myName = "Entity";
+	}
 
 	constexpr Entity(const ModelView& model_view)
 		: Entity()
@@ -258,11 +260,9 @@ public:
 	/// </summary>
 	/// <param name="other"></param>
 	/// <returns></returns>
-	bool IsCollideWith(const Collider& other) const
+	bool IsCollideWith(const BoxCollider& other) const
 	{
-		const auto place = WhereCollideWith(other);
-
-		if (wrongCollisionCoord == place)
+		if (myCollider.Check(other))
 		{
 			return false;
 		}
@@ -271,17 +271,6 @@ public:
 			return true;
 		}
 	}
-
-	/// <summary>
-	/// 충돌한 위치를 반환합니다.
-	/// </summary>
-	/// <param name="other">다른 충돌체</param>
-	/// <returns>로컬 좌표계의 충돌 지점</returns>
-	glm::vec3 WhereCollideWith(const Collider& other) const
-	{
-		return wrongCollisionCoord;
-	}
-
 protected:
 	virtual void EnumerateTransform()
 	{
@@ -296,8 +285,7 @@ public:
 	Entity(Entity&& other) = default;
 	Entity& operator=(const Entity& other) = default;
 	Entity& operator=(Entity&& other) = default;
-
-	std::string myName;
+	
 	float myHealth;
 	float maxHealth;
 
@@ -322,8 +310,6 @@ public:
 
 	ModelView myModel;
 	BoxCollider myCollider;
-
-	static inline constexpr glm::vec3 wrongCollisionCoord = glm::vec3{ std::numeric_limits<float>::min() };
 };
 
 template<typename Ty, typename ...ArgTy>

@@ -63,19 +63,15 @@ void WorldManager::Start(Scene* scene)
 		const float cy = constants::GROUND_Y + 0.5f * cheight;
 		const float cz = boardScaleD * static_cast<float>(height_block.y);
 
-		Entity* wall = scene->CreateEntity<Entity>(wall_model_view, cx, cy, cz);
+		auto wall = new Wall{ wall_model_view, cx, cy, cz };
 		wall->Scale(boardScaleW, cheight, boardScaleD);
 		wall->myName = "Wall";
-		wall->isStatic = true;
 
 		auto& collider = wall->GetCollider();
 		collider.SetCenter(wall->GetPosition());
 		collider.SetExtent(boardScaleW * 0.5f, cheight * 0.5f, boardScaleD * 0.5f);
-		
-		if (2 < ++test)
-		{
-			break;
-		}
+
+		scene->everyWall.push_back(wall);
 	}
 
 	// 타일 텍스쳐 가져오기
