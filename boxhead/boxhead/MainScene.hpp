@@ -45,6 +45,13 @@ public:
 		textureRenderer.Start();
 	}
 
+	void Update() override
+	{
+		const auto delta_time = Timer::GetDeltaTime();
+
+		
+	}
+	
 	void OnKeyboard(const unsigned char& key, const int& x, const int& y) override
 	{
 		switch (key)
@@ -119,5 +126,9 @@ public:
 	
 	glm::vec3 titleCoords;
 
-	float introFadeTime = 4.0f;
+	float introFadeTime = 2.0f;
+	float introFadePeriod = 2.0f;
+
+	float outroFadeTime = 4.0f;
+	float outroFadePeriod = 4.0f;
 };

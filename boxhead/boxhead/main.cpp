@@ -5,7 +5,7 @@
 
 Framework MySystem{};
 
-constexpr std::string_view TITLE = "Shooter";
+constexpr std::string_view TITLE = "Hunter Killer";
 const std::vector<wchar_t> WTITLE{ TITLE.cbegin(), TITLE.cend() };
 
 std::random_device seed{};

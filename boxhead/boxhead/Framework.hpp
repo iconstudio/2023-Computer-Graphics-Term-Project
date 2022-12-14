@@ -241,11 +241,11 @@ public:
 		return gameModels.at(FindModelID(name));
 	}
 
-	GLint LoadTexture(std::string_view name, std::string_view filepath, GLenum format = GL_RGB)
+	GLint LoadTexture(std::string_view name, std::string_view filepath, GLint px_format = GL_RGB, GLenum format = GL_RGB)
 	{
 		AddTextureID(name, gameTextureIDs.size());
 
-		GLint texture = InternalLoadTexture(filepath, format);
+		GLint texture = InternalLoadTexture(filepath, px_format, format);
 
 		gameTextures.push_back(texture);
 
@@ -423,13 +423,13 @@ private:
 		auto dirt_tex_3 = LoadTexture("Dirt 3", "textures/TDF2.bmp");
 		auto dirt_tex_4 = LoadTexture("Dirt 4", "textures/TDF3.bmp");
 		auto dirt_tex_5 = LoadTexture("Dirt 5", "textures/TDF7.bmp");
-		// 6
-		auto title_tex = LoadTexture("Title", "textures/title.png", GL_RGBA);
 		// 7
+		auto title_tex = LoadTexture("Title", "textures/title.png", GL_RGBA, GL_RGBA);
+		// 8
 		auto shadow_tex = LoadTexture("Shadow", "textures/shadow.png");
 	}
 
-	GLuint InternalLoadTexture(std::string_view filepath, GLenum format = GL_RGB);
+	GLuint InternalLoadTexture(std::string_view filepath, GLint px_format, GLenum format);
 
 	std::vector<Scene*> myScenes;
 	Scene* currentScene;

@@ -4,7 +4,7 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include "ImageLoader.hpp"
 
-GLuint Framework::InternalLoadTexture(std::string_view filepath, GLenum format)
+GLuint Framework::InternalLoadTexture(std::string_view filepath, GLint px_format, GLenum format)
 {
 	GLuint texture = 0;
 	glGenTextures(1, &texture);
@@ -23,7 +23,7 @@ GLuint Framework::InternalLoadTexture(std::string_view filepath, GLenum format)
 	unsigned char* data = img::stbi_load(filepath.data(), &width, &height, &nrChannels, 0);
 	if (data)
 	{
-		glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, data);
+		glTexImage2D(GL_TEXTURE_2D, 0, px_format, width, height, 0, format, GL_UNSIGNED_BYTE, data);
 		glGenerateMipmap(GL_TEXTURE_2D);
 	}
 	else
