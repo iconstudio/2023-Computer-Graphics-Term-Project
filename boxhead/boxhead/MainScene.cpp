@@ -72,6 +72,8 @@ void MainScene::Render()
 		{
 			const float menu_item_fade = (1.0f - outroTitleTime / outroTitlePeriod);
 
+			titleCoords.y = 0.4f * std::pow(1.0f - menu_item_fade, 3.0f);
+
 			menu_item_alpha = catmull_rom_spline(menu_item_fade, 1.0f, 0.6f, 0.55f, 0.0f);
 		}
 	}
@@ -103,6 +105,7 @@ void MainScene::Render()
 		{
 			glBindTexture(GL_TEXTURE_2D, texid);
 			glTexGeni(GL_S, GL_TEXTURE_GEN_MODE, GL_SPHERE_MAP);
+			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 			if (menuSelected == index)
 			{
@@ -131,7 +134,7 @@ void MainScene::Render()
 	}
 	else // µµ¿ò¸»
 	{
-		const float ratio = static_cast<float>(ogl::gl_width) / static_cast<float>(ogl::gl_height);
+		//const float ratio = static_cast<float>(ogl::gl_width) / static_cast<float>(ogl::gl_height);
 
 		glPushMatrix();
 		glLoadIdentity();
