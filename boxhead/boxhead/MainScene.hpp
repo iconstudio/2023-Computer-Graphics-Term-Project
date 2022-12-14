@@ -42,9 +42,9 @@ public:
 		const ogl::Vertex2D rect[] =
 		{
 			{ -1.0f, -1.0f, fade_color },
-			{ -1.0f, +1.0f, fade_color },
+			{ +1.0f, -1.0f, fade_color },
 			{ +1.0f, +1.0f, fade_color },
-			{ +1.0f, -1.0f, fade_color }
+			{ -1.0f, +1.0f, fade_color }
 		};
 		
 		auto& floor_buffer = fadeBuffer.Push(rect);
@@ -197,8 +197,8 @@ public:
 	bool doingAppQuit;
 	
 	float introFadeTime;
-	const float introFadePeriod = 2.0f;
+	const float introFadePeriod = 0.8f;
 
 	float outroFadeTime;
-	const float outroFadePeriod = 4.0f;
+	const float outroFadePeriod = 1.0f;
 };

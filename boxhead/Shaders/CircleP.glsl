@@ -11,7 +11,7 @@ void main()
 	float centre_distance = distance(v_Position, vec2(0.0f));
 
 	vec4 outcolour = v_Colour;
-	outcolour.a = step(u_Percentage, centre_distance * centre_distance);
+	outcolour.a = 1 - step(u_Percentage, centre_distance * centre_distance);
 	
 	FragColor = outcolour;
 }
