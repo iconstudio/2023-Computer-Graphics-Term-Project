@@ -47,6 +47,8 @@ public:
 		playerCharacter->myCamera = &viewManager.GetCamera();
 		viewManager.SetFollower(playerCharacter);
 
+		AddEntity(playerCharacter);
+
 		worldManager.Awake();
 		worldManager.Start(this);
 	}
@@ -78,7 +80,7 @@ public:
 
 		Scene::Update();
 
-		playerCharacter->Update(delta_time);
+		//playerCharacter->Update(delta_time);
 		UpdateEnemyList();
 
 		viewManager.Update(delta_time);
@@ -193,7 +195,7 @@ public:
 			//SetCapture(WindowManager::windowHandle);
 		}
 	}
-	
+
 	void Render() override;
 
 	void Cleanup() override
