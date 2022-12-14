@@ -10,6 +10,7 @@ void GameScene::Render()
 	glPushMatrix();
 	const auto& matrix_cam = viewManager.GetCameraMatrix();
 	const auto& matrix_view = viewManager.GetPerspectiveViewMatrix();
+	const auto& otho_view = viewManager.GetOrthodoxViewMatrix();
 
 	textureRenderer.PrepareRendering();
 	auto tex_uniform_world = textureRenderer.GetUniform("a_WorldMatrix");
@@ -37,13 +38,22 @@ void GameScene::Render()
 	worldManager.Render(model_texfloor, tex_uniform_world, tex_uniform_sample);
 	textureRenderer.ResetSeekBuffer();
 
+	// 12: 화면 암등 효과
 	auto model_vignette = ModelView::GetReference(4);
 	model_vignette.PrepareRendering();
 	textureRenderer.ReadBuffer(attr_texpos, 3);
 	textureRenderer.ReadBuffer(attr_texcoord, 2);
 
+	tex_uniform_world.AssignMatrix4x4(ogl::identity);
+	tex_uniform_camera.AssignMatrix4x4(ogl::identity);
+	tex_uniform_proj.AssignMatrix4x4(otho_view);
+
+	tex_uniform_sample.ActiveTexture(12);
 	tex_uniform_sample.BindTexture(13);
+
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	model_vignette.Render();
+	ogl::Render(ogl::PRIMITIVE_TYPES::QUADS, 4);
 	textureRenderer.ResetSeekBuffer();
 
 	attr_texpos.DisableVertexArray();
@@ -107,32 +117,4 @@ void GameScene::Render()
 	attr_col.DisableVertexArray();
 	ogl::ResetProgram();
 	glPopMatrix();
-
-	// 12: 화면 암등 효과
-	glPushMatrix();
-	glOrtho(-1, 1, -1, 1, -1, 10);
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-
-	//textureRenderer.PrepareRendering();
-	ogl::TurnOnOption(GL_TEXTURE_2D);
-	glTexGeni(GL_S, GL_TEXTURE_GEN_MODE, GL_SPHERE_MAP);
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
-	ogl::DrawSetColor(1.0f, 1.0f, 1.0f, 0.12f);
-	ogl::PrimitivesBegin(ogl::PRIMITIVE_TYPES::QUADS);
-	glVertex2f(-1, +1);
-	glTexCoord2f(1.0f, 0.0f);
-	glVertex2f(-1, -1);
-	glTexCoord2f(1.0f, 1.0f);
-	glVertex2f(+1, -1);
-	glTexCoord2f(0.0f, 1.0f);
-	glVertex2f(+1, +1);
-	glTexCoord2f(0.0f, 0.0f);
-	ogl::PrimitivesEnd();
-	textureRenderer.ResetSeekBuffer();
-	
-	glPopMatrix();
-	ogl::ResetProgram();
-	ogl::TurnOffOption(GL_TEXTURE_2D);
 }

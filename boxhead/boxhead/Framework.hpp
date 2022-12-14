@@ -424,8 +424,10 @@ private:
 		AddModel<SideCubeModel>("Cube", cube_buffer);
 		AddModel<AxisModel>("Axis", axis_buffer);
 		AddModel<FloorModel>("Floor", floor_buffer);
-		AddModel<TexturePlaneModel>("TextureFloor", texfloor_buffer);
-		AddModel<TexturePlaneModel>("Vignette", tex_vig_buffer);
+		
+		auto aa = AddModel<TexturePlaneModel>("TextureFloor", texfloor_buffer);
+
+		auto bb = AddModel<TexturePlaneModel>("Vignette", tex_vig_buffer);
 	}
 
 	void CreateTextures()

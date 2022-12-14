@@ -28,4 +28,9 @@ public:
 
 	~Wall()
 	{}
+
+	void Render(ogl::Uniform& world) override
+	{
+		StaticObject::Render(world);
+	}
 };

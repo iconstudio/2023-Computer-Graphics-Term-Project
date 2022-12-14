@@ -12,7 +12,8 @@ public:
 	{
 		Model::PrepareRendering();
 
-		tex_uniform.Assign(textureID);
+		//tex_uniform.BindTexture(textureID);
+		//tex_uniform.Assign(textureID);
 	}
 
 	virtual void Render() const override
