@@ -1,15 +1,17 @@
 #version 450
 layout(location=0) out vec4 FragColor;
 
-in vec4 v_Position;
+in vec2 v_Position;
 in vec4 v_Colour;
 
 uniform float u_Percentage;
-uniform float u_Threshold;
 
 void main()
 {
-	
+	float centre_distance = distance(v_Position, vec2(0.0f));
 
-	FragColor = v_Colour;
+	vec4 outcolour = v_Colour;
+	outcolour.a = step(u_Percentage, centre_distance * centre_distance);
+	
+	FragColor = outcolour;
 }
