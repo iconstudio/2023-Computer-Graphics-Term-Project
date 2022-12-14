@@ -149,10 +149,6 @@ public:
 						doingAppQuit = true;
 					}
 				}
-				else
-				{
-
-				}
 			}
 			break;
 

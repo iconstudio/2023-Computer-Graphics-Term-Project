@@ -432,7 +432,9 @@ private:
 		// 10
 		auto menu3_tex = LoadTexture("Menu 3", "textures/menu_exit.png", GL_RGBA, GL_RGBA);
 		// 11
-		auto shadow_tex = LoadTexture("Shadow", "textures/shadow.png");
+		auto menu_help = LoadTexture("Menu 4", "textures/help.png", GL_RGBA, GL_RGBA);
+		// 12
+		auto shadow_tex = LoadTexture("Shadow", "textures/shadow.png", GL_RGBA, GL_RGBA);
 	}
 
 	GLuint InternalLoadTexture(std::string_view filepath, GLint px_format, GLenum format);

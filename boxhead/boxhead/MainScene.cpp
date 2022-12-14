@@ -72,7 +72,7 @@ void MainScene::Render()
 		{
 			const float menu_item_fade = (1.0f - outroTitleTime / outroTitlePeriod);
 
-			menu_item_alpha = catmull_rom_spline(menu_item_fade, 1.0f, 0.6, 0.55, 0.0f);
+			menu_item_alpha = catmull_rom_spline(menu_item_fade, 1.0f, 0.6f, 0.55f, 0.0f);
 		}
 	}
 	else if (State::NEXT_ROOM == myStatus || State::EXIT == myStatus)
@@ -103,7 +103,6 @@ void MainScene::Render()
 		{
 			glBindTexture(GL_TEXTURE_2D, texid);
 			glTexGeni(GL_S, GL_TEXTURE_GEN_MODE, GL_SPHERE_MAP);
-			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 			if (menuSelected == index)
 			{
@@ -128,13 +127,34 @@ void MainScene::Render()
 			glTranslatef(-0.2f, 0, 0);
 			index++;
 		}
+		glPopMatrix();
 	}
 	else // µµ¿ò¸»
 	{
+		const float ratio = static_cast<float>(ogl::gl_width) / static_cast<float>(ogl::gl_height);
 
+		glPushMatrix();
+		glLoadIdentity();
+		glTranslatef(titleCoords.x, titleCoords.y - himgh - 0.3f, 0);
+		glRotatef(90, 0, 0, 1);
+		
+		glBindTexture(GL_TEXTURE_2D, 11);
+		glTexGeni(GL_S, GL_TEXTURE_GEN_MODE, GL_SPHERE_MAP);
+
+		ogl::DrawSetColor(1.0f, 1.0f, 1.0f, 1.0f);
+
+		ogl::PrimitivesBegin(ogl::PRIMITIVE_TYPES::QUADS);
+		glVertex2f(-0.5f, +0.5f);
+		glTexCoord2f(1.0f, 0.0f);
+		glVertex2f(-0.5f, -0.5f);
+		glTexCoord2f(1.0f, 1.0f);
+		glVertex2f(+0.5f, -0.5f);
+		glTexCoord2f(0.0f, 1.0f);
+		glVertex2f(+0.5f, +0.5f);
+		glTexCoord2f(0.0f, 0.0f);
+		ogl::PrimitivesEnd();
+		glPopMatrix();
 	}
-
-	glPopMatrix();
 
 	//
 	glPushMatrix();
