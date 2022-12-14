@@ -17,6 +17,8 @@ public:
 		maxSpeed = moveMaxSpeed;
 		myAccel = moveAccel;
 		myFriction = moveFriction;
+
+		myCollider.SetExtent(1.0f, 2.0f, 1.0f);
 	}
 
 	Player(const glm::vec3& position)

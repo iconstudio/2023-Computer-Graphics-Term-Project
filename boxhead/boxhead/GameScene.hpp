@@ -20,7 +20,7 @@ public:
 		, myRenderer(), textureRenderer()
 		, worldManager(tileSizeX, tileSizeY, tileSizeZ), viewManager()
 		, windowFocused(false), cursorClicked(false), cursorPosition(), clientRect()
-		, playerCharacter(nullptr), playerSpawnPosition(1.0f, 1.0f, 1.0f)
+		, playerCharacter(nullptr), playerSpawnPosition(2.0f, 1.0f, 2.0f)
 		, everyEnemy()
 	{
 		SetName("GameScene");
