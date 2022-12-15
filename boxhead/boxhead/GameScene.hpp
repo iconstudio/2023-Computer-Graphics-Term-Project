@@ -25,6 +25,8 @@ public:
 	{
 		SetName("GameScene");
 		everyEnemy.reserve(50);
+
+		Instance = this;
 	}
 
 	void Awake() override
@@ -273,6 +275,13 @@ public:
 
 		ClipCursor(NULL);
 	}
+
+	constexpr float GetActualHeight(const float& x, const float& z) const
+	{
+		return worldManager.GetActualHeight(x, z);
+	}
+
+	static GameScene* Instance;
 
 private:
 	template<typename Ty, typename... Args>
