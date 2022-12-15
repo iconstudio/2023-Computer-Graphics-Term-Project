@@ -423,5 +423,11 @@
     <Image Include="textures\menu_start.png">
       <Filter>리소스 파일\Textures</Filter>
     </Image>
+    <Image Include="textures\iron_hoe.png">
+      <Filter>리소스 파일\Textures</Filter>
+    </Image>
+    <Image Include="textures\iron_sword.png">
+      <Filter>리소스 파일\Textures</Filter>
+    </Image>
   </ItemGroup>
 </Project>

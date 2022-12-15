@@ -15,6 +15,7 @@ public:
 
 	virtual void Render() const override
 	{
+		ogl::TurnOnOption(GL_TEXTURE_2D);
 		for (GLint i = 0; i < 6; i++)
 		{
 			ogl::Render(ogl::PRIMITIVE_TYPES::TRIANGLE_FAN, 4, i * 4);

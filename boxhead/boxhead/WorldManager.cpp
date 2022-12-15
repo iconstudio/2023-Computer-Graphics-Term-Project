@@ -112,7 +112,7 @@ void WorldManager::Start(Scene* scene)
 	}
 }
 
-void WorldManager::Render(ModelView model, ogl::Pipeline& renderer, ogl::Attribute& position, ogl::Attribute& texcoords, ogl::Uniform& world_uniform, ogl::Uniform& texture_uniform)
+void WorldManager::Render(ModelView model, ogl::Uniform& world_uniform, ogl::Uniform& texture_uniform)
 {
 	for (auto& tile : tileMap)
 	{
@@ -120,12 +120,8 @@ void WorldManager::Render(ModelView model, ogl::Pipeline& renderer, ogl::Attribu
 
 		const GLint& texid = tile.textureID;
 
-		renderer.ReadBuffer(position, 3);
-		renderer.ReadBuffer(texcoords, 2);
-		
-		texture_uniform.ActiveTexture(texid);
+		glActiveTexture(GL_TEXTURE0);
 		texture_uniform.BindTexture(texid);
 		model.Render();
-		renderer.ResetSeekBuffer();
 	}
 }

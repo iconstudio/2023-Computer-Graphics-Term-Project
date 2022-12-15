@@ -294,6 +294,8 @@
     <Image Include="textures\dark_oak_log.png" />
     <Image Include="textures\dark_oak_log_top.png" />
     <Image Include="textures\dark_oak_planks.png" />
+    <Image Include="textures\iron_hoe.png" />
+    <Image Include="textures\iron_sword.png" />
     <Image Include="textures\menu_exit.png" />
     <Image Include="textures\menu_help.png" />
     <Image Include="textures\menu_start.png" />

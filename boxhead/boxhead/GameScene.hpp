@@ -17,7 +17,7 @@ class GameScene : public Scene
 public:
 	constexpr GameScene(const size_t& id)
 		: Scene(id)
-		, myRenderer(), textureRenderer()
+		, myRenderer(), textureRenderer(), overTextureRenderer()
 		, worldManager(tileSizeX, tileSizeY, tileSizeZ), viewManager()
 		, windowFocused(false), cursorClicked(false), cursorPosition(), clientRect()
 		, playerCharacter(nullptr), playerSpawnPosition(3.0f, 1.0f, 3.0f)
@@ -40,6 +40,11 @@ public:
 		textureRenderer.LoadVertexShader("..\\Shaders\\TextureV.glsl");
 		textureRenderer.LoadFragmentShader("..\\Shaders\\TextureP.glsl");
 		textureRenderer.Ready();
+
+		overTextureRenderer.Awake();
+		overTextureRenderer.LoadVertexShader("..\\Shaders\\TextureV.glsl");
+		overTextureRenderer.LoadFragmentShader("..\\Shaders\\TextureP.glsl");
+		overTextureRenderer.Ready();
 
 		viewManager.Awake();
 
@@ -72,6 +77,7 @@ public:
 
 		myRenderer.Start();
 		textureRenderer.Start();
+		overTextureRenderer.Start();
 	}
 
 	void Update() override
@@ -346,7 +352,7 @@ private:
 	}
 
 	ogl::Pipeline myRenderer;
-	ogl::Pipeline textureRenderer;
+	ogl::Pipeline textureRenderer, overTextureRenderer;
 
 	bool windowFocused;
 	bool cursorClicked;

@@ -18,8 +18,6 @@ void GameScene::Render()
 	auto tex_uniform_proj = textureRenderer.GetUniform("a_ProjMatrix");
 	auto tex_uniform_sample = textureRenderer.GetUniform("u_Texture");
 
-	auto& floor_texture = Framework::GetTextureBuffer(0);
-
 	tex_uniform_camera.AssignMatrix4x4(matrix_cam);
 	tex_uniform_proj.AssignMatrix4x4(matrix_view);
 
@@ -32,27 +30,12 @@ void GameScene::Render()
 	// 3: 텍스쳐 바닥
 	auto model_texfloor = ModelView::GetReference(3);
 	model_texfloor.PrepareRendering();
-	
-	worldManager.Render(model_texfloor, textureRenderer, attr_texpos, attr_texcoord, tex_uniform_world, tex_uniform_sample);
-
-	// 12: 화면 암등 효과
-	auto model_vignette = ModelView::GetReference(4);
-	model_vignette.PrepareRendering();
 	textureRenderer.ReadBuffer(attr_texpos, 3);
 	textureRenderer.ReadBuffer(attr_texcoord, 2);
 
-	tex_uniform_world.AssignMatrix4x4(ogl::identity);
-	tex_uniform_camera.AssignMatrix4x4(ogl::identity);
-	tex_uniform_proj.AssignMatrix4x4(otho_view);
-
-	tex_uniform_sample.ActiveTexture(12);
-	tex_uniform_sample.BindTexture(13);
-
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	model_vignette.Render();
-	ogl::Render(ogl::PRIMITIVE_TYPES::QUADS, 4);
+	worldManager.Render(model_texfloor, tex_uniform_world, tex_uniform_sample);
 	textureRenderer.ResetSeekBuffer();
-
+	
 	attr_texpos.DisableVertexArray();
 	attr_texcoord.DisableVertexArray();
 	ogl::ResetProgram();
@@ -75,7 +58,6 @@ void GameScene::Render()
 	auto attr_pos = myRenderer.BeginAttribute("a_Position", shade_stride);
 	auto attr_col = myRenderer.BeginAttribute("a_Colour", shade_stride);
 
-	// 버그 있음
 	myRenderer.ReadBuffer(attr_pos, 3);
 	myRenderer.ReadBuffer(attr_col, 2);
 	ogl::Render(ogl::PRIMITIVE_TYPES::POINTS, 8);
@@ -106,6 +88,39 @@ void GameScene::Render()
 
 	attr_pos.DisableVertexArray();
 	attr_col.DisableVertexArray();
-	ogl::ResetProgram();
 	glPopMatrix();
+	ogl::ResetProgram();
+
+	ogl::TurnOnOption(GL_TEXTURE_2D);
+	glPushMatrix();
+
+	overTextureRenderer.PrepareRendering();
+	auto ov_uniform_world = overTextureRenderer.GetUniform("a_WorldMatrix");
+	auto ov_uniform_camera = overTextureRenderer.GetUniform("a_CameraMatrix");
+	auto ov_uniform_proj = overTextureRenderer.GetUniform("a_ProjMatrix");
+	auto ov_uniform_sample = overTextureRenderer.GetUniform("u_Texture");
+
+	auto attr_ovpos = overTextureRenderer.BeginAttribute("a_Position", shade_tex);
+	auto attr_ovcoord = overTextureRenderer.BeginAttribute("a_TexCoord", shade_tex);
+	
+	// 12: 화면 암등 효과
+	auto model_vignette = ModelView::GetReference(4);
+	model_vignette.PrepareRendering();
+	overTextureRenderer.ReadBuffer(attr_ovpos, 3);
+	overTextureRenderer.ReadBuffer(attr_ovcoord, 2);
+
+	ov_uniform_world.AssignMatrix4x4(ogl::identity);
+	ov_uniform_camera.AssignMatrix4x4(ogl::identity);
+	ov_uniform_proj.AssignMatrix4x4(otho_view);
+
+	ov_uniform_sample.BindTexture(13);
+
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	model_vignette.Render();
+	overTextureRenderer.ResetSeekBuffer();
+
+	attr_ovpos.DisableVertexArray();
+	attr_ovcoord.DisableVertexArray();
+	glPopMatrix();
+	ogl::ResetProgram();
 }

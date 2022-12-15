@@ -50,7 +50,7 @@ public:
 
 	void Start(Scene* scene);
 
-	void Render(ModelView model, ogl::Pipeline& renderer, ogl::Attribute& position, ogl::Attribute& texcoords, ogl::Uniform& world_uniform, ogl::Uniform& texture_uniform);
+	void Render(ModelView model, ogl::Uniform& world_uniform, ogl::Uniform& texture_uniform);
 
 	constexpr float GetActualHeight(const float& x, const float& z) const
 	{

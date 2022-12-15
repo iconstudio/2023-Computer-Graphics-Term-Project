@@ -406,7 +406,7 @@ private:
 		);
 
 		// Model 3: 텍스쳐 바닥
-		auto& texfloor_buffer = textureBuffer.Push(texfloor);
+		auto& texfloor_buffer = modelBuffer.Push(texfloor);
 
 		// 
 		const ogl::blob::TexturePlane vignette = ogl::blob::plane::tex::Create
@@ -418,7 +418,7 @@ private:
 		);
 
 		// Model 4: 화면 암등 효과
-		auto& tex_vig_buffer = textureBuffer.Push(vignette);
+		auto& tex_vig_buffer = modelBuffer.Push(vignette);
 
 		//
 		const ogl::blob::TexturePlane tex_side_0 = ogl::blob::plane::tex::Create
