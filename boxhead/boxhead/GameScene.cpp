@@ -35,61 +35,37 @@ void GameScene::Render()
 
 	worldManager.Render(model_texfloor, tex_uniform_world, tex_uniform_sample);
 	textureRenderer.ResetSeekBuffer();
-	
-	attr_texpos.DisableVertexArray();
-	attr_texcoord.DisableVertexArray();
-	ogl::ResetProgram();
-	glPopMatrix();
 
-	ogl::TurnOffOption(GL_TEXTURE_2D);
-	glPushMatrix();
-	myRenderer.PrepareRendering();
-	auto uniform_mat_world = myRenderer.GetUniform("a_WorldMatrix");
-	auto uniform_mat_camera = myRenderer.GetUniform("a_CameraMatrix");
-	auto uniform_mat_proj = myRenderer.GetUniform("a_ProjMatrix");
+	// 5: 텍스쳐 큐브
+	auto model_texcube = ModelView::GetReference(5);
+	model_texcube.PrepareRendering();
+	textureRenderer.ReadBuffer(attr_texpos, 3);
+	textureRenderer.ReadBuffer(attr_texcoord, 2);
 
-	uniform_mat_world.AssignMatrix4x4(ogl::identity);
-	uniform_mat_camera.AssignMatrix4x4(matrix_cam);
-	uniform_mat_proj.AssignMatrix4x4(matrix_view);
+	tex_uniform_world.AssignMatrix4x4(glm::translate(ogl::identity, { 7.0, 2.0, 7.0f }));
 
-	// x, y, z, r, g, b, a
-	constexpr GLsizei shade_stride = sizeof(float) * 7;
-
-	auto attr_pos = myRenderer.BeginAttribute("a_Position", shade_stride);
-	auto attr_col = myRenderer.BeginAttribute("a_Colour", shade_stride);
-
-	myRenderer.ReadBuffer(attr_pos, 3);
-	myRenderer.ReadBuffer(attr_col, 2);
-	ogl::Render(ogl::PRIMITIVE_TYPES::POINTS, 8);
+	const GLint& texid = 3;
+	glActiveTexture(GL_TEXTURE0);
+	tex_uniform_sample.BindTexture(texid);
+	model_texcube.Render();
+	textureRenderer.ResetSeekBuffer();
 
 	for (auto& objet : everyWall)
 	{
 		objet->PrepareRendering();
-		myRenderer.ReadBuffer(attr_pos, 3);
-		myRenderer.ReadBuffer(attr_col, 4);
+		textureRenderer.ReadBuffer(attr_texpos, 3);
+		textureRenderer.ReadBuffer(attr_texcoord, 2);
 
-		objet->Render(uniform_mat_world);
-		myRenderer.ResetSeekBuffer();
+		glActiveTexture(GL_TEXTURE0);
+		tex_uniform_sample.BindTexture(texid);
+		objet->Render(tex_uniform_world);
+		textureRenderer.ResetSeekBuffer();
 	}
 
-	for (auto it = myInstances.begin(); it != myInstances.end(); it++)
-	{
-		auto& instance = *it;
-
-		//  0: 큐브
-		instance->PrepareRendering();
-
-		myRenderer.ReadBuffer(attr_pos, 3);
-		myRenderer.ReadBuffer(attr_col, 4);
-
-		instance->Render(uniform_mat_world);
-		myRenderer.ResetSeekBuffer();
-	}
-
-	attr_pos.DisableVertexArray();
-	attr_col.DisableVertexArray();
-	glPopMatrix();
+	attr_texpos.DisableVertexArray();
+	attr_texcoord.DisableVertexArray();
 	ogl::ResetProgram();
+	glPopMatrix();
 
 	ogl::TurnOnOption(GL_TEXTURE_2D);
 	glPushMatrix();
@@ -102,7 +78,7 @@ void GameScene::Render()
 
 	auto attr_ovpos = overTextureRenderer.BeginAttribute("a_Position", shade_tex);
 	auto attr_ovcoord = overTextureRenderer.BeginAttribute("a_TexCoord", shade_tex);
-	
+
 	// 12: 화면 암등 효과
 	auto model_vignette = ModelView::GetReference(4);
 	model_vignette.PrepareRendering();

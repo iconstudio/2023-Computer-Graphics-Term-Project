@@ -56,7 +56,8 @@ void WorldManager::Awake()
 void WorldManager::Start(Scene* scene)
 {
 	// 모델 가져오기
-	auto wall_model_view = ModelView::GetReference<SideCubeModel>();
+	auto wall_model_view = ModelView::GetReference<TextureCubeModel>();
+	//auto wall_model_view = ModelView::GetReference<SideCubeModel>();
 
 	bool skip_first = false;
 
@@ -119,7 +120,7 @@ void WorldManager::Render(ModelView model, ogl::Uniform& world_uniform, ogl::Uni
 		world_uniform.AssignMatrix4x4(tile.worldMatrix);
 
 		const GLint& texid = tile.textureID;
-
+		
 		glActiveTexture(GL_TEXTURE0);
 		texture_uniform.BindTexture(texid);
 		model.Render();

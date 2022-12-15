@@ -423,36 +423,73 @@ private:
 		//
 		const ogl::blob::TexturePlane tex_side_0 = ogl::blob::plane::tex::Create
 		(
-			0.0f, 0.0f, 0.0f, glm::vec2{ 0.0f, 0.0f },
-			0.0f, 0.0f, 1.0f, glm::vec2{ 0.0f, 1.0f },
-			1.0f, 0.0f, 1.0f, glm::vec2{ 1.0f, 1.0f },
-			1.0f, 0.0f, 0.0f, glm::vec2{ 1.0f, 0.0f }
+			pt1, glm::vec2{ 0.0f, 0.0f },
+			pt2, glm::vec2{ 0.0f, 1.0f },
+			pt3, glm::vec2{ 1.0f, 1.0f },
+			pt4, glm::vec2{ 1.0f, 0.0f }
 		);
-
-		/*
+		const ogl::blob::TexturePlane tex_side_1 = ogl::blob::plane::tex::Create
+		(
+			pt1, glm::vec2{ 0.0f, 0.0f },
+			pt5, glm::vec2{ 0.0f, 1.0f },
+			pt6, glm::vec2{ 1.0f, 1.0f },
+			pt2, glm::vec2{ 1.0f, 0.0f }
+		);
+		const ogl::blob::TexturePlane tex_side_2 = ogl::blob::plane::tex::Create
+		(
+			pt2, glm::vec2{ 0.0f, 0.0f },
+			pt6, glm::vec2{ 0.0f, 1.0f },
+			pt7, glm::vec2{ 1.0f, 1.0f },
+			pt3, glm::vec2{ 1.0f, 0.0f }
+		);
+		const ogl::blob::TexturePlane tex_side_3 = ogl::blob::plane::tex::Create
+		(
+			pt1, glm::vec2{ 0.0f, 0.0f },
+			pt4, glm::vec2{ 0.0f, 1.0f },
+			pt8, glm::vec2{ 1.0f, 1.0f },
+			pt5, glm::vec2{ 1.0f, 0.0f }
+		);
+		const ogl::blob::TexturePlane tex_side_4 = ogl::blob::plane::tex::Create
+		(
+			pt3, glm::vec2{ 0.0f, 0.0f },
+			pt7, glm::vec2{ 0.0f, 1.0f },
+			pt8, glm::vec2{ 1.0f, 1.0f },
+			pt4, glm::vec2{ 1.0f, 0.0f }
+		);
+		const ogl::blob::TexturePlane tex_side_5 = ogl::blob::plane::tex::Create
+		(
+			pt5, glm::vec2{ 0.0f, 0.0f },
+			pt8, glm::vec2{ 0.0f, 1.0f },
+			pt7, glm::vec2{ 1.0f, 1.0f },
+			pt6, glm::vec2{ 1.0f, 0.0f }
+		);
 		const ogl::blob::TexturePlane tex_each_sides[] =
 		{
-			ogl::blob::plane::tex::Create(pt1, pt2, pt3, pt4, glm::vec2{ 0.0f, 0.0f }),
-			ogl::blob::plane::tex::Create(pt1, pt5, pt6, pt2, {}),
-			ogl::blob::plane::tex::Create(pt2, pt6, pt7, pt3, {}),
-			ogl::blob::plane::tex::Create(pt1, pt4, pt8, pt5, {}),
-			ogl::blob::plane::tex::Create(pt3, pt7, pt8, pt4, {}),
-			ogl::blob::plane::tex::Create(pt5, pt8, pt7, pt6, {})
+			tex_side_0,
+			tex_side_1,
+			tex_side_2,
+			tex_side_3,
+			tex_side_4,
+			tex_side_5
 		};
 		const ogl::blob::TextureCube raw_texcube = ogl::blob::cube::tex::Create(tex_each_sides);
 
 		// Model 5: 텍스쳐 큐브
-		auto& texcube_buffer = modelBuffer.Push(raw_cube);
-		//*/
+		auto& texcube_buffer = modelBuffer.Push(raw_texcube);
 		
 		// 모델 준비
 		AddModel<SideCubeModel>("Cube", cube_buffer);
 		AddModel<AxisModel>("Axis", axis_buffer);
 		AddModel<FloorModel>("Floor", floor_buffer);
 
+		// 3
 		auto aa = AddModel<TexturePlaneModel>("TextureFloor", texfloor_buffer);
 
+		// 4
 		auto bb = AddModel<TexturePlaneModel>("Vignette", tex_vig_buffer);
+
+		// 5
+		auto cc = AddModel<TextureCubeModel>("Vignette", texcube_buffer);
 	}
 
 	void CreateTextures()
@@ -477,7 +514,7 @@ private:
 		// 11
 		auto menu_help = LoadTexture("Menu 4", "textures/help.png", GL_RGBA, GL_RGBA);
 		// 12
-		auto shadow_tex = LoadTexture("Shadow", "textures/shadow.png", GL_RGBA, GL_RGBA);
+		auto shadow_tex = LoadTexture("Weapon", "textures/iron_hoe.png", GL_RGBA, GL_RGBA);
 
 		// 13
 		auto vignette_tex = LoadTexture("Vignette", "textures/vignette.png", GL_RGBA, GL_RGBA);

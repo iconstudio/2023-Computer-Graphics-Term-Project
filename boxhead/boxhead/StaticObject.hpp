@@ -47,6 +47,16 @@ public:
 	virtual ~StaticObject()
 	{}
 
+	virtual void PrepareRendering() override
+	{
+		EnumerateTransform();
+
+		if (myModel.IsAvailable())
+		{
+			myModel.PrepareRendering();
+		}
+	}
+
 	virtual void Render(ogl::Uniform& world_uniform)
 	{
 		if (myChild)
@@ -63,7 +73,6 @@ public:
 
 		if (myModel.IsAvailable())
 		{
-			myModel.PrepareRendering();
 			myModel.Render();
 		}
 	}

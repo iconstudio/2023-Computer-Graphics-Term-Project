@@ -1,7 +1,5 @@
 ﻿#include "pch.hpp"
 #include "Main.hpp"
-#include "MainScene.hpp"
-#include "GameScene.hpp"
 
 Framework MySystem{};
 

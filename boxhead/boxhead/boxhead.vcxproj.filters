@@ -354,9 +354,6 @@
     </Text>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="textures\shadow.png">
-      <Filter>리소스 파일\Textures</Filter>
-    </Image>
     <Image Include="textures\title.png">
       <Filter>리소스 파일\Textures</Filter>
     </Image>

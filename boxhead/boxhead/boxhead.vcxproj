@@ -299,7 +299,6 @@
     <Image Include="textures\menu_exit.png" />
     <Image Include="textures\menu_help.png" />
     <Image Include="textures\menu_start.png" />
-    <Image Include="textures\shadow.png" />
     <Image Include="textures\TDF1.bmp" />
     <Image Include="textures\TDF2.bmp" />
     <Image Include="textures\TDF3.bmp" />

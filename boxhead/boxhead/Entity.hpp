@@ -78,7 +78,6 @@ public:
 			if (dist_ground < 0)
 			{
 				localTransform.myMatrix[3].y = constants::GROUND_Y + myCollider.GetGroundHeight();
-				//Translate(0, -dist_ground, 0);
 				vSpeed = 0;
 			}
 			else
