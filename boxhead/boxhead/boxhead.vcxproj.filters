@@ -16,12 +16,6 @@
     <Filter Include="헤더 파일\Lib">
       <UniqueIdentifier>{bbbfb052-f3af-44c2-a770-81ca0ca32cc2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\Lib">
-      <UniqueIdentifier>{f2ee6cb2-7781-4443-be08-1e4fc9fd8fc7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="헤더 파일\Core">
-      <UniqueIdentifier>{0eccec0f-6afc-494b-8af2-f9557e7073ef}</UniqueIdentifier>
-    </Filter>
     <Filter Include="헤더 파일\Contents">
       <UniqueIdentifier>{ff4d99fc-1269-45bb-ae6d-df6f76144fd1}</UniqueIdentifier>
     </Filter>
@@ -52,11 +46,17 @@
     <Filter Include="리소스 파일\Shaders">
       <UniqueIdentifier>{97fc9bcb-c0a9-49fc-9caa-c00bc8f8163b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="리소스 파일\Models">
-      <UniqueIdentifier>{f315cda2-85fa-4eb1-8224-b24461e52df9}</UniqueIdentifier>
-    </Filter>
     <Filter Include="리소스 파일\Textures\Tiles">
       <UniqueIdentifier>{b505d806-87fc-4964-b7a9-55533776ded1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="리소스 파일\Libraray">
+      <UniqueIdentifier>{feb488c2-2f23-454b-ad5a-5969ef14e35f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\MyLib">
+      <UniqueIdentifier>{f2ee6cb2-7781-4443-be08-1e4fc9fd8fc7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="헤더 파일\MyLib">
+      <UniqueIdentifier>{0eccec0f-6afc-494b-8af2-f9557e7073ef}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -69,71 +69,17 @@
     <ClCompile Include="pch.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="..\IconerLibrary\Attribute.cpp">
-      <Filter>소스 파일\Lib</Filter>
-    </ClCompile>
-    <ClCompile Include="..\IconerLibrary\BasicBlobs.cpp">
-      <Filter>소스 파일\Lib</Filter>
-    </ClCompile>
-    <ClCompile Include="..\IconerLibrary\Blobs.cpp">
-      <Filter>소스 파일\Lib</Filter>
-    </ClCompile>
-    <ClCompile Include="..\IconerLibrary\BlobUtils.cpp">
-      <Filter>소스 파일\Lib</Filter>
-    </ClCompile>
-    <ClCompile Include="..\IconerLibrary\OpenGL.cpp">
-      <Filter>소스 파일\Lib</Filter>
-    </ClCompile>
-    <ClCompile Include="..\IconerLibrary\Pipeline.cpp">
-      <Filter>소스 파일\Lib</Filter>
-    </ClCompile>
-    <ClCompile Include="..\IconerLibrary\Prototypes.cpp">
-      <Filter>소스 파일\Lib</Filter>
-    </ClCompile>
-    <ClCompile Include="..\IconerLibrary\Shader.cpp">
-      <Filter>소스 파일\Lib</Filter>
-    </ClCompile>
-    <ClCompile Include="..\IconerLibrary\Uniform.cpp">
-      <Filter>소스 파일\Lib</Filter>
-    </ClCompile>
-    <ClCompile Include="..\IconerLibrary\Utils.cpp">
-      <Filter>소스 파일\Lib</Filter>
-    </ClCompile>
-    <ClCompile Include="..\IconerLibrary\VertexStream.cpp">
-      <Filter>소스 파일\Lib</Filter>
-    </ClCompile>
-    <ClCompile Include="Scene.cpp">
-      <Filter>소스 파일\Core</Filter>
-    </ClCompile>
-    <ClCompile Include="Camera.cpp">
-      <Filter>소스 파일\Core</Filter>
-    </ClCompile>
-    <ClCompile Include="Constants.cpp">
-      <Filter>소스 파일\Core</Filter>
-    </ClCompile>
-    <ClCompile Include="Framework.cpp">
-      <Filter>소스 파일\Core</Filter>
-    </ClCompile>
     <ClCompile Include="GameScene.cpp">
       <Filter>소스 파일\Contents</Filter>
     </ClCompile>
     <ClCompile Include="Player.cpp">
       <Filter>소스 파일\Contents</Filter>
     </ClCompile>
-    <ClCompile Include="Transform.cpp">
-      <Filter>소스 파일\Core</Filter>
-    </ClCompile>
     <ClCompile Include="GameObject.cpp">
       <Filter>소스 파일\Contents</Filter>
     </ClCompile>
     <ClCompile Include="MainScene.cpp">
       <Filter>소스 파일\Contents</Filter>
-    </ClCompile>
-    <ClCompile Include="Timer.cpp">
-      <Filter>소스 파일\Core</Filter>
-    </ClCompile>
-    <ClCompile Include="WindowsManager.cpp">
-      <Filter>소스 파일\Core</Filter>
     </ClCompile>
     <ClCompile Include="SideCubeModel.cpp">
       <Filter>소스 파일\Contents</Filter>
@@ -147,32 +93,17 @@
     <ClCompile Include="CubeModel.cpp">
       <Filter>소스 파일\Contents</Filter>
     </ClCompile>
-    <ClCompile Include="ModelView.cpp">
-      <Filter>소스 파일\Core</Filter>
-    </ClCompile>
     <ClCompile Include="Wall.cpp">
       <Filter>소스 파일\Contents\World</Filter>
     </ClCompile>
     <ClCompile Include="Entity.cpp">
       <Filter>소스 파일\Contents</Filter>
     </ClCompile>
-    <ClCompile Include="Collider.cpp">
-      <Filter>소스 파일\Core</Filter>
-    </ClCompile>
-    <ClCompile Include="BoxCollider.cpp">
-      <Filter>소스 파일\Core</Filter>
-    </ClCompile>
     <ClCompile Include="WorldManager.cpp">
       <Filter>소스 파일\Contents\World</Filter>
     </ClCompile>
-    <ClCompile Include="Model.cpp">
-      <Filter>소스 파일\Core</Filter>
-    </ClCompile>
     <ClCompile Include="Enemy.cpp">
       <Filter>소스 파일\Contents</Filter>
-    </ClCompile>
-    <ClCompile Include="GameViewManger.cpp">
-      <Filter>소스 파일\Core</Filter>
     </ClCompile>
     <ClCompile Include="TexturePlaneModel.cpp">
       <Filter>소스 파일\Contents</Filter>
@@ -183,34 +114,97 @@
     <ClCompile Include="ImageLoader.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="core\Attribute.cpp">
+      <Filter>소스 파일\MyLib</Filter>
+    </ClCompile>
+    <ClCompile Include="core\BasicBlobs.cpp">
+      <Filter>소스 파일\MyLib</Filter>
+    </ClCompile>
+    <ClCompile Include="core\Blobs.cpp">
+      <Filter>소스 파일\MyLib</Filter>
+    </ClCompile>
+    <ClCompile Include="core\BlobUtils.cpp">
+      <Filter>소스 파일\MyLib</Filter>
+    </ClCompile>
+    <ClCompile Include="core\OpenGL.cpp">
+      <Filter>소스 파일\MyLib</Filter>
+    </ClCompile>
+    <ClCompile Include="core\Pipeline.cpp">
+      <Filter>소스 파일\MyLib</Filter>
+    </ClCompile>
+    <ClCompile Include="core\Prototypes.cpp">
+      <Filter>소스 파일\MyLib</Filter>
+    </ClCompile>
+    <ClCompile Include="core\Shader.cpp">
+      <Filter>소스 파일\MyLib</Filter>
+    </ClCompile>
+    <ClCompile Include="core\Uniform.cpp">
+      <Filter>소스 파일\MyLib</Filter>
+    </ClCompile>
+    <ClCompile Include="core\Utils.cpp">
+      <Filter>소스 파일\MyLib</Filter>
+    </ClCompile>
+    <ClCompile Include="core\VertexStream.cpp">
+      <Filter>소스 파일\MyLib</Filter>
+    </ClCompile>
+    <ClCompile Include="WindowsManager.cpp">
+      <Filter>소스 파일\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Transform.cpp">
+      <Filter>소스 파일\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Timer.cpp">
+      <Filter>소스 파일\Core</Filter>
+    </ClCompile>
     <ClCompile Include="StaticObject.cpp">
+      <Filter>소스 파일\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene.cpp">
+      <Filter>소스 파일\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="ModelView.cpp">
+      <Filter>소스 파일\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Model.cpp">
+      <Filter>소스 파일\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Framework.cpp">
+      <Filter>소스 파일\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Collider.cpp">
+      <Filter>소스 파일\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>소스 파일\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="BoxCollider.cpp">
       <Filter>소스 파일\Core</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    <None Include="fragment.glsl">
+    <None Include="shaders\CircleP.glsl">
       <Filter>리소스 파일\Shaders</Filter>
     </None>
-    <None Include="..\Shaders\PlainP.glsl">
+    <None Include="shaders\CircleV.glsl">
       <Filter>리소스 파일\Shaders</Filter>
     </None>
-    <None Include="..\Shaders\PlainV.glsl">
+    <None Include="shaders\FullRectP.glsl">
       <Filter>리소스 파일\Shaders</Filter>
     </None>
-    <None Include="vertex.glsl">
+    <None Include="shaders\FullRectV.glsl">
       <Filter>리소스 파일\Shaders</Filter>
     </None>
-    <None Include="..\Shaders\TextureP.glsl">
+    <None Include="shaders\PlainP.glsl">
       <Filter>리소스 파일\Shaders</Filter>
     </None>
-    <None Include="..\Shaders\TextureV.glsl">
+    <None Include="shaders\PlainV.glsl">
       <Filter>리소스 파일\Shaders</Filter>
     </None>
-    <None Include="..\Shaders\CircleP.glsl">
+    <None Include="shaders\TextureP.glsl">
       <Filter>리소스 파일\Shaders</Filter>
     </None>
-    <None Include="..\Shaders\CircleV.glsl">
+    <None Include="shaders\TextureV.glsl">
       <Filter>리소스 파일\Shaders</Filter>
     </None>
   </ItemGroup>
@@ -221,65 +215,32 @@
     <ClInclude Include="pch.hpp">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="..\IconerLibrary\Attribute.hpp">
-      <Filter>헤더 파일\Lib</Filter>
-    </ClInclude>
-    <ClInclude Include="..\IconerLibrary\BasicBlobs.hpp">
-      <Filter>헤더 파일\Lib</Filter>
-    </ClInclude>
-    <ClInclude Include="..\IconerLibrary\Blobs.hpp">
-      <Filter>헤더 파일\Lib</Filter>
-    </ClInclude>
-    <ClInclude Include="..\IconerLibrary\BlobUtils.hpp">
-      <Filter>헤더 파일\Lib</Filter>
-    </ClInclude>
-    <ClInclude Include="..\IconerLibrary\OpenGL.hpp">
-      <Filter>헤더 파일\Lib</Filter>
-    </ClInclude>
-    <ClInclude Include="..\IconerLibrary\Pipeline.hpp">
-      <Filter>헤더 파일\Lib</Filter>
-    </ClInclude>
-    <ClInclude Include="..\IconerLibrary\Prototypes.hpp">
-      <Filter>헤더 파일\Lib</Filter>
-    </ClInclude>
-    <ClInclude Include="..\IconerLibrary\Shader.hpp">
-      <Filter>헤더 파일\Lib</Filter>
-    </ClInclude>
-    <ClInclude Include="..\IconerLibrary\Uniform.hpp">
-      <Filter>헤더 파일\Lib</Filter>
-    </ClInclude>
-    <ClInclude Include="..\IconerLibrary\Utils.hpp">
-      <Filter>헤더 파일\Lib</Filter>
-    </ClInclude>
-    <ClInclude Include="..\IconerLibrary\VertexStream.hpp">
-      <Filter>헤더 파일\Lib</Filter>
-    </ClInclude>
     <ClInclude Include="Camera.hpp">
-      <Filter>헤더 파일\Core</Filter>
+      <Filter>헤더 파일\MyLib</Filter>
     </ClInclude>
     <ClInclude Include="Constants.hpp">
-      <Filter>헤더 파일\Core</Filter>
+      <Filter>헤더 파일\MyLib</Filter>
     </ClInclude>
     <ClInclude Include="Framework.hpp">
-      <Filter>헤더 파일\Core</Filter>
+      <Filter>헤더 파일\MyLib</Filter>
     </ClInclude>
     <ClInclude Include="Scene.hpp">
-      <Filter>헤더 파일\Core</Filter>
+      <Filter>헤더 파일\MyLib</Filter>
     </ClInclude>
     <ClInclude Include="GameScene.hpp">
       <Filter>헤더 파일\Contents</Filter>
     </ClInclude>
     <ClInclude Include="Transform.hpp">
-      <Filter>헤더 파일\Core</Filter>
+      <Filter>헤더 파일\MyLib</Filter>
     </ClInclude>
     <ClInclude Include="MainScene.hpp">
       <Filter>헤더 파일\Contents</Filter>
     </ClInclude>
     <ClInclude Include="GameObject.hpp">
-      <Filter>헤더 파일\Core</Filter>
+      <Filter>헤더 파일\MyLib</Filter>
     </ClInclude>
     <ClInclude Include="ModelView.hpp">
-      <Filter>헤더 파일\Core</Filter>
+      <Filter>헤더 파일\MyLib</Filter>
     </ClInclude>
     <ClInclude Include="CubeModel.hpp">
       <Filter>헤더 파일\Contents\Models</Filter>
@@ -303,10 +264,10 @@
       <Filter>헤더 파일\Contents\World</Filter>
     </ClInclude>
     <ClInclude Include="Collider.hpp">
-      <Filter>헤더 파일\Core</Filter>
+      <Filter>헤더 파일\MyLib</Filter>
     </ClInclude>
     <ClInclude Include="BoxCollider.hpp">
-      <Filter>헤더 파일\Core</Filter>
+      <Filter>헤더 파일\MyLib</Filter>
     </ClInclude>
     <ClInclude Include="WindowManager.hpp">
       <Filter>헤더 파일\Application</Filter>
@@ -321,7 +282,7 @@
       <Filter>헤더 파일\Contents\World</Filter>
     </ClInclude>
     <ClInclude Include="Model.hpp">
-      <Filter>헤더 파일\Core</Filter>
+      <Filter>헤더 파일\MyLib</Filter>
     </ClInclude>
     <ClInclude Include="resource.h">
       <Filter>헤더 파일</Filter>
@@ -330,7 +291,7 @@
       <Filter>헤더 파일\Contents\Entities</Filter>
     </ClInclude>
     <ClInclude Include="GameViewManger.hpp">
-      <Filter>헤더 파일\Core</Filter>
+      <Filter>헤더 파일\MyLib</Filter>
     </ClInclude>
     <ClInclude Include="TextureCubeModel.hpp">
       <Filter>헤더 파일\Contents\Models</Filter>
@@ -342,13 +303,43 @@
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="StaticObject.hpp">
-      <Filter>헤더 파일\Core</Filter>
+      <Filter>헤더 파일\MyLib</Filter>
+    </ClInclude>
+    <ClInclude Include="core\VertexStream.hpp">
+      <Filter>헤더 파일\Lib</Filter>
+    </ClInclude>
+    <ClInclude Include="core\Attribute.hpp">
+      <Filter>헤더 파일\Lib</Filter>
+    </ClInclude>
+    <ClInclude Include="core\BasicBlobs.hpp">
+      <Filter>헤더 파일\Lib</Filter>
+    </ClInclude>
+    <ClInclude Include="core\Blobs.hpp">
+      <Filter>헤더 파일\Lib</Filter>
+    </ClInclude>
+    <ClInclude Include="core\BlobUtils.hpp">
+      <Filter>헤더 파일\Lib</Filter>
+    </ClInclude>
+    <ClInclude Include="core\OpenGL.hpp">
+      <Filter>헤더 파일\Lib</Filter>
+    </ClInclude>
+    <ClInclude Include="core\Pipeline.hpp">
+      <Filter>헤더 파일\Lib</Filter>
+    </ClInclude>
+    <ClInclude Include="core\Prototypes.hpp">
+      <Filter>헤더 파일\Lib</Filter>
+    </ClInclude>
+    <ClInclude Include="core\Shader.hpp">
+      <Filter>헤더 파일\Lib</Filter>
+    </ClInclude>
+    <ClInclude Include="core\Uniform.hpp">
+      <Filter>헤더 파일\Lib</Filter>
+    </ClInclude>
+    <ClInclude Include="core\Utils.hpp">
+      <Filter>헤더 파일\Lib</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="cube.txt">
-      <Filter>리소스 파일\Models</Filter>
-    </Text>
     <Text Include="Stage.txt">
       <Filter>리소스 파일</Filter>
     </Text>
@@ -426,5 +417,28 @@
     <Image Include="textures\iron_sword.png">
       <Filter>리소스 파일\Textures</Filter>
     </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="lib\freeglut.lib">
+      <Filter>리소스 파일\Libraray</Filter>
+    </Library>
+    <Library Include="lib\glew32.lib">
+      <Filter>리소스 파일\Libraray</Filter>
+    </Library>
+    <Library Include="lib\glew32s.lib">
+      <Filter>리소스 파일\Libraray</Filter>
+    </Library>
+    <Library Include="lib\glfw3.lib">
+      <Filter>리소스 파일\Libraray</Filter>
+    </Library>
+    <Library Include="lib\glfw3_mt.lib">
+      <Filter>리소스 파일\Libraray</Filter>
+    </Library>
+    <Library Include="lib\glfw3dll.lib">
+      <Filter>리소스 파일\Libraray</Filter>
+    </Library>
+    <Library Include="lib\IconerLibrary.lib">
+      <Filter>리소스 파일\Libraray</Filter>
+    </Library>
   </ItemGroup>
 </Project>

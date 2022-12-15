@@ -34,13 +34,13 @@ public:
 		Scene::Awake();
 
 		myRenderer.Awake();
-		myRenderer.LoadVertexShader("..\\Shaders\\PlainV.glsl");
-		myRenderer.LoadFragmentShader("..\\Shaders\\PlainP.glsl");
+		myRenderer.LoadVertexShader("shaders\\PlainV.glsl");
+		myRenderer.LoadFragmentShader("shaders\\PlainP.glsl");
 		myRenderer.Ready();
 
 		textureRenderer.Awake();
-		textureRenderer.LoadVertexShader("..\\Shaders\\TextureV.glsl");
-		textureRenderer.LoadFragmentShader("..\\Shaders\\TextureP.glsl");
+		textureRenderer.LoadVertexShader("shaders\\TextureV.glsl");
+		textureRenderer.LoadFragmentShader("shaders\\TextureP.glsl");
 		textureRenderer.Ready();
 
 		viewManager.Awake();
@@ -53,6 +53,8 @@ public:
 
 		worldManager.Awake();
 		worldManager.Start(this);
+
+		ogl::background_color = { 0.0f, 0.5f, 1.0f, 1.0f };
 	}
 
 	void Start() override

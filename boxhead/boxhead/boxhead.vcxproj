@@ -73,30 +73,30 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <GlfwLinkage>static</GlfwLinkage>
     <Linkage-freeglut>static</Linkage-freeglut>
-    <IncludePath>$(SolutionDir)IconerLibrary;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)lib;$(LibraryPath)</LibraryPath>
+    <LibraryPath>lib;$(LibraryPath)</LibraryPath>
     <CopyLocalDeploymentContent>true</CopyLocalDeploymentContent>
     <CopyCppRuntimeToOutputDir>true</CopyCppRuntimeToOutputDir>
+    <IncludePath>core;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>$(SolutionDir)IconerLibrary;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)lib;$(LibraryPath)</LibraryPath>
+    <LibraryPath>lib;$(LibraryPath)</LibraryPath>
     <GlfwLinkage>static</GlfwLinkage>
     <Linkage-freeglut>static</Linkage-freeglut>
     <CopyLocalDeploymentContent>true</CopyLocalDeploymentContent>
     <CopyCppRuntimeToOutputDir>true</CopyCppRuntimeToOutputDir>
+    <IncludePath>core;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <LibraryPath>$(SolutionDir)lib;$(LibraryPath)</LibraryPath>
-    <IncludePath>$(SolutionDir)IconerLibrary;$(IncludePath)</IncludePath>
+    <LibraryPath>lib;$(LibraryPath)</LibraryPath>
     <CopyLocalDeploymentContent>true</CopyLocalDeploymentContent>
     <CopyCppRuntimeToOutputDir>true</CopyCppRuntimeToOutputDir>
+    <IncludePath>core;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <LibraryPath>$(SolutionDir)lib;$(LibraryPath)</LibraryPath>
-    <IncludePath>$(SolutionDir)IconerLibrary;$(IncludePath)</IncludePath>
+    <LibraryPath>lib;$(LibraryPath)</LibraryPath>
     <CopyLocalDeploymentContent>true</CopyLocalDeploymentContent>
     <CopyCppRuntimeToOutputDir>true</CopyCppRuntimeToOutputDir>
+    <IncludePath>core;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -108,7 +108,7 @@
       <LanguageStandard_C>stdc17</LanguageStandard_C>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.hpp</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>$(SolutionDir)textures;$(SolutionDir)IconerLibrary</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>shaders;textures;lib;core</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -128,7 +128,7 @@
       <LanguageStandard_C>stdc17</LanguageStandard_C>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.hpp</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>$(SolutionDir)textures;$(SolutionDir)IconerLibrary</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>shaders;textures;lib;core</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -147,7 +147,7 @@
       <LanguageStandard_C>stdc17</LanguageStandard_C>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.hpp</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>$(SolutionDir)textures;$(SolutionDir)IconerLibrary</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>shaders;textures;lib;core</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -166,7 +166,7 @@
       <LanguageStandard_C>stdc17</LanguageStandard_C>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.hpp</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>$(SolutionDir)textures;$(SolutionDir)IconerLibrary</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>shaders;textures;lib;core</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -176,22 +176,21 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\IconerLibrary\Attribute.cpp" />
-    <ClCompile Include="..\IconerLibrary\BasicBlobs.cpp" />
-    <ClCompile Include="..\IconerLibrary\Blobs.cpp" />
-    <ClCompile Include="..\IconerLibrary\BlobUtils.cpp" />
-    <ClCompile Include="..\IconerLibrary\OpenGL.cpp" />
-    <ClCompile Include="..\IconerLibrary\Pipeline.cpp" />
-    <ClCompile Include="..\IconerLibrary\Prototypes.cpp" />
-    <ClCompile Include="..\IconerLibrary\Shader.cpp" />
-    <ClCompile Include="..\IconerLibrary\Uniform.cpp" />
-    <ClCompile Include="..\IconerLibrary\Utils.cpp" />
-    <ClCompile Include="..\IconerLibrary\VertexStream.cpp" />
     <ClCompile Include="AxisModel.cpp" />
     <ClCompile Include="BoxCollider.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Collider.cpp" />
-    <ClCompile Include="Constants.cpp" />
+    <ClCompile Include="core\Attribute.cpp" />
+    <ClCompile Include="core\BasicBlobs.cpp" />
+    <ClCompile Include="core\Blobs.cpp" />
+    <ClCompile Include="core\BlobUtils.cpp" />
+    <ClCompile Include="core\OpenGL.cpp" />
+    <ClCompile Include="core\Pipeline.cpp" />
+    <ClCompile Include="core\Prototypes.cpp" />
+    <ClCompile Include="core\Shader.cpp" />
+    <ClCompile Include="core\Uniform.cpp" />
+    <ClCompile Include="core\Utils.cpp" />
+    <ClCompile Include="core\VertexStream.cpp" />
     <ClCompile Include="CubeModel.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Entity.cpp" />
@@ -199,7 +198,6 @@
     <ClCompile Include="Framework.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GameScene.cpp" />
-    <ClCompile Include="GameViewManger.cpp" />
     <ClCompile Include="ImageLoader.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainScene.cpp" />
@@ -225,33 +223,33 @@
     <ClCompile Include="WorldManager.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\Shaders\CircleP.glsl" />
-    <None Include="..\Shaders\CircleV.glsl" />
-    <None Include="..\Shaders\PlainP.glsl" />
-    <None Include="..\Shaders\PlainV.glsl" />
-    <None Include="..\Shaders\TextureP.glsl" />
-    <None Include="..\Shaders\TextureV.glsl" />
-    <None Include="fragment.glsl" />
     <None Include="packages.config" />
-    <None Include="vertex.glsl" />
+    <None Include="shaders\CircleP.glsl" />
+    <None Include="shaders\CircleV.glsl" />
+    <None Include="shaders\FullRectP.glsl" />
+    <None Include="shaders\FullRectV.glsl" />
+    <None Include="shaders\PlainP.glsl" />
+    <None Include="shaders\PlainV.glsl" />
+    <None Include="shaders\TextureP.glsl" />
+    <None Include="shaders\TextureV.glsl" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\IconerLibrary\Attribute.hpp" />
-    <ClInclude Include="..\IconerLibrary\BasicBlobs.hpp" />
-    <ClInclude Include="..\IconerLibrary\Blobs.hpp" />
-    <ClInclude Include="..\IconerLibrary\BlobUtils.hpp" />
-    <ClInclude Include="..\IconerLibrary\OpenGL.hpp" />
-    <ClInclude Include="..\IconerLibrary\Pipeline.hpp" />
-    <ClInclude Include="..\IconerLibrary\Prototypes.hpp" />
-    <ClInclude Include="..\IconerLibrary\Shader.hpp" />
-    <ClInclude Include="..\IconerLibrary\Uniform.hpp" />
-    <ClInclude Include="..\IconerLibrary\Utils.hpp" />
-    <ClInclude Include="..\IconerLibrary\VertexStream.hpp" />
     <ClInclude Include="AxisModel.hpp" />
     <ClInclude Include="BoxCollider.hpp" />
     <ClInclude Include="Camera.hpp" />
     <ClInclude Include="Collider.hpp" />
     <ClInclude Include="Constants.hpp" />
+    <ClInclude Include="core\Attribute.hpp" />
+    <ClInclude Include="core\BasicBlobs.hpp" />
+    <ClInclude Include="core\Blobs.hpp" />
+    <ClInclude Include="core\BlobUtils.hpp" />
+    <ClInclude Include="core\OpenGL.hpp" />
+    <ClInclude Include="core\Pipeline.hpp" />
+    <ClInclude Include="core\Prototypes.hpp" />
+    <ClInclude Include="core\Shader.hpp" />
+    <ClInclude Include="core\Uniform.hpp" />
+    <ClInclude Include="core\Utils.hpp" />
+    <ClInclude Include="core\VertexStream.hpp" />
     <ClInclude Include="CubeModel.hpp" />
     <ClInclude Include="Enemy.hpp" />
     <ClInclude Include="Entity.hpp" />
@@ -281,7 +279,6 @@
     <ClInclude Include="WorldManager.hpp" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="cube.txt" />
     <Text Include="Stage.txt" />
   </ItemGroup>
   <ItemGroup>
@@ -309,6 +306,15 @@
     <Image Include="textures\TDX3.bmp" />
     <Image Include="textures\title.png" />
     <Image Include="textures\vignette.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="lib\freeglut.lib" />
+    <Library Include="lib\glew32.lib" />
+    <Library Include="lib\glew32s.lib" />
+    <Library Include="lib\glfw3.lib" />
+    <Library Include="lib\glfw3dll.lib" />
+    <Library Include="lib\glfw3_mt.lib" />
+    <Library Include="lib\IconerLibrary.lib" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -5,8 +5,8 @@
 void MainScene::Awake()
 {
 	textureRenderer.Awake();
-	textureRenderer.LoadVertexShader("..\\Shaders\\TextureV.glsl");
-	textureRenderer.LoadFragmentShader("..\\Shaders\\TextureP.glsl");
+	textureRenderer.LoadVertexShader("shaders\\TextureV.glsl");
+	textureRenderer.LoadFragmentShader("shaders\\TextureP.glsl");
 	textureRenderer.Ready();
 
 	ogl::background_color = { 0.1f, 0.1f, 0.1f, 1.0f };
