@@ -17,7 +17,7 @@ class GameScene : public Scene
 public:
 	constexpr GameScene(const size_t& id)
 		: Scene(id)
-		, myRenderer(), textureRenderer(), overTextureRenderer()
+		, myRenderer(), textureRenderer()
 		, worldManager(tileSizeX, tileSizeY, tileSizeZ), viewManager()
 		, windowFocused(false), cursorClicked(false), cursorPosition(), clientRect()
 		, playerCharacter(nullptr), playerSpawnPosition(3.0f, 1.0f, 3.0f)
@@ -43,11 +43,6 @@ public:
 		textureRenderer.LoadFragmentShader("..\\Shaders\\TextureP.glsl");
 		textureRenderer.Ready();
 
-		overTextureRenderer.Awake();
-		overTextureRenderer.LoadVertexShader("..\\Shaders\\TextureV.glsl");
-		overTextureRenderer.LoadFragmentShader("..\\Shaders\\TextureP.glsl");
-		overTextureRenderer.Ready();
-
 		viewManager.Awake();
 
 		playerCharacter = new Player{ playerSpawnPosition };
@@ -55,11 +50,6 @@ public:
 		viewManager.SetFollower(playerCharacter);
 
 		AddEntity(playerCharacter);
-
-		auto cube_model = ModelView::GetReference<SideCubeModel>();
-		auto aa = CreateEnemy<Enemy>(cube_model, glm::vec3{ 1.0f, 0.0f, 4.0f });
-		auto bb = CreateEnemy<Enemy>(cube_model, glm::vec3{ 1.0f, 0.0f, 6.0f });
-		auto cc = CreateEnemy<Enemy>(cube_model, glm::vec3{ 3.0f, 0.0f, 8.0f });
 
 		worldManager.Awake();
 		worldManager.Start(this);
@@ -79,7 +69,6 @@ public:
 
 		myRenderer.Start();
 		textureRenderer.Start();
-		overTextureRenderer.Start();
 	}
 
 	void Update() override
@@ -361,7 +350,7 @@ private:
 	}
 
 	ogl::Pipeline myRenderer;
-	ogl::Pipeline textureRenderer, overTextureRenderer;
+	ogl::Pipeline textureRenderer;
 
 	bool windowFocused;
 	bool cursorClicked;

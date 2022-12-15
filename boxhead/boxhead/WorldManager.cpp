@@ -57,7 +57,6 @@ void WorldManager::Start(Scene* scene)
 {
 	// 모델 가져오기
 	auto wall_model_view = ModelView::GetReference<TextureCubeModel>();
-	//auto wall_model_view = ModelView::GetReference<SideCubeModel>();
 
 	bool skip_first = false;
 

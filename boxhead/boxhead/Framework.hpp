@@ -489,7 +489,7 @@ private:
 		auto bb = AddModel<TexturePlaneModel>("Vignette", tex_vig_buffer);
 
 		// 5
-		auto cc = AddModel<TextureCubeModel>("Vignette", texcube_buffer);
+		auto cc = AddModel<TextureCubeModel>("TextureCube", texcube_buffer);
 	}
 
 	void CreateTextures()
@@ -518,6 +518,12 @@ private:
 
 		// 13
 		auto vignette_tex = LoadTexture("Vignette", "textures/vignette.png", GL_RGBA, GL_RGBA);
+		// 14
+		LoadTexture("BlockStand", "textures/brewing_stand_base.png");
+		// 15
+		LoadTexture("BlockStand", "textures/chiseled_deepslate.png");
+		// 16
+		LoadTexture("BlockStand", "textures/chiseled_polished_blackstone.png");
 	}
 
 	GLuint InternalLoadTexture(std::string_view filepath, GLint px_format, GLenum format);

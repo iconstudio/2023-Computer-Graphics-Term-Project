@@ -42,22 +42,24 @@ void GameScene::Render()
 	textureRenderer.ReadBuffer(attr_texpos, 3);
 	textureRenderer.ReadBuffer(attr_texcoord, 2);
 
-	tex_uniform_world.AssignMatrix4x4(glm::translate(ogl::identity, { 7.0, 2.0, 7.0f }));
-
-	const GLint& texid = 3;
+	// 테스트 큐브
+	const GLint& texid = 14;
 	glActiveTexture(GL_TEXTURE0);
+	tex_uniform_world.AssignMatrix4x4(glm::translate(ogl::identity, { 7.0, 2.0, 7.0f }));
 	tex_uniform_sample.BindTexture(texid);
 	model_texcube.Render();
 	textureRenderer.ResetSeekBuffer();
 
 	for (auto& objet : everyWall)
 	{
+		const GLint& obj_texid = 15;
+
 		objet->PrepareRendering();
 		textureRenderer.ReadBuffer(attr_texpos, 3);
 		textureRenderer.ReadBuffer(attr_texcoord, 2);
 
 		glActiveTexture(GL_TEXTURE0);
-		tex_uniform_sample.BindTexture(texid);
+		tex_uniform_sample.BindTexture(obj_texid);
 		objet->Render(tex_uniform_world);
 		textureRenderer.ResetSeekBuffer();
 	}
@@ -67,36 +69,5 @@ void GameScene::Render()
 	ogl::ResetProgram();
 	glPopMatrix();
 
-	ogl::TurnOnOption(GL_TEXTURE_2D);
-	glPushMatrix();
-
-	overTextureRenderer.PrepareRendering();
-	auto ov_uniform_world = overTextureRenderer.GetUniform("a_WorldMatrix");
-	auto ov_uniform_camera = overTextureRenderer.GetUniform("a_CameraMatrix");
-	auto ov_uniform_proj = overTextureRenderer.GetUniform("a_ProjMatrix");
-	auto ov_uniform_sample = overTextureRenderer.GetUniform("u_Texture");
-
-	auto attr_ovpos = overTextureRenderer.BeginAttribute("a_Position", shade_tex);
-	auto attr_ovcoord = overTextureRenderer.BeginAttribute("a_TexCoord", shade_tex);
-
-	// 12: 화면 암등 효과
-	auto model_vignette = ModelView::GetReference(4);
-	model_vignette.PrepareRendering();
-	overTextureRenderer.ReadBuffer(attr_ovpos, 3);
-	overTextureRenderer.ReadBuffer(attr_ovcoord, 2);
-
-	ov_uniform_world.AssignMatrix4x4(ogl::identity);
-	ov_uniform_camera.AssignMatrix4x4(ogl::identity);
-	ov_uniform_proj.AssignMatrix4x4(otho_view);
-
-	ov_uniform_sample.BindTexture(13);
-
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	model_vignette.Render();
-	overTextureRenderer.ResetSeekBuffer();
-
-	attr_ovpos.DisableVertexArray();
-	attr_ovcoord.DisableVertexArray();
-	glPopMatrix();
-	ogl::ResetProgram();
+	ogl::TurnOffOption(GL_TEXTURE_2D);
 }

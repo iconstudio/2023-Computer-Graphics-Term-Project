@@ -33,4 +33,7 @@ public:
 	{
 		StaticObject::Render(world);
 	}
+
+	GLint horizontalRepeatTimes = 1;
+	GLint verticalRepeatTimes = 1;
 };
